@@ -61,6 +61,61 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-HowToUpdateBlogWithGit" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/08/HowToUpdateBlogWithGit/" class="article-date">
+  <time datetime="2016-10-08T14:06:50.067Z" itemprop="datePublished">2016-10-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/08/HowToUpdateBlogWithGit/">如何使用Git更新博客（一次失败的尝试）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开门见山，先来说一下我用git发布博文的整体结构。  </p>
+<ul>
+<li>博客服务器一枚  </li>
+<li>Git@OSC帐号一枚  </li>
+<li>本地电脑一台</li>
+</ul>
+<p>发布工作的流程是这样的：  </p>
+<ol>
+<li>本地编写完成之后在博文目录提交并push到OSC的仓库  </li>
+<li>博客服务器从OSC的仓库中pull得最新博文。</li>
+</ol>
+<p>这样博客服务器和本地电脑上面的git都是充当客户端的git，本来想看一看有没有直接上传的办法，找了一会没找到就采取这种办法了，不过这样也好，我的博文有<strong>四处</strong>存放点（本地+博客服务器+OSC仓库+坚果云）。  </p>
+<p>为了保证每次打开博客看到的都是最新的情况，我在GitBlog的index.php里面加了一句运行本地shell文件的命令，如下：<br><code>exec(&quot;.../gitpull.sh&quot;);</code><br>这样每次打开博客都会自动去远程仓库pull一下，总感觉pull频繁了会有安全隐患呢。。。先不管了，以后再说吧。其实刚才也尝试了crontab的方法（linux的定时器），设定的是每五分钟pull一次，但是好像没什么效果，加上这么做可能不能实时更新，就放弃了。以后的话看看改善一下gitpull这个脚本吧。  </p>
+<hr>
+<p>对了，我现在用的MarkDown是一个开源的Qt的本地编辑器CuteMarkEd，每次打开都要手动复制博文的前缀也是很麻烦的，所以最近想要在这个CuteMarkEd的基础上添加一些适合GitBlog的功能，这样用起来应该会方便一些吧。  </p>
+<hr>
+<p>但是Git的方案失败了，因为在网页里面的php代码不能执行git pull，有说是权限问题的，我尝试了几次不行就放弃了，因为对php不熟悉。  </p>
+<hr>
+<p><strong>但是！我现在也实现了自动发布博文功能！是用Dropbox实现的，稍等我就来记载一下</strong>  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/08/HowToUpdateBlogWithGit/" data-id="ciu19yjhg0000j5yg52379har" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-Git发布博文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/08/Git发布博文/" class="article-date">
@@ -216,6 +271,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2016/10/08/HowToUpdateBlogWithGit/">如何使用Git更新博客（一次失败的尝试）</a>
+          </li>
         
           <li>
             <a href="/2016/10/08/Git发布博文/">使用Git来发布博文</a>
