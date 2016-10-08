@@ -64,17 +64,26 @@
     <article id="post-Git发布博文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/08/Git发布博文/" class="article-date">
-  <time datetime="2016-10-08T13:51:20.670Z" itemprop="datePublished">2016-10-08</time>
+  <time datetime="2016-10-08T13:53:30.876Z" itemprop="datePublished">2016-10-08</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/08/Git发布博文/">使用Git来发布博文</a>
+    </h1>
+  
+
+      </header>
+    
     <div class="article-entry" itemprop="articleBody">
       
-        <hr>
-<h2 id="title-使用Git来发布博文"><a href="#title-使用Git来发布博文" class="headerlink" title="title:使用Git来发布博文"></a>title:使用Git来发布博文</h2><p>##使用Git发布博文<br>其实之前也尝试过使用Git发布博文，但是totally失败了，上次方法很可笑，这次用git的hook工具。<br>首先在服务器上安装git，这个就不说了。安装好git之后需要在服务器上面给git分配一个用户<code>adduser git</code>并给它一个密码。<br>切换到git用户之后创建一个git远程代码仓库（myblog.git），然后再去博文目录创建git仓库。（在这一步我遇到了问题……权限问题，最后无奈的我把blog目录所有者改为了git）在博文目录添加myblog.git作为远程仓库。<br>然后去myblog.git的目录，进入hooks目录之后新建post-receive脚本文件，这个文件会在每次接收到客户端push之后执行，其余hook用法可以看<a href="http://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">这里</a><br>下面是脚本文件的内容，保存好之后还得给它+x<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="built_in">unset</span> GIT_DIR</div><div class="line">B<span class="built_in">log</span>Path=/data/vhost/liyu34.xyz/blog</div><div class="line"></div><div class="line"><span class="built_in">cd</span> <span class="variable">$BlogPath</span></div><div class="line">git add . -A &amp;&amp; git stash</div><div class="line">git pull orig master</div><div class="line">cp -r conf.yaml ../conf.yaml</div><div class="line">rm -rf ../app/cache/*</div><div class="line">```  </div><div class="line">这样钩子就设定好了，接下来得把网站服务器上的git搭建为服务器git，</div><div class="line">参照[这里](https://ruby-china.org/topics/5040)（我就是偷懒了……）  </div><div class="line"></div><div class="line">**然后vps的ssh端口变了怎么办，也请参照[这里](http://zengrong.net/post/1544.htm)。**  </div><div class="line"></div><div class="line">权限问题？刚刚我遇到了一个问题就是我按照之前的办法来写了post-receive脚本，就是无法执行，后来发现是权限问题，我把blog目录的权限设为765之后git就不能pull了，暂时还不清楚是什么原因。  </div><div class="line">权限问题真混乱，缓存目录下面的东西是apache用户的,我把cache目录设为777之后apache用户产生的目录还是755的，git无法去操作那些目录。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2015.10.21补充</span></div><div class="line">经过今天的事情我充分认识到我的Linux水平就跟海平面一样。。。稍稍高一点的东西就不懂了……  </div><div class="line">之前我每次在本地提交的时候还需要输入登陆密码，作为一个合格程序员（就是懒），我觉得我得做点什么，比如ssh什么的。</div><div class="line">然后我就把ssh的key传到了服务器上，然后……就不用输密码了。。。由于我的Linux水平低下，所以我并不准备说太多。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2016年3月3日补充</span></div><div class="line">如果是SCP命令想要使用除了22以外的端口的话，需要加上端口参数如下：</div></pre></td></tr></table></figure></p>
+        <p>##使用Git发布博文<br>其实之前也尝试过使用Git发布博文，但是totally失败了，上次方法很可笑，这次用git的hook工具。<br>首先在服务器上安装git，这个就不说了。安装好git之后需要在服务器上面给git分配一个用户<code>adduser git</code>并给它一个密码。<br>切换到git用户之后创建一个git远程代码仓库（myblog.git），然后再去博文目录创建git仓库。（在这一步我遇到了问题……权限问题，最后无奈的我把blog目录所有者改为了git）在博文目录添加myblog.git作为远程仓库。<br>然后去myblog.git的目录，进入hooks目录之后新建post-receive脚本文件，这个文件会在每次接收到客户端push之后执行，其余hook用法可以看<a href="http://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">这里</a><br>下面是脚本文件的内容，保存好之后还得给它+x<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="built_in">unset</span> GIT_DIR</div><div class="line">B<span class="built_in">log</span>Path=/data/vhost/liyu34.xyz/blog</div><div class="line"></div><div class="line"><span class="built_in">cd</span> <span class="variable">$BlogPath</span></div><div class="line">git add . -A &amp;&amp; git stash</div><div class="line">git pull orig master</div><div class="line">cp -r conf.yaml ../conf.yaml</div><div class="line">rm -rf ../app/cache/*</div><div class="line">```  </div><div class="line">这样钩子就设定好了，接下来得把网站服务器上的git搭建为服务器git，</div><div class="line">参照[这里](https://ruby-china.org/topics/5040)（我就是偷懒了……）  </div><div class="line"></div><div class="line">**然后vps的ssh端口变了怎么办，也请参照[这里](http://zengrong.net/post/1544.htm)。**  </div><div class="line"></div><div class="line">权限问题？刚刚我遇到了一个问题就是我按照之前的办法来写了post-receive脚本，就是无法执行，后来发现是权限问题，我把blog目录的权限设为765之后git就不能pull了，暂时还不清楚是什么原因。  </div><div class="line">权限问题真混乱，缓存目录下面的东西是apache用户的,我把cache目录设为777之后apache用户产生的目录还是755的，git无法去操作那些目录。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2015.10.21补充</span></div><div class="line">经过今天的事情我充分认识到我的Linux水平就跟海平面一样。。。稍稍高一点的东西就不懂了……  </div><div class="line">之前我每次在本地提交的时候还需要输入登陆密码，作为一个合格程序员（就是懒），我觉得我得做点什么，比如ssh什么的。</div><div class="line">然后我就把ssh的key传到了服务器上，然后……就不用输密码了。。。由于我的Linux水平低下，所以我并不准备说太多。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2016年3月3日补充</span></div><div class="line">如果是SCP命令想要使用除了22以外的端口的话，需要加上端口参数如下：</div></pre></td></tr></table></figure></p>
 <p>SCP -P port_number user@serviceip:floder<br>```  </p>
 <p>也必须在blog目录下面初始化git目录。</p>
 
@@ -209,7 +218,7 @@
       <ul>
         
           <li>
-            <a href="/2016/10/08/Git发布博文/">(no title)</a>
+            <a href="/2016/10/08/Git发布博文/">使用Git来发布博文</a>
           </li>
         
           <li>
