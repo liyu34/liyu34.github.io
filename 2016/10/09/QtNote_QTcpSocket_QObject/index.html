@@ -17,15 +17,15 @@
 
 ##一、QTcpSocket无法跨进程调用的问题当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  
 最后发现问题">
-<meta property="og:image" content="http://ablee.cc/blog/img/qobjectclass.png">
-<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta property="og:image" content="http://liyu34.github.io/images/qobjectclass.png">
+<meta property="og:updated_time" content="2016-10-09T14:41:04.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="QtNote:QTcpSocket与QThread，QObject的拷贝问题">
 <meta name="twitter:description" content="昨晚在做ModBus的时候遇到了两个问题，第一个是tcpsocket突然无法发送数据了，显示tcpsocket无法跨进程调用；第二个是编译时一直显示无法访问QObject的私有变量。
 
 ##一、QTcpSocket无法跨进程调用的问题当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  
 最后发现问题">
-<meta name="twitter:image" content="http://ablee.cc/blog/img/qobjectclass.png">
+<meta name="twitter:image" content="http://liyu34.github.io/images/qobjectclass.png">
   
     <link rel="alternate" href="/atom.xml" title="AbLee&#39;s Blog" type="application/atom+xml">
   
@@ -81,7 +81,7 @@
         <section id="main"><article id="post-QtNote_QTcpSocket_QObject" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/09/QtNote_QTcpSocket_QObject/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+  <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -107,7 +107,7 @@
 <p>后来我写了一个按钮响应，把线程的<code>start()</code>给挪到按钮响应里去了，这样之后每次tcpsocket发送数据的时候就是出错，输出“tcpsocket无法跨线程调用”，于是我又把start给挪回构造函数里了，下一步准备试一下在按钮响应里面new一个线程的对象。  </p>
 <p>这个问题我觉得可能是因为主进程和线程的关系的原因？</p>
 <hr>
-<p>##二、无法访问QObject私有变量<br>这个问题其实是发生在上一个问题之前的，这个问题在之前的我看来其实是蛮无厘头的。光说可能没啥感觉，上个图先。<br><img src="http://ablee.cc/blog/img/qobjectclass.png" alt="qobjectclass.png">  </p>
+<p>##二、无法访问QObject私有变量<br>这个问题其实是发生在上一个问题之前的，这个问题在之前的我看来其实是蛮无厘头的。光说可能没啥感觉，上个图先。<br><img src="http://liyu34.github.io/images/qobjectclass.png" alt="qobjectclass.png">  </p>
 <p>上图就是这次问题的三个主角，<code>DataBlock</code>、<code>CollectionThread</code>、<code>DBManager</code>。  <del>需要交代的是DataBlock这个主角中的主角是一个关系户，他爸爸是QObject（传说中Qt大家庭里面大部分人的爷爷or太爷爷…）</del>  也就是说DataBlock直接继承自QObject。然后编译的时候就一直提示我“无法访问QObject的私有成员”，我还真信了，跑去看了几个DataBlock里面的变量，后来想不可能啊，以我这奇葩的命名方式，怎么可能会那么巧合的重名！于是我百度了。  </p>
 <p>然后我发现是因为QObject不允许copy或者opeartor=，然后我看了看我的代码，果真有地方用了等于号。</p>
 <p>本来是想借用Qt的QObject的管理机制来管理这个DataBlock的，原来这么多限制，  <del>于是就取消了DataBlock和QObject的父子关系</del>，  于是就不让DataBlock继承QObject了，也不用Q_OBJECT宏了。这样就解决了。  </p>
@@ -129,19 +129,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/10/09/RTU通信协议（翻译）/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          QtNote:QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题
+          NARTU通信协议（翻译）
         
       </div>
     </a>
   
   
-    <a href="/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/10/09/GBCMInstruction/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">QtNote:Qt5.6缺少QODBC驱动</div>
+      <div class="article-nav-title">Gitblog&amp;CuteMarkED快速添加博文前缀</div>
     </a>
   
 </nav>
@@ -178,15 +178,15 @@
       <ul>
         
           <li>
-            <a href="/2016/10/09/Hexo建站/">Hexo建站</a>
+            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
           </li>
         
           <li>
@@ -194,7 +194,7 @@
           </li>
         
           <li>
-            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+            <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
           </li>
         
       </ul>

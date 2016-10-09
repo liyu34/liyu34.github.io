@@ -65,9 +65,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Multiple Qt Dll Project in one Solution" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Git发布博文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/" class="article-date">
+    <a href="/2016/10/09/Git发布博文/" class="article-date">
   <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Multiple Qt Dll Project in one Solution/">用VS组建一个Qt多工程的解决方案来进行软件开发</a>
+      <a class="article-title" href="/2016/10/09/Git发布博文/">使用Git来发布博文</a>
     </h1>
   
 
@@ -87,27 +87,113 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一直在各种场合看到真正的Visual Studio软件工程项目，无一不是多工程协同工作的，或者说多模块合作编程，不同的模块分为不同的子工程生成DLL，这样更新子工程的时候只需要更新DLL即可，无需重新交付用户新的版本，这样听起来就很有吸引力，这才是真正的软件工程师该干的事情，我终于得到机会亲自尝试一把了，这让我在软件工程师的道路上走了一大步。  </p>
-<p>当我把架构设计初稿用Atash UML完成之后，就准备着手实际新建一个这样的VS工程了，这期间遇到了不少问题，有一些也是很有意义的问题，是启发思维的问题，于是记录一下。那么首先说一下重构的软件架构，典型的MVC式的结构。下面就是简单的结构图。  </p>
-<p><img src="http://ablee.cc/blog/img/mps1.png" alt="Multiple Project in One Solution">  </p>
-<p>这个系统结构简图忽略了项目特有的一些特征。可以看到主要有三层，底层是<code>Database</code>,<code>SystemIO</code>,<code>SystemTCP</code>三个，其中SystemTCP是SystemIO的一部分，再往上是Controller，在上面就是负责显示的子工程SystemView，除了SystemView是生成可执行文件以外，其他子工程都是生成DLL，他们按照箭头逆方向依赖，SystemView依赖于Controller，也就是说说SystemView要调用Controller的DLL，其余部分相类似。  </p>
-<p>那么我们就可以到Visual Studio里面新建工程了，新建五个工程（当然要先新建一个工程，然后再工程的解决方案中添加新的工程），然后VS也提供了文件夹功能，你可以使用解决方案中的文件夹让整个解决方案看起来符合逻辑结构。  </p>
-<p>新建完工程之后就需要让VS知道他们之间的关系，首先是项目依赖关系，也就是编译顺序，这个是在解决方案的属性中设置的（右键解决方案，选择属性，然后在<strong>通用属性</strong>中找到第二个<strong>项目依赖</strong>，按照实际的依赖关系选择即可，比如Controller依赖Database和SystemIO，SystemIO依赖SystemTCP这样）。这样设置完之后可以编译下试试，可以发现编译顺序就是按照设定的顺序来的。  </p>
-<p>当然，这还没完，这样只是设置了编译顺序，实际上各个项目之间半毛钱关系都没有，需要在每个工程里面添加它依赖的工程的<strong>引用目录</strong>、<strong>库目录</strong>、<strong>附加依赖项</strong>，这个可以参照我之前的那篇博文<a href="http://ablee.cc/blog/%25E8%25B0%2583%25E8%25AF%2595%25E9%2593%25BE%25E6%258E%25A5%25E5%25BA%2593%25E5%25B7%25A5%25E7%25A8%258B.html" target="_blank" rel="external">《如何调试一个链接库工程工程》</a>。但是那篇博客里面只是说了要添加这些， 但是怎么添加路径这个事情其实是有大学问的。  </p>
-<hr>
-<p>假设你把绝对路径作为参数添加进去之后，实际使用起来没有任何问题，但是问题就是，你从<code>Debug</code>换到<code>Release</code>的时候，就会发现<strong>库目录</strong>这个东西不对了，因为之前添加的是调试DLL的目录，所以肯定就不行了。这种问题其实其他程序员前辈们早就考虑好了，要知道程序员可能是世界上最懒的工种了，解决办法就是路径<code>Macro</code>，当你添加的时候你会在界面上发现有一个Macro按钮，点开你就会发现所有的路径宏。如下图：  </p>
-<p><img src="http://ablee.cc/blog/img/mps2.png" alt="Direction Macros">  </p>
-<p>另外附上几个常用的路径宏：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$(SolutionDir)是指解决方案目录，</div><div class="line">$(ProjectDir)是指工程目录，</div><div class="line">$(IntDir)指的是当前配置环境下的库目录地址。</div><div class="line">```  </div><div class="line"></div><div class="line">---</div><div class="line">Qt动态链接库工程要在所有（想要编译到dll）的类中加上一个宏指令`$PROJECTNAME_EXPORT`，这个宏可以在工程中的`$projectname_global.h`文件中发现，`$`符号表示这是个变量，加在如下的位置：</div></pre></td></tr></table></figure>
-<p>class $PROJECTNAME_EXPORT ClassName<br>{<br>public:<br>    ClassName();<br>    ~ClassName();<br>};<br>```  </p>
-<p>否则会出现连接错误。  </p>
-<p>如果不加这个可以把动态链接库改成静态链接库也可以，但是加上这个之后就不能改静态链接库了。  </p>
-<p><strong>还有非常重要的一点就是父工程需要包括所有的子工程的引用目录和Qt Project Settings，比如一个子工程用到了SQL，那么所有的父工程都要包含SQL，否则可能出现打不开头文件的连接错误。</strong></p>
+        <p>##使用Git发布博文<br>其实之前也尝试过使用Git发布博文，但是totally失败了，上次方法很可笑，这次用git的hook工具。<br>首先在服务器上安装git，这个就不说了。安装好git之后需要在服务器上面给git分配一个用户<code>adduser git</code>并给它一个密码。<br>切换到git用户之后创建一个git远程代码仓库（myblog.git），然后再去博文目录创建git仓库。（在这一步我遇到了问题……权限问题，最后无奈的我把blog目录所有者改为了git）在博文目录添加myblog.git作为远程仓库。<br>然后去myblog.git的目录，进入hooks目录之后新建post-receive脚本文件，这个文件会在每次接收到客户端push之后执行，其余hook用法可以看<a href="http://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">这里</a><br>下面是脚本文件的内容，保存好之后还得给它+x<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="built_in">unset</span> GIT_DIR</div><div class="line">B<span class="built_in">log</span>Path=/data/vhost/liyu34.xyz/blog</div><div class="line"></div><div class="line"><span class="built_in">cd</span> <span class="variable">$BlogPath</span></div><div class="line">git add . -A &amp;&amp; git stash</div><div class="line">git pull orig master</div><div class="line">cp -r conf.yaml ../conf.yaml</div><div class="line">rm -rf ../app/cache/*</div><div class="line">```  </div><div class="line">这样钩子就设定好了，接下来得把网站服务器上的git搭建为服务器git，</div><div class="line">参照[这里](https://ruby-china.org/topics/5040)（我就是偷懒了……）  </div><div class="line"></div><div class="line">**然后vps的ssh端口变了怎么办，也请参照[这里](http://zengrong.net/post/1544.htm)。**  </div><div class="line"></div><div class="line">权限问题？刚刚我遇到了一个问题就是我按照之前的办法来写了post-receive脚本，就是无法执行，后来发现是权限问题，我把blog目录的权限设为765之后git就不能pull了，暂时还不清楚是什么原因。  </div><div class="line">权限问题真混乱，缓存目录下面的东西是apache用户的,我把cache目录设为777之后apache用户产生的目录还是755的，git无法去操作那些目录。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2015.10.21补充</span></div><div class="line">经过今天的事情我充分认识到我的Linux水平就跟海平面一样。。。稍稍高一点的东西就不懂了……  </div><div class="line">之前我每次在本地提交的时候还需要输入登陆密码，作为一个合格程序员（就是懒），我觉得我得做点什么，比如ssh什么的。</div><div class="line">然后我就把ssh的key传到了服务器上，然后……就不用输密码了。。。由于我的Linux水平低下，所以我并不准备说太多。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2016年3月3日补充</span></div><div class="line">如果是SCP命令想要使用除了22以外的端口的话，需要加上端口参数如下：</div></pre></td></tr></table></figure></p>
+<p>SCP -P port_number user@serviceip:floder<br>```  </p>
+<p>也必须在blog目录下面初始化git目录。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Multiple Qt Dll Project in one Solution/" data-id="ciu2osn2x00088cygjx94g8zf" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/Git发布博文/" data-id="ciu2osn2l00058cygyw1dsxwo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Gitblog升级记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Gitblog升级记录/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Gitblog升级记录/">Gitblog升级记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天晚上Gitblog又发布新版本了，于是又是一次更新换代的时间，我第一时间在我的VPS上更新了Gitblog2.2，期间还做了些小改动。Gitblog版本的更新细则请参见<a href="https://github.com/jockchou/gitblog/releases" target="_blank" rel="external">这里</a>。</p>
+<p>那么每次更新Gitblog版本的时候都要注意不要把博文和自己的配置给弄丢，我之前是把所有的博文放到了Dropbox中，所以这次我直接把更新包里面的东西全部丢进了我的站点目录，然后暂时停掉Dropbox服务，把Dropbox自动更新目录重新指向正确的目录就OK啦！这时候博客已经可以打开了。</p>
+<p>但是由于这时候我忘记了把配置文件放进去，所以网站有点奇奇怪怪的，我不得不打开WinSCP把配置文件拷贝进去，这样倒是可以，不过每当我想要更改什么配置的时候还得打开WinSCP什么的，好麻烦。所以我就把配置文件放到了Dropbox里面同时备份，这样配置文件就会出现在blog/文件夹下，那么我在网站根目录下做一个配置文件的软连接即可。</p>
+<p>我也尝试过硬链接，但是我在本地改了配置文件之后只有blog文件夹里面的配置文件发生了变化，但是根目录下的硬连接文件并没有改变，可能是因为Dropbox在同步的时候把旧文件内容和新内容加在一起生成了一个新文件，然后旧文件依旧在原处作为备份，硬链接依旧指向原来的地址，所以并没有发生变化。</p>
+<p>所以现在我的所有配置和博文都在Dropbox里面了，下次更新Gitblog只需要更新一下配置文件的软连接就行了。</p>
+<ol>
+<li>停止Dropbox服务<code>killall dropbox</code></li>
+<li>把网站根目录下的blog文件夹拷贝到别处<code>cp -Rf blog/* ../blog/</code></li>
+<li>解压Gitblog<code>tar -xvzf v2.2</code></li>
+<li>把解压目录下的blog文件夹删除</li>
+<li>把解压目录下所有的东西拷贝到网站根目录</li>
+<li>将blog文件夹拷贝回来</li>
+<li>重新建立配置文件的软连接<code>ln -s blog/conf.yaml conf.yaml</code></li>
+<li>启动Dropbox服务<code>~/.dropbox-dist/dropboxd &amp;</code>  </li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/Gitblog升级记录/" data-id="ciu2osn2g00038cygv38br5j6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_of_file_event" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_of_file_event/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_of_file_event/">QtNote:QTextEdit、QEvent和QFile</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>今天在给CuteMarkEd添加gitblog博文前缀功能的时候遇到了不少问题，有的是老问题，有的是新问题，所以既温故又知新了，为了不再忘记，所以得记录。</p>
+<hr>
+<p>最常用又最常忘的文件操作：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function">QFile <span class="title">file</span><span class="params">(<span class="string">"categories.txt"</span>)</span></span>;</div><div class="line"><span class="keyword">if</span> (!file.open(QIODevice::ReadWrite | QIODevice::Text))  </div><div class="line">&#123;</div><div class="line">    QMessageBox::information(<span class="literal">NULL</span>,<span class="string">"Error!"</span>,<span class="string">"Can't open the file!"</span>);</div><div class="line">&#125;</div><div class="line"><span class="function">QTextStream <span class="title">write</span><span class="params">(&amp;file)</span></span>;</div><div class="line">file.close();</div></pre></td></tr></table></figure></p>
+<p>有一点需要记住，可以通过<code>QIODevice::Append</code>来使的文件指针指向文件末尾，这样直接可以往文件末尾添加内容。另外如果是有在指定位置写入东西的话必须要开放Read的权限，不能<code>WriteOnly</code>。</p>
+<hr>
+<p>继承QTextEdit来实现按下Tab转移焦点功能。因为默认的TextEdit默认是按下Tab输入一个制表符，非常不适合使用习惯，所以我重写了<code>MyTextEdit</code>类来支持Tab键转移焦点。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> MyTextEdit : <span class="keyword">public</span> QTextEdit</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    MyTextEdit(QWidget *parent=<span class="number">0</span>);</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetNext</span><span class="params">(MyTextEdit *n)</span></span>&#123;next = n;&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">event</span><span class="params">(QEvent *e)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    MyTextEdit *next;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这里还有一个很重要的点，是一个我早就想知道的点，那就是Event事件。为了转移焦点，我试过在编辑框的父窗口类里<code>setFoucus</code>但是调用这个函数的slot无法响应在<code>MyTextEdit</code>里面发出的信号，由于时间有限我也没有去深究哪里的原因。(<del>~可能只是因为函数名写错了？</del>~)既然这种方法不可行那我就直接在他们之间相互转换，可以看到上面的类体里面有一个<code>MyTextEdit *next</code>这个就是指向按下tab键之后跳转的那个编辑框。这里的重点在重写的<code>bool event(QEvent *e)</code>下面是函数实现。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> MyTextEdit::event(QEvent *e)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (e-&gt;type() == QEvent::KeyPress)</div><div class="line">    &#123;</div><div class="line">        QKeyEvent *keyEvent = <span class="keyword">static_cast</span>&lt;QKeyEvent *&gt;(e);</div><div class="line">        <span class="keyword">if</span> (keyEvent-&gt;key() == Qt::Key_Tab)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">// 处理Tab鍵</span></div><div class="line">            <span class="keyword">if</span>(next!=<span class="literal">NULL</span>)</div><div class="line">                next-&gt;setFocus();</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> QWidget::event(e);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个事件体系很强大，假如之前我做StandardSeach的时候知道这个体系的话可能就会做的更好了。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">closeEvent(QCloseEvent * event)</div></pre></td></tr></table></figure></p>
+<p>很多时候我只是忘记流程了，只要有一个小提醒就能想起来，比如上面那个就是窗口关闭的时候会出现的<code>closeEvent</code>，有了这个提醒就可以Google了，所以这个写的并不详细。</p>
+<hr>
+<p><strong>不过还是得练习写作啊。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_of_file_event/" data-id="ciu2osn3j000h8cyg1n8enl7m" class="article-share-link">Share</a>
       
       
     </footer>
@@ -167,82 +253,6 @@
     </div>
     <footer class="article-footer">
       <a data-url="http://ablee.cc/2016/10/09/Oracle连接/" data-id="ciu2osn3000098cyghv5e2h1h" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-QtNote2015.09.19" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/QtNote2015.09.19/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote2015.09.19/">QtNote:QTcpSocket、Qt位运算、QTableView、QLineEdit焦点问题</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>开门见山，这里是QtNote。<br>注意，本文中的所有代码均取自我写的ModBus程序，阅读时请适当忽略上下文。</p>
-<hr>
-<p>##QTcpSocket<br>由于项目需要，我需要使用ModBus TCP协议与RTU通信，所以需要使用套接字。<br>套接字的使用现在只是实现了特定的功能，容错性什么的暂时没有考虑。</p>
-<p>Socket编程的步骤就是<strong>连接</strong>-》<strong>发送消息</strong>-》<strong>接收消息</strong>（出错处理）。<br>QT对Socket进行了封装，封装为了QTcpSocket类，调用这个类的<code>connectToHost</code>函数即可对目标进行一次连接尝试。（如果连接不上会返回连接错误）<br>我写了一个自己的MyTcp，在这个类里面有一个QTcpSocket变量。<br>通过Qt的信号与槽的机制，将消息发送成功与接收消息绑定在一起。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">connect(&amp;tcpSocket, SIGNAL(readyRead()), this, SLOT(ReadData()));</div><div class="line">```  </div><div class="line">通过学习我知道了TCP协议氛围**块**和**行**，ModBus是面向行的，一行内的信息是使用QByteArray编辑的（参照发送消息的函数）。</div><div class="line">发送消息使用如下函数</div></pre></td></tr></table></figure></p>
-<p>void MyTCP::SendRequest(qint8 slaveaddress, qint8 functioncode, qint16 startaddress, qint16 datanumber)<br>{<br>    QByteArray line;<br>    QDataStream out(&amp;line, QIODevice::WriteOnly);<br>    out.setVersion(QDataStream::Qt_DefaultCompiledVersion);<br>    out &lt;&lt; qint8(00) &lt;&lt; qint8(00) &lt;&lt; qint8(00) &lt;&lt; qint8(00);//protocal identifier 4byte<br>    qint16 messagelen = sizeof(slaveaddress) + sizeof(functioncode) + sizeof(startaddress) + sizeof(datanumber);<br>    out &lt;&lt; messagelen;//High 8-bit ModBus &amp; Low 8-bit message length<br>    out &lt;&lt; slaveaddress;//slave address<br>    out &lt;&lt; functioncode;//function code<br>    out &lt;&lt; startaddress;//High 8-bit &amp; Low 8-bit of start address<br>    out &lt;&lt; datanumber;//High 8-bit &amp; Low 8-bit of data number<br>    tcpSocket.write(line);</p>
-<p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">注，这里都是针对ModBus发送的信息。可以参照我翻译的RTU文档（还未翻译完）。</div><div class="line">接收消息如下。</div></pre></td></tr></table></figure></p>
-<p>void MyTCP::ReadData()<br>{<br>    QDataStream in(&amp;tcpSocket);<br>    in.setVersion(QDataStream::Qt_DefaultCompiledVersion);<br>    qint64 availabelnum = tcpSocket.bytesAvailable();<br>    QByteArray res = tcpSocket.readAll();<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">##Qt位运算</div><div class="line">由于Modbus返回的信息都是特定格式的字节数据，有的数据会分为高低两块，所以需要位运算来将数据合并。其实这里叫C++位运算更合适一点。下面是位运算操作符。</div></pre></td></tr></table></figure></p>
-<p>“&amp;”与<br>“|”或<br>“&gt;&gt;”右移<br>“&lt;&lt;”左移</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">下面是一个高位与低位合并的函数：</div></pre></td></tr></table></figure>
-<p>qint16 MyTCP::Combine(qint8 high, qint8 low)<br>{<br>    return (high &lt;&lt; 8 | low);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">##QTableView</div><div class="line">注：本部分摘自网络，因为ModBus只用到了其中一部分，不全。</div><div class="line">添加表头：</div></pre></td></tr></table></figure></p>
-<p>QStandardItemModel  *model = new QStandardItemModel();<br>model-&gt;setColumnCount(2);<br>model-&gt;setHeaderData(0,Qt::Horizontal,QString::fromLocal8Bit(“卡号”));<br>model-&gt;setHeaderData(1,Qt::Horizontal,QString::fromLocal8Bit(“姓名”));<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">设置表格属性：</div></pre></td></tr></table></figure></p>
-<p>ui-&gt;tableView-&gt;setModel(model);<br>//表头信息显示居左<br>ui-&gt;tableView-&gt;horizontalHeader()-&gt;setDefaultAlignment(Qt::AlignLeft);<br>//设置列宽不可变<br>ui-&gt;tableView-&gt;horizontalHeader()-&gt;setResizeMode(0,QHeaderView::Fixed);<br>ui-&gt;tableView-&gt;horizontalHeader()-&gt;setResizeMode(1,QHeaderView::Fixed);<br>ui-&gt;tableView-&gt;setColumnWidth(0,101);<br>ui-&gt;tableView-&gt;setColumnWidth(1,102);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">注：在进行表格设置时必须是“ui-&gt;tableView-&gt;setModel(model);”在前，属性具体设置在后，</div><div class="line"></div><div class="line">反之则设置不会生效。如上述代码所示。</div><div class="line"></div><div class="line">添加行（添加三行一样的信息）：</div></pre></td></tr></table></figure></p>
-<p> for(int i = 0; i &lt; 3; i++)<br> {<br>     model-&gt;setItem(i,0,new QStandardItem(“2009441676”));<br>        //设置字符颜色<br>     model-&gt;item(i,0)-&gt;setForeground(QBrush(QColor(255, 0, 0)));<br>        //设置字符位置<br>     model-&gt;item(i,0)-&gt;setTextAlignment(Qt::AlignCenter);<br>     model-&gt;setItem(i,1,new QStandardItem(QString::fromLocal8Bit(“哈哈”)));<br> }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">删除行：</div></pre></td></tr></table></figure></p>
-<p>//x是指定删除哪一行<br>model-&gt;removeRow(x);<br>//删除所有行<br>model-&gt;removeRows(0,model-&gt;rowCount());<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">##QLineEdit焦点问题</div><div class="line">一般如果能够使用Tab键来更换焦点的话会很方便，我发现QLineEdit自带了Tab键的响应，或者说是MainWindow，具体机制没有研究。</div><div class="line">我进行了布局之后Tab键顺序混乱了，然后我发现了问题在ui_modbus.h文件里面，先上代码。</div></pre></td></tr></table></figure></p>
-<pre><code>SlaveAddress = new QLineEdit(centralWidget);
-SlaveAddress-&gt;setObjectName(QStringLiteral(&quot;SlaveAddress&quot;));
-SlaveAddress-&gt;setFocusPolicy(Qt::StrongFocus);
-
-gridLayout-&gt;addWidget(SlaveAddress, 0, 1, 1, 1);
-
-FuntionCode = new QLineEdit(centralWidget);
-FuntionCode-&gt;setObjectName(QStringLiteral(&quot;FunctionCode&quot;));
-
-gridLayout-&gt;addWidget(FuntionCode, 1, 1, 1, 1);
-
-StartAddress = new QLineEdit(centralWidget);
-StartAddress-&gt;setObjectName(QStringLiteral(&quot;StartAddress&quot;));
-
-gridLayout-&gt;addWidget(StartAddress, 2, 1, 1, 1);
-
-DataNumber = new QLineEdit(centralWidget);
-DataNumber-&gt;setObjectName(QStringLiteral(&quot;DataNumber&quot;));
-
-gridLayout-&gt;addWidget(DataNumber, 3, 1, 1, 1);
-
-OKButton = new QPushButton(centralWidget);
-OKButton-&gt;setObjectName(QStringLiteral(&quot;OKButton&quot;));
-
-gridLayout-&gt;addWidget(OKButton, 4, 1, 1, 1);
-</code></pre><p>```<br>添加的顺序就是光标移动的顺序。即SlaveAddress-&gt;FunctionCode-&gt;StartAddress-&gt;DataNumber-&gt;OKButton。其实这并不是QLineEdit独有的，QPushButton也可以。然后我还发现了选中OKButton按钮之后按Enter键没有反应，按Space倒是响应了。  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote2015.09.19/" data-id="ciu2osn33000a8cygubm3pu4d" class="article-share-link">Share</a>
       
       
     </footer>
@@ -317,84 +327,6 @@ gridLayout-&gt;addWidget(OKButton, 4, 1, 1, 1);
 
 
   
-    <article id="post-QtNote_QTableView_Button" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/QtNote_QTableView_Button/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_QTableView_Button/">QtNote:在QTableView里面添加按钮&amp;QMessageBox按钮</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>首先，我要说明的是，经过我的研究发现，这个事情根本没有我之前看到的博客那么麻烦，原地址如下:<a href="http://www.cnblogs.com/li-peng/p/3961843.html" target="_blank" rel="external">QTableView 添加按钮</a>。这个博文里面有三个类，ButtonDelegate/TableModel/TableView。我发现其实只需要ButtonDelegate一个类即可。   </p>
-<p>废话不多说，先上代码为敬。<br><code>buttondelegate.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#ifndef BUTTONDELEGATE_H</div><div class="line">#define BUTTONDELEGATE_H</div><div class="line"></div><div class="line">#include &lt;QItemDelegate&gt;</div><div class="line"></div><div class="line">class ButtonDelegate : public QItemDelegate</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line">public:</div><div class="line">    explicit ButtonDelegate(QString t, QObject *parent = 0);</div><div class="line"></div><div class="line">    void paint(QPainter *painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const;</div><div class="line">    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index);</div><div class="line"></div><div class="line">signals:</div><div class="line">    void Pressed(QString ID);</div><div class="line"></div><div class="line">private:</div><div class="line">    QMap&lt;QModelIndex, QStyleOptionButton*&gt; m_btns;</div><div class="line">    QString text;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // BUTTONDELEGATE_H</div><div class="line">```  </div><div class="line"></div><div class="line">`buttondelegate.cpp`</div></pre></td></tr></table></figure></p>
-<p>#include “buttondelegate.h”</p>
-<p>#include <qapplication></qapplication></p>
-<p>#include <qmouseevent></qmouseevent></p>
-<p>#include <qdialog></qdialog></p>
-<p>#include <qpainter></qpainter></p>
-<p>#include <qstyleoption></qstyleoption></p>
-<p>#include <qdesktopwidget></qdesktopwidget></p>
-<p>ButtonDelegate::ButtonDelegate(QString t, QObject *parent) :<br>    QItemDelegate(parent)<br>{<br>    text = t;<br>}</p>
-<p>void ButtonDelegate::paint(QPainter <em>painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const<br>{<br>    QStyleOptionButton</em> button = m_btns.value(index);<br>    //if (!button) {//如果有这个if判断的话，当窗口缩小到出现滑块的时候会有异常，因为判断已经有这个按钮了，就不再重画了<br>        button = new QStyleOptionButton();<br>        button-&gt;rect = option.rect.adjusted(3, 3, -3, -3);<br>        button-&gt;text = text;<br>        button-&gt;state |= QStyle::State_Enabled;</p>
-<pre><code>    (const_cast&lt;ButtonDelegate *&gt;(this))-&gt;m_btns.insert(index, button);
-//}
-painter-&gt;save();
-
-if (option.state &amp; QStyle::State_Selected) {
-    painter-&gt;fillRect(option.rect, option.palette.highlight());
-
-}
-painter-&gt;restore();
-QApplication::style()-&gt;drawControl(QStyle::CE_PushButton, button, painter);
-</code></pre><p>}</p>
-<p>bool ButtonDelegate::editorEvent(QEvent <em>event, QAbstractItemModel </em>model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index)<br>{<br>    if (event-&gt;type() == QEvent::MouseButtonPress) {</p>
-<pre><code>    QMouseEvent* e = (QMouseEvent*)event;
-
-    if (option.rect.adjusted(4, 4, -4, -4).contains(e-&gt;x(), e-&gt;y()) &amp;&amp; m_btns.contains(index)) {
-        m_btns.value(index)-&gt;state |= QStyle::State_Sunken;
-    }
-}
-if (event-&gt;type() == QEvent::MouseButtonRelease) {
-    QMouseEvent* e = (QMouseEvent*)event;
-    emit Pressed(index.data().toString());
-}
-return true;
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">(⊙o⊙)…恩，没错，就是直接复制的上面那个博客的源码。不过我发现不需要去定义三个类，并把QTableView提升为“TableView”，只需要在QTableView初始化的时候（我说的是InitTableView()这个我写的函数）定义一个ButtonDelegate类型的指针，然后把你想要实现的功能给绑定到按钮被按到时候发出的消息上即可。以下为部分关键代码。</div></pre></td></tr></table></figure></p>
-<pre><code>ButtonDelegate *m_button = new ButtonDelegate();
-connect(m_button, SIGNAL(DeleteRTU_Signal(QString)), this, SLOT(DeleteRTU(QString)));
-ui.tableView-&gt;setItemDelegateForColumn(3, m_button);
-emit model-&gt;layoutChanged();
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">经过我的初步研究，我发现，这个问题的关键就是ButtonDelegate里面那两个函数，`paint`来负责在制定的位置画上按钮，`editorEvent`负责发出按钮响应信号（和把按钮换成被按的状态）。这个`editorEvent`实际上都不是按钮响应事件，而是编辑事件，因为这个ButtonDelegate实际上继承的是QItemDelegate。  </div><div class="line"></div><div class="line">---</div><div class="line">QMessageBox可以用来做一个简单的再次确认的对话框，上代码为敬：</div></pre></td></tr></table></figure>
-<p>int confirm = QMessageBox::information(this, “Delete”, “Please confirm!”, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);<br>    if (confirm == QMessageBox::No) return;<br>```  </p>
-<p>(⊙o⊙)…我觉得我不需要再记录什么内容了，这些代码就足够了。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTableView_Button/" data-id="ciu2osn37000c8cygjci0cbbm" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
 
 
   <nav id="page-nav">
@@ -429,15 +361,15 @@ emit model-&gt;layoutChanged();
       <ul>
         
           <li>
-            <a href="/2016/10/09/Hexo建站/">Hexo建站</a>
+            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
           </li>
         
           <li>
@@ -445,7 +377,7 @@ emit model-&gt;layoutChanged();
           </li>
         
           <li>
-            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+            <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
           </li>
         
       </ul>

@@ -173,9 +173,9 @@ go
 
 
   
-    <article id="post-Win10无声音" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Linux-MySql" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/Win10无声音/" class="article-date">
+    <a href="/2016/10/09/Linux-MySql/" class="article-date">
   <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -187,7 +187,7 @@ go
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
+      <a class="article-title" href="/2016/10/09/Linux-MySql/">在Linux服务器上安装MySql并用Qt连接它</a>
     </h1>
   
 
@@ -195,20 +195,18 @@ go
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>昨天帮刘硕修理了她的笔记本电脑，她的电脑突然就没有声音了，没有摔过也没有下载什么奇怪的东西，就是突然没有声音了。</p>
-<p>像这种离奇的事件也就只有离奇的软件能够作为其原因了，所以我理所当然的想到是不是声卡驱动出了问题，然后我就让她重装了声卡驱动，然而没有什么效果。</p>
-<p>昨天我拿到了她的电脑，然后开始了检查，使用搜狗音乐播放音乐，进度条始终无法前进，然后换网易云音乐，也是一样的情况，用网易云音乐下载了一首歌曲然后播放提示我“无法播放请更换输出介质”之类的提示语。看视频只有动画没有声音。</p>
+        <p>因为项目需要，我需要在一个服务器上面安装MySql然后用客户端程序去访问它，之前以为SAE可以用，后来发现，SAE提供的数据库服务只能用于它本地的程序，根本就不能用外网访问。于是我就在我的VPS上安上了MySql。  </p>
+<p>在CentOs上面安装MySql挺简单的，可以用一个命令完成安装。<code>yum groupinstall &quot;mysql&quot;</code>安装上之后  <code>service mysqld start</code><br>然后就可以进入<code>mysql</code>的命令行模式了。  </p>
 <hr>
-<p>了解了这个问题的所有表征之后我向百度提了一个问题：<br><strong>Win10无法播放所有音频文件</strong><br>然后我找到了这个连接：<a href="http://zhidao.baidu.com/question/426103597708091812.html" target="_blank" rel="external">win10无法播放音乐文件</a></p>
-<hr>
-<p>右键点击那个小喇叭，选择“播放设备”，选中“扬声器”，点击“属性”，进入“高级”之后选择不同的Hz。<br><img src="http://ablee.cc/blog/img/sound.JPG" alt="sound"><br>就是上图的界面，我发现16位的高于48000Hz的选项是没有声音的，24位的高于44100Hz的选项是没有声音的。所以我想应该是存储位不足的原因吧。声卡内存？</p>
-<hr>
-<p>这次能够免于重装系统，我还是很开心的~</p>
+<p>然后用Qt连接数据库需要知道mysql的端口号和一个账户，所以需要新建一个账户，新建账户的命令如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GRANT USAGE ON *数据库* TO &apos;用户名&apos;@&apos;主机&apos; IDENTIFIED BY &apos;密码&apos;;</div><div class="line">```  </div><div class="line"></div><div class="line">USAGE指的就是权限范围，范围就是增删查改（insert,delete,select,update），可以都写上，也可以写`all privileges`那么下面是一个例子：</div></pre></td></tr></table></figure>
+<p>grant select,insert,update,delete on <em>.</em> to ‘sa’ identified by “sa”;<br>```<br>这个就是说新建一个用户名和密码都是sa的账户，在所有数据库上赋予所有权限。  </p>
+<p>新建好了账户之后我们需要知道数据库的服务端口，可以用<code>show variables;</code>来查看mysql的所有属性，端口号是report_port。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Win10无声音/" data-id="ciu2osn3t000m8cyg54yeo18f" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/Linux-MySql/" data-id="ciu2osn2s00078cyg9vddarq2" class="article-share-link">Share</a>
       
       
     </footer>
@@ -275,9 +273,9 @@ go
 
 
   
-    <article id="post-friends" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-QtNote_QTableView_Button" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/friends/" class="article-date">
+    <a href="/2016/10/09/QtNote_QTableView_Button/" class="article-date">
   <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -289,7 +287,7 @@ go
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/friends/">友情链接</a>
+      <a class="article-title" href="/2016/10/09/QtNote_QTableView_Button/">QtNote:在QTableView里面添加按钮&amp;QMessageBox按钮</a>
     </h1>
   
 
@@ -297,16 +295,53 @@ go
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#友链见下方：  </p>
-<hr>
-<p>##<a href="http://www.gitblog.cn/index.html" target="_blank" rel="external">GitBlog官网</a></p>
-<p>##<a href="http://www.lihuanyu.com" target="_blank" rel="external">环宇博客</a></p>
-<p>虽然我很想再写上几个，但是现在就只能写这些了，希望以后能够多起来。</p>
+        <p>首先，我要说明的是，经过我的研究发现，这个事情根本没有我之前看到的博客那么麻烦，原地址如下:<a href="http://www.cnblogs.com/li-peng/p/3961843.html" target="_blank" rel="external">QTableView 添加按钮</a>。这个博文里面有三个类，ButtonDelegate/TableModel/TableView。我发现其实只需要ButtonDelegate一个类即可。   </p>
+<p>废话不多说，先上代码为敬。<br><code>buttondelegate.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#ifndef BUTTONDELEGATE_H</div><div class="line">#define BUTTONDELEGATE_H</div><div class="line"></div><div class="line">#include &lt;QItemDelegate&gt;</div><div class="line"></div><div class="line">class ButtonDelegate : public QItemDelegate</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line">public:</div><div class="line">    explicit ButtonDelegate(QString t, QObject *parent = 0);</div><div class="line"></div><div class="line">    void paint(QPainter *painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const;</div><div class="line">    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index);</div><div class="line"></div><div class="line">signals:</div><div class="line">    void Pressed(QString ID);</div><div class="line"></div><div class="line">private:</div><div class="line">    QMap&lt;QModelIndex, QStyleOptionButton*&gt; m_btns;</div><div class="line">    QString text;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // BUTTONDELEGATE_H</div><div class="line">```  </div><div class="line"></div><div class="line">`buttondelegate.cpp`</div></pre></td></tr></table></figure></p>
+<p>#include “buttondelegate.h”</p>
+<p>#include <qapplication></qapplication></p>
+<p>#include <qmouseevent></qmouseevent></p>
+<p>#include <qdialog></qdialog></p>
+<p>#include <qpainter></qpainter></p>
+<p>#include <qstyleoption></qstyleoption></p>
+<p>#include <qdesktopwidget></qdesktopwidget></p>
+<p>ButtonDelegate::ButtonDelegate(QString t, QObject *parent) :<br>    QItemDelegate(parent)<br>{<br>    text = t;<br>}</p>
+<p>void ButtonDelegate::paint(QPainter <em>painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const<br>{<br>    QStyleOptionButton</em> button = m_btns.value(index);<br>    //if (!button) {//如果有这个if判断的话，当窗口缩小到出现滑块的时候会有异常，因为判断已经有这个按钮了，就不再重画了<br>        button = new QStyleOptionButton();<br>        button-&gt;rect = option.rect.adjusted(3, 3, -3, -3);<br>        button-&gt;text = text;<br>        button-&gt;state |= QStyle::State_Enabled;</p>
+<pre><code>    (const_cast&lt;ButtonDelegate *&gt;(this))-&gt;m_btns.insert(index, button);
+//}
+painter-&gt;save();
+
+if (option.state &amp; QStyle::State_Selected) {
+    painter-&gt;fillRect(option.rect, option.palette.highlight());
+
+}
+painter-&gt;restore();
+QApplication::style()-&gt;drawControl(QStyle::CE_PushButton, button, painter);
+</code></pre><p>}</p>
+<p>bool ButtonDelegate::editorEvent(QEvent <em>event, QAbstractItemModel </em>model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index)<br>{<br>    if (event-&gt;type() == QEvent::MouseButtonPress) {</p>
+<pre><code>    QMouseEvent* e = (QMouseEvent*)event;
+
+    if (option.rect.adjusted(4, 4, -4, -4).contains(e-&gt;x(), e-&gt;y()) &amp;&amp; m_btns.contains(index)) {
+        m_btns.value(index)-&gt;state |= QStyle::State_Sunken;
+    }
+}
+if (event-&gt;type() == QEvent::MouseButtonRelease) {
+    QMouseEvent* e = (QMouseEvent*)event;
+    emit Pressed(index.data().toString());
+}
+return true;
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">(⊙o⊙)…恩，没错，就是直接复制的上面那个博客的源码。不过我发现不需要去定义三个类，并把QTableView提升为“TableView”，只需要在QTableView初始化的时候（我说的是InitTableView()这个我写的函数）定义一个ButtonDelegate类型的指针，然后把你想要实现的功能给绑定到按钮被按到时候发出的消息上即可。以下为部分关键代码。</div></pre></td></tr></table></figure></p>
+<pre><code>ButtonDelegate *m_button = new ButtonDelegate();
+connect(m_button, SIGNAL(DeleteRTU_Signal(QString)), this, SLOT(DeleteRTU(QString)));
+ui.tableView-&gt;setItemDelegateForColumn(3, m_button);
+emit model-&gt;layoutChanged();
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">经过我的初步研究，我发现，这个问题的关键就是ButtonDelegate里面那两个函数，`paint`来负责在制定的位置画上按钮，`editorEvent`负责发出按钮响应信号（和把按钮换成被按的状态）。这个`editorEvent`实际上都不是按钮响应事件，而是编辑事件，因为这个ButtonDelegate实际上继承的是QItemDelegate。  </div><div class="line"></div><div class="line">---</div><div class="line">QMessageBox可以用来做一个简单的再次确认的对话框，上代码为敬：</div></pre></td></tr></table></figure>
+<p>int confirm = QMessageBox::information(this, “Delete”, “Please confirm!”, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);<br>    if (confirm == QMessageBox::No) return;<br>```  </p>
+<p>(⊙o⊙)…我觉得我不需要再记录什么内容了，这些代码就足够了。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/friends/" data-id="ciu2osn3v000o8cyghtbp94je" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTableView_Button/" data-id="ciu2osn37000c8cygjci0cbbm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -350,15 +385,15 @@ go
       <ul>
         
           <li>
-            <a href="/2016/10/09/Hexo建站/">Hexo建站</a>
+            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
           </li>
         
           <li>
@@ -366,7 +401,7 @@ go
           </li>
         
           <li>
-            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+            <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
           </li>
         
       </ul>

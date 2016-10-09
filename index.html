@@ -65,10 +65,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Hexo建站" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-研究生开学了" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/Hexo建站/" class="article-date">
-  <time datetime="2016-10-09T14:03:00.000Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/研究生开学了/" class="article-date">
+  <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Hexo建站/">Hexo建站</a>
+      <a class="article-title" href="/2016/10/09/研究生开学了/">研究生开学了</a>
     </h1>
   
 
@@ -87,12 +87,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>先挖个坑，站下</p>
+        <p>研究生的生活终于要开始了，不过每次来到新的环境都要耗费很久来拾掇我的小窝来让我生活的舒服一点。经过了两天时间，现在总算是像模像样了。</p>
+<p>最近好像很多讲座的样子，不过我后天下午要去接我女朋友，所以如果冲突的话只能请假了……</p>
+<p>现在媳妇儿大人也已经开学了，接下来就是用三年的努力来换取以后幸福的生活了。我的方向应该是人工智能，研究生阶段的课程我已经选择好了。下面是我的课程列表。  </p>
+<p><img src="http://liyu34.github.io/images/my_courses.png" alt="my_course">  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Hexo建站/" data-id="ciu2pa6rt0000j2ygr24ihgk0" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/研究生开学了/" data-id="ciu2osn4c000w8cyg82ybjbs1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -102,10 +105,10 @@
 
 
   
-    <article id="post-自动检测是否有新博文" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-如何用VS作为Git的合并工具" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/自动检测是否有新博文/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/如何用VS作为Git的合并工具/" class="article-date">
+  <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -116,7 +119,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+      <a class="article-title" href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
     </h1>
   
 
@@ -124,62 +127,74 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前我并没有遇到其他Gitblog使用者遇到的每次发布新博客都要手动删除缓存的问题，原因是我的Gitblog根本无法产生缓存，每次访问都需要解析博客文件，访客少的时候自然没有问题，但是访客多了的话就有很大的隐患了。</p>
-<p>所以我检查了Gitblog无法缓存的原因，发现是文件所有者出了问题，因为nginx服务器和php服务的owner是<strong>apache</strong>，而我之前把整个网站文件的owner改为了root，所以Gitblog无法产生缓存。</p>
-<p>既然发现了问题就好办了，把文件的owner改回来就好了。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown -Rf apache ./*</div></pre></td></tr></table></figure>
-<p>-R参数会让系统递归的检索所有文件夹。</p>
-<p>这时候Gitblog已经可以产生缓存了，但是又有新的问题，缓存的有效期为1个小时，时间有点长，我发布了博文，希望立即能够看到，所以使用了群内大神写的一个简单守护脚本，这个脚本会遍历blog文件夹下面所有的文件，以最后修改时间作为判断标准，如果有更新，就删除cache。下面是文件内容：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"></div><div class="line"># 脚本说明：监控..../blog/文件夹，如果文件夹和内容发生改变(根据时间来判断)，</div><div class="line"># 则自动删除..../app/cache/目录里面的所有内容。请根据实际情况将下面的变量赋值为绝对路径</div><div class="line"></div><div class="line">OLD=&quot;..../tmp/old.txt&quot;</div><div class="line">NEW=&quot;..../tmp/new.txt&quot;</div><div class="line">BLOG=&quot;..../blog/&quot;</div><div class="line">CACHE=&quot;..../app/cache/&quot;</div><div class="line"></div><div class="line">while :; do</div><div class="line">    if [ -e &quot;$OLD&quot; ]; then</div><div class="line">        mv &quot;$OLD&quot; &quot;$NEW&quot;</div><div class="line">        ls -lR &quot;$BLOG&quot; | awk &apos;&#123;print $8&#125;&apos;  &gt; &quot;$OLD&quot;</div><div class="line">        diff &quot;$OLD&quot; &quot;$NEW&quot;</div><div class="line">        if [ $? == 0 ]; then</div><div class="line">            echo &quot;$BLOG&quot; Not changed</div><div class="line">        else</div><div class="line">            echo &quot;$BLOG&quot; Changed</div><div class="line">	        echo Delete files in &quot;$CACHE&quot; </div><div class="line">	        rm -rf &quot;$CACHE&quot;/*</div><div class="line">        fi</div><div class="line">    else</div><div class="line">        ls -lR &quot;$BLOG&quot; | awk &apos;&#123;print $8&#125;&apos;  &gt; &quot;$OLD&quot;</div><div class="line">    fi</div><div class="line">    # 可以通过调整sleep的时间来更改频率,也可以加到crontab里面</div><div class="line">	# crontab -e 添加 */1 * * * * /root/monitor.sh</div><div class="line">    sleep 60</div><div class="line">done</div></pre></td></tr></table></figure>
-<p>这样就好多了。以上脚本由<strong>︻┳═一</strong>大神提供。  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/自动检测是否有新博文/" data-id="ciu2osn4o000y8cyg0eibywhc" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-调试链接库工程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/调试链接库工程/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>近来我突发奇想想要把原来的一个功能发布成一个链接库，但是还需要完善，所以需要对它进行调试，所以我就学会了如何调试一个链接库工程。  </p>
-<p>那么如何才能对一个链接库工程进行调试呢？这个方法的核心思想就是再给它专门建立一个测试工程（突然回想起大四的时候春雷哥一直跟我们说的测试工程，没想到现在我也用上了这个词）。这个测试工程与链接库工程处于同一个解决方案内。  </p>
-<p>当然不是新建一个测试工程就可以直接测试了，如果你直接打开文件写代码会发现无法引用链接库工程的头文件。  </p>
-<p>那是因为还需要在测试工程的属性中添加几个内容。一个是附加引用目录，这个就写链接库工程根目录就行（注意不是解决方案根目录）；第二就是附加库目录，这个要写库文件生成的地方；第三个就是把库文件名字添加到附加依赖项上。  </p>
-<p>这样就好啦，尽情测试吧。  </p>
+        <p>今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。<br>补充：非VS工程不能用……</p>
 <hr>
-<p>以上为Visual Studio 2013环境下。</p>
+<p>要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  </p>
+<p><img src="http://liyu34.github.io/images/git/conflict.png" alt="conflict">  </p>
+<p>怎么制造冲突我就不说了，结果如上图。冲突就位之后我们打开VS的团队界面，如下图。</p>
+<p><img src="http://liyu34.github.io/images/git/teamexplorer.png" alt="team">  </p>
+<p>打开之后，点击一下’Changes’按钮（其实点除了Settings另外那三个都可以），然后就会发现VS提示我们了。  </p>
+<p><img src="http://liyu34.github.io/images/git/teamexplorer2.png" alt="team2">  </p>
+<p>那我们肯定要点’Resolve the conflicts’了，点击之后是这样的：  </p>
+<p><img src="http://liyu34.github.io/images/git/resolveconflicts.png" alt="resolveconflicts">  </p>
+<p>当然点击之后不是直接跟上图一模一样的，因为VS会给你标记出现在有冲突的文件有几个，当然我现在只是人为制造了一个冲突，所以只有一个，点击那个冲突就会展开上图那样的。然后我们点击’Merge’，就会开始合并了。  </p>
+<p><img src="http://liyu34.github.io/images/git/merge.png" alt="merge">  </p>
+<p>这个时候你就可以”为所欲为”了，干完一票之后别忘了’Accept Merge’  </p>
+<p><img src="http://liyu34.github.io/images/git/acceptmerge.png" alt="acceptmerge">  </p>
+<p>那么让我们看看合并之后的样子：  </p>
+<p><img src="http://liyu34.github.io/images/git/mergend.png" alt="mergend">  </p>
+<hr>
+<p>就是这样啦，看起来像是个比较合格的教程了，除了那些大小不一的图片之外……<br>P.S.比较可惜的是Visual Studio提供的原生Git不支持除了微软自己的remote repository之外的其他remote repository。</p>
+<hr>
+<p><strong>非VS工程不能用以上的方法</strong><br><strong>在VS里面提交竟然遇到了换行符被自动改变</strong></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/调试链接库工程/" data-id="ciu2osn4p000z8cygevmu0yyr" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/如何用VS作为Git的合并工具/" data-id="ciu2osn49000v8cygzdcww3j9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-如何清除U盘的分区" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/如何清除U盘的分区/" class="article-date">
+  <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前我把我的新U盘装成了win7的安装U盘，但是我用UltraISO写入硬盘映像的时候选择了高端隐藏，把我的U盘分成了两部分，我发现了在磁盘管理里面无法进行扩展U盘分区等操作，所以我百度了。  </p>
+<p>然后我发现了这个网址<a href="http://jingyan.baidu.com/article/86112f1346ec5227379787df.html" target="_blank" rel="external">怎样为u盘分区</a>。  </p>
+<p>我按照教程做的，成功的清楚了U盘的分区，但是这个教程中有个让我非常疑惑的地方（幸好我成功了），所以来记录下来。  </p>
+<p>教程是这样的，先打开<code>cmd</code>，然后输入<code>diskpart</code>进入分区程序，然后选择你要进行操作的disk，即输入<code>select disk *N*</code>，这个N在教程中是1，然后教程注释说：“写1就是一个u盘，两个就写2，以此类推”，这完全把我弄混了，然后看了看他的后续操作，输入clean，删除U盘所有信息，假如我选中的是我的系统硬盘，那后果很严重（虽然我感觉系统不会让clean在系统盘上执行，但我不想冒险）。  </p>
+<p>所以这个教程的问题就在这了，这个N到底应该是多少，后来我发现这个N就是硬盘管理里面的那个N，你可以打开磁盘管理，然后看看你的U盘是磁盘几。如下图所示：  </p>
+<p><img src="http://liyu34.github.io/images/diskn.png" alt="diskn">  </p>
+<p>知道是磁盘几了之后继续那个教程的操作就行了，<code>clean</code>之后就可以去磁盘管理里面进行新建分区操作了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/如何清除U盘的分区/" data-id="ciu2osn47000u8cygpasfl4pm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -192,7 +207,7 @@
     <article id="post-sqlserver express" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/09/sqlserver express/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+  <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -215,8 +230,8 @@
 <p>闲话不多说，首先说的是我安装的sqlserver express是最简版本，就是说只有一个数据库系统，没有任何管理软件，创建数据库都得用<code>sqlcmd</code>。所以网络上好多使用sqlserver management studio的对我来说就不适用了。但是我发现要想远程访问sqlserver其实并不难，所需要做的事情也不多。（最起码我是这样的）。我也在网络上面找到了一个很简单的版本，在<a href="http://www.veryhuo.com/a/view/180.html" target="_blank" rel="external">这里</a>。  </p>
 <hr>
 <p>##如何配置Sql Server 2014 Express</p>
-<p>###1.配置SQL网络配置<br>在这一步我们需要启用两个服务，第一个是<code>Named Pipes</code>，第二个是<code>TCP/IP</code>。默认是不启用的，右键点击启用即可，它可能会提示你重启之后才会生效什么的，这个重启服务指的就是sqlserver服务，去第一个Sql Server服务里面重启一下那个Sqlserver就行了。下面是启动好的图片。<br><img src="http://ablee.cc/blog/img/sqlserverconfigs.png" alt="sqlserverconfigs.png"><br>可能有的教程还需要你启动什么Sql Server Browser什么的，我发现这个不是必须的，因为我安装的最简版本连安装都没安装。  </p>
-<p>###2.配置TCP/IP属性<br>在这一步我们需要配置刚刚启动的两个服务中的tcp协议。首先我们需要把一个’全部侦听’设置为’否’（这个我是按照教程来的，没有测试设置为’是’的情况），如图：<br><img src="http://ablee.cc/blog/img/sqlservertcpip1.png" alt="sqlservertcpip1.png"><br>这一页就ok了，然后我们需要配置你想远程的那个ip地址的端口等参数，如图：<br><img src="http://ablee.cc/blog/img/sqlservertcpip2.png" alt="sqlservertcpip2.png"><br>要注意画红线的部分，要把这个设置为启动才可以。我之前并没有发现刚刚那个<a href="http://www.veryhuo.com/a/view/180.html" target="_blank" rel="external">教程</a>其实也说了这个了，因为没有注意，所以做了好多次尝试。  </p>
+<p>###1.配置SQL网络配置<br>在这一步我们需要启用两个服务，第一个是<code>Named Pipes</code>，第二个是<code>TCP/IP</code>。默认是不启用的，右键点击启用即可，它可能会提示你重启之后才会生效什么的，这个重启服务指的就是sqlserver服务，去第一个Sql Server服务里面重启一下那个Sqlserver就行了。下面是启动好的图片。<br><img src="http://liyu34.github.io/images/sqlserverconfigs.png" alt="sqlserverconfigs.png"><br>可能有的教程还需要你启动什么Sql Server Browser什么的，我发现这个不是必须的，因为我安装的最简版本连安装都没安装。  </p>
+<p>###2.配置TCP/IP属性<br>在这一步我们需要配置刚刚启动的两个服务中的tcp协议。首先我们需要把一个’全部侦听’设置为’否’（这个我是按照教程来的，没有测试设置为’是’的情况），如图：<br><img src="http://liyu34.github.io/images/sqlservertcpip1.png" alt="sqlservertcpip1.png"><br>这一页就ok了，然后我们需要配置你想远程的那个ip地址的端口等参数，如图：<br><img src="http://liyu34.github.io/images/sqlservertcpip2.png" alt="sqlservertcpip2.png"><br>要注意画红线的部分，要把这个设置为启动才可以。我之前并没有发现刚刚那个<a href="http://www.veryhuo.com/a/view/180.html" target="_blank" rel="external">教程</a>其实也说了这个了，因为没有注意，所以做了好多次尝试。  </p>
 <hr>
 <p>这样就可以远程访问数据库啦，另外我之前安装Sqlserver的时候设置了sa账户，如果使用Windows登陆验证能不能login就不清楚了。  </p>
 <hr>
@@ -225,14 +240,14 @@
 <p>##2015.10.21作死记录  </p>
 <p>###把TCP/IP协议里面的IP地址都清空！</p>
 <p>作为一个用精神洁癖的人，看着SQL Server网络服务TCP/IP协议属性框那一堆堆的ipv6地址就难受。  </p>
-<p><img src="http://ablee.cc/blog/img/sqlservertcpip03.png" alt="sqlservertcpip3.png">  </p>
+<p><img src="http://liyu34.github.io/images/sqlservertcpip03.png" alt="sqlservertcpip3.png">  </p>
 <p>所以我曾经无数次的点击每个ip地址前面的减号想要把它删掉，但是每次也只能把它收起来而已。为了删掉它们，我尝试了把多余的ip地址都清空（就是把ip地址那一栏里面的内容删掉），然后Sqlserver服务器就启动不起来了，尝试了三遍确定它确实启动不起来之后我就意识到是我刚刚的所作所为要为它的事故负责。  </p>
 <p>为了更加精确的明白它到底哪里出了问题，所以我就去看了errorlog，然后找到了最为关键的一句话。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">TDSSNIClient initialization failed with error 0x57, status code 0x1e. </div><div class="line">Reason: The SQL Server Network Interface found a duplicate IP address in the SQL Server TCP listening settings.  </div><div class="line">Remove the duplicate IP address by using SQL Server Configuration Manager. </div><div class="line">The parameter is incorrect. </div><div class="line">```  </div><div class="line">其实最关键的三个词就是`duplicate IP address`（重复的ip地址），然后我还看到了`Remove ... by using SQL Server Configuration Manager`，就是这个remove让我又去SQL Server Configuration Manager里面右键了很多次。  </div><div class="line"></div><div class="line">删除无果之后我猜想那几个空位其实是Sqlserver预留的，没法删除，但是留空之后就重复了（***空白也是一种重复呢***），那么我就自然而然的想到了修复，拿安装管理器修复一通，它给我填上了几个ipv6的地址，仍然还有很多留空。  </div><div class="line"></div><div class="line">没有办法的我只好实行权宜之计咯。</div></pre></td></tr></table></figure></p>
 <p>127.0.0.2<br>127.0.0.3<br>127.0.0.4<br>127.0.0.5<br>127.0.0.6<br>…<br>```<br>然后运行，就可以了。。。</p>
 <hr>
 <p>要注意Windows防火墙设置！！！Windows防火墙默认会把sqlserver给屏蔽掉的，所以要么把sqlserver置为例外，要么关掉Windows防火墙。<br>我因为sqlserver实例位置不好找就关闭了专用网络的防火墙。</p>
 <hr>
-<p>##2016年3月4日补充<br>电脑ip地址更改，会导致SqlServer服务器监听程序监听失败，从而导致SqlServer实例启动失败，如图：<br><img src="http://ablee.cc/blog/img/sqlserver_listener_error.png" alt="sqlserver_listener_error"><br>进入SqlServer的TCPIP设置里面把原来的地址更改为新地址即可，我这里使懒，直接把老地址设置为了不启用，反正暂时用不到远程访问我的SqlServer服务器。</p>
+<p>##2016年3月4日补充<br>电脑ip地址更改，会导致SqlServer服务器监听程序监听失败，从而导致SqlServer实例启动失败，如图：<br><img src="http://liyu34.github.io/images/sqlserver_listener_error.png" alt="sqlserver_listener_error"><br>进入SqlServer的TCPIP设置里面把原来的地址更改为新地址即可，我这里使懒，直接把老地址设置为了不启用，反正暂时用不到远程访问我的SqlServer服务器。</p>
 
       
     </div>
@@ -247,10 +262,10 @@
 
 
   
-    <article id="post-sqlserver命令行导入数据库文件" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Win10无声音" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/sqlserver命令行导入数据库文件/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/Win10无声音/" class="article-date">
+  <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -261,7 +276,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+      <a class="article-title" href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
     </h1>
   
 
@@ -269,14 +284,20 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>之前就想把这个记录到博客里面，但是觉得以后用的机会不多，就没记录，但是今天课题组的同志需要用我的电脑当数据库服务器，需要我导入数据库，所以又用到了，我就记录下来吧。（摘自<a href="http://zhidao.baidu.com/link?url=eqX1lFIyksakIty9eWmXifVK_EkQ_Nk4KXkRyCR3WW80jK_pCrPaXYQ7d96MUG3D3FqY5E2tUaXyZcf9YmtKHTPinr67fyFKiIOFMLE6YSG" target="_blank" rel="external">百度知道</a>）  </p>
+        <p>昨天帮刘硕修理了她的笔记本电脑，她的电脑突然就没有声音了，没有摔过也没有下载什么奇怪的东西，就是突然没有声音了。</p>
+<p>像这种离奇的事件也就只有离奇的软件能够作为其原因了，所以我理所当然的想到是不是声卡驱动出了问题，然后我就让她重装了声卡驱动，然而没有什么效果。</p>
+<p>昨天我拿到了她的电脑，然后开始了检查，使用搜狗音乐播放音乐，进度条始终无法前进，然后换网易云音乐，也是一样的情况，用网易云音乐下载了一首歌曲然后播放提示我“无法播放请更换输出介质”之类的提示语。看视频只有动画没有声音。</p>
 <hr>
-<p>sqlcmd<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sqlcmd -S &quot;localhost\SQLEXPRESS&quot;</div><div class="line">USE [master]</div><div class="line">GO</div><div class="line">CREATE DATABASE [TEST] ON</div><div class="line">( FILENAME = N&apos;C:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS\MSSQL\DATA\TEST.mdf&apos; ),</div><div class="line">( FILENAME = N&apos;C:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS\MSSQL\DATA\TEST_log.ldf&apos; )</div><div class="line"> FOR ATTACH ;</div><div class="line">GO</div></pre></td></tr></table></figure></p>
+<p>了解了这个问题的所有表征之后我向百度提了一个问题：<br><strong>Win10无法播放所有音频文件</strong><br>然后我找到了这个连接：<a href="http://zhidao.baidu.com/question/426103597708091812.html" target="_blank" rel="external">win10无法播放音乐文件</a></p>
+<hr>
+<p>右键点击那个小喇叭，选择“播放设备”，选中“扬声器”，点击“属性”，进入“高级”之后选择不同的Hz。<br><img src="http://liyu34.github.io/images/sound.JPG" alt="sound"><br>就是上图的界面，我发现16位的高于48000Hz的选项是没有声音的，24位的高于44100Hz的选项是没有声音的。所以我想应该是存储位不足的原因吧。声卡内存？</p>
+<hr>
+<p>这次能够免于重装系统，我还是很开心的~</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/sqlserver命令行导入数据库文件/" data-id="ciu2osn41000q8cygkj01q8p5" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/Win10无声音/" data-id="ciu2osn3t000m8cyg54yeo18f" class="article-share-link">Share</a>
       
       
     </footer>
@@ -320,15 +341,15 @@
       <ul>
         
           <li>
-            <a href="/2016/10/09/Hexo建站/">Hexo建站</a>
+            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
           </li>
         
           <li>
@@ -336,7 +357,7 @@
           </li>
         
           <li>
-            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+            <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
           </li>
         
       </ul>

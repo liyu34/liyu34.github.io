@@ -15,16 +15,16 @@
 <meta property="og:description" content="NARTU通常装备有串行端口或者以太网端口，串行端口支持MODBUS协议，以太网端口支持MODBUS TCP/IP协议（注释：MODBUS协议和MODBUS TCP/IP协议是生产PLC的施耐德电气公司制定的，NARTU完全遵循以上两种标准协议）。  
 #1、概要介绍
 ##（1）信息交换属性MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接">
-<meta property="og:image" content="http://ablee.cc/blog/img/RTU_fg1.png">
-<meta property="og:image" content="http://ablee.cc/blog/img/RTU_fg2.png">
-<meta property="og:image" content="http://ablee.cc/blog/img/RTU_t1.png">
-<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta property="og:image" content="http://liyu34.github.io/images/RTU_fg1.png">
+<meta property="og:image" content="http://liyu34.github.io/images/RTU_fg2.png">
+<meta property="og:image" content="http://liyu34.github.io/images/RTU_t1.png">
+<meta property="og:updated_time" content="2016-10-09T14:41:04.538Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NARTU通信协议（翻译）">
 <meta name="twitter:description" content="NARTU通常装备有串行端口或者以太网端口，串行端口支持MODBUS协议，以太网端口支持MODBUS TCP/IP协议（注释：MODBUS协议和MODBUS TCP/IP协议是生产PLC的施耐德电气公司制定的，NARTU完全遵循以上两种标准协议）。  
 #1、概要介绍
 ##（1）信息交换属性MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接">
-<meta name="twitter:image" content="http://ablee.cc/blog/img/RTU_fg1.png">
+<meta name="twitter:image" content="http://liyu34.github.io/images/RTU_fg1.png">
   
     <link rel="alternate" href="/atom.xml" title="AbLee&#39;s Blog" type="application/atom+xml">
   
@@ -80,7 +80,7 @@
         <section id="main"><article id="post-RTU通信协议（翻译）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2016/10/09/RTU通信协议（翻译）/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+  <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -104,10 +104,10 @@
 <p>##（1）信息交换属性<br>MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接读写单个byte。<br>除去广播信息之外，所有的信息交换都是由主方发起的，所有完整的信息交换流程都包含下行（downlink）和上行（uplink）两个消息。  </p>
 <ul>
 <li>下行消息：一个由主方发出的请求消息  </li>
-<li>上行消息：一个由从方发出的回应消息<br><img src="http://ablee.cc/blog/img/RTU_fg1.png" alt="fg1"><br><img src="http://ablee.cc/blog/img/RTU_fg2.png" alt="fg2"></li>
+<li>上行消息：一个由从方发出的回应消息<br><img src="http://liyu34.github.io/images/RTU_fg1.png" alt="fg1"><br><img src="http://liyu34.github.io/images/RTU_fg2.png" alt="fg2"></li>
 </ul>
 <p>如图Fig.12.1，主方的请求信号一般是向特定的从属设备发出的（通过请求信息的第一个字节我们可以知道目标从属设备的地址）。如图Fig.12.2，如果从属设备地址为0的话，那么这条消息就是一条广播消息，广播消息会被发送到所有的从属设备，但是ModBus通信协议规定这种信息只能是写入指令，从属设备也不会对广播消息作出回应（发出回应消息）。  </p>
-<p>##（2）信息格式<br>所有的RTU交换信息（包括上行消息和下行消息）都遵循相同的信息格式。信息格式如下：<br><img src="http://ablee.cc/blog/img/RTU_t1.png" alt="t1"><br>每条信息具有四种信息：</p>
+<p>##（2）信息格式<br>所有的RTU交换信息（包括上行消息和下行消息）都遵循相同的信息格式。信息格式如下：<br><img src="http://liyu34.github.io/images/RTU_t1.png" alt="t1"><br>每条信息具有四种信息：</p>
 <p>###从属设备地址<br>从属设备的地址长度为一个字节（取值范围为0-FFH），但是如果从属设备地址为0的话，这条消息实际上是一个广播消息，所以从属设备的真正的取值范围为01H-FFH（即1-255）。</p>
 <p>###操作码<br>操作码的长度也为一个字节，操作码用来告诉设备这条消息选择了哪一个指令（读、写、回答正确还是不正确等等）。操作码的有效范围为1-255，各种操作码的指令含义会在本手册的后续部分进行详细讲解。</p>
 <p>###数据区<br>数据区均为16进制的数据，数据区的长度并不固定，实际长度与操作码有关。</p>
@@ -130,19 +130,19 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/10/09/QtNote_of_file_event/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Newer</strong>
       <div class="article-nav-title">
         
-          QtNote:QTextEdit、QEvent和QFile
+          用VS组建一个Qt多工程的解决方案来进行软件开发
         
       </div>
     </a>
   
   
-    <a href="/2016/10/09/SetupStationNote/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/10/09/QtNote_QTcpSocket_QObject/" id="article-nav-older" class="article-nav-link-wrap">
       <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">建站记录</div>
+      <div class="article-nav-title">QtNote:QTcpSocket与QThread，QObject的拷贝问题</div>
     </a>
   
 </nav>
@@ -179,15 +179,15 @@
       <ul>
         
           <li>
-            <a href="/2016/10/09/Hexo建站/">Hexo建站</a>
+            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
           </li>
         
           <li>
-            <a href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
           </li>
         
           <li>
@@ -195,7 +195,7 @@
           </li>
         
           <li>
-            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+            <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
           </li>
         
       </ul>
