@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>用Dropbox自动发布GitBlog博文 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天中午尝试了使用Git作为自动发布博客的工具，思想就是本地一个Git，OSC仓库，博客服务器一个Git，每次本地写完之后push到OSC仓库，然后刷新博客页面的时候自动pull一下。结果是失败的。  
+
+然后就开始尝试同步盘的方式，国内最好的坚果云可惜没有LinuxCLI版本，小VPS又安不上图形界面，再给坚果云官方提了建议之后就不了了之了。然后视线自然的挪向了Dropbox，因为Dropbox">
+<meta property="og:type" content="article">
+<meta property="og:title" content="用Dropbox自动发布GitBlog博文">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/使用Dropbox自动发布博文/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="今天中午尝试了使用Git作为自动发布博客的工具，思想就是本地一个Git，OSC仓库，博客服务器一个Git，每次本地写完之后push到OSC仓库，然后刷新博客页面的时候自动pull一下。结果是失败的。  
+
+然后就开始尝试同步盘的方式，国内最好的坚果云可惜没有LinuxCLI版本，小VPS又安不上图形界面，再给坚果云官方提了建议之后就不了了之了。然后视线自然的挪向了Dropbox，因为Dropbox">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="用Dropbox自动发布GitBlog博文">
+<meta name="twitter:description" content="今天中午尝试了使用Git作为自动发布博客的工具，思想就是本地一个Git，OSC仓库，博客服务器一个Git，每次本地写完之后push到OSC仓库，然后刷新博客页面的时候自动pull一下。结果是失败的。  
+
+然后就开始尝试同步盘的方式，国内最好的坚果云可惜没有LinuxCLI版本，小VPS又安不上图形界面，再给坚果云官方提了建议之后就不了了之了。然后视线自然的挪向了Dropbox，因为Dropbox">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-使用Dropbox自动发布博文" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/使用Dropbox自动发布博文/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      用Dropbox自动发布GitBlog博文
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天中午尝试了使用Git作为自动发布博客的工具，思想就是本地一个Git，OSC仓库，博客服务器一个Git，每次本地写完之后push到OSC仓库，然后刷新博客页面的时候自动pull一下。结果是失败的。  </p>
+<hr>
+<p>然后就开始尝试同步盘的方式，国内最好的坚果云可惜没有LinuxCLI版本，小VPS又安不上图形界面，再给坚果云官方提了建议之后就不了了之了。然后视线自然的挪向了Dropbox，因为Dropbox有CLI版本。</p>
+<hr>
+<p>一番折腾之后在我的小VPS上安装上了Dropbox，然后我把原来Dropbox里面的文件全部删除了只用来做GitBlog的中转站。可是突然发现Dropbox并没有指定文件夹同步功能（<del>被坚果云宠坏了。。。</del>）一时之间陷入了困境。<br>好在Linux还有种神奇的东西叫做<strong>连接</strong>（link），连接分为软连接和硬连接，硬连接不能连接目录所以只能用软连接。我做了如下两次尝试：  </p>
+<hr>
+<ul>
+<li><p>将网站根目录下的posts文件夹删除之后建立一个从Dropbox同步目录到博文目录posts的软连接（<del><code>ln -s ~/Dropbox/ posts</code></del>）这样一来网站根目录下的博文目录就会连接到Dropbox的同步目录中去。不过这种方法行不通，可能是因为GitBlog暂时还不支持这种做法吧。  </p>
+</li>
+<li><p>第二种方法是倒过来的，这种方法事实证明是可行的。如果把posts连接到Dropbox不行的话，那就试试把Dropbox连接到posts，让Dropbox直接网博文目录下进行同步。这么做的话先关闭Dropbox服务<strong><code>killall Dropbox</code></strong>然后趁机把同步目录删除，然后建立一个从posts到Dropbox的软连接<strong>‘ln -s …/posts/ ~/Dropbox’</strong>，最后打开Dropbox<strong><code>~/.dropbox-dist/dropboxd &amp;</code></strong>即可。这样就大功告成了！  </p>
+</li>
+</ul>
+<hr>
+<p>折腾了一下午加一晚上终于可以自动发布博文了！<br>现在可以放心的写博客了！剩下的交给Dropbox！<strong>：）</strong>  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/使用Dropbox自动发布博文/" data-id="ciu2osn45000s8cygzychb0d8" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">适用于Modbus协议的CRC16校验（查表法）</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

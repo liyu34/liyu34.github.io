@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何用Visual Studio作为Git的合并工具 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。补充：非VS工程不能用……
+
+要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  
+  
+怎么制造冲突我就不说了，结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何用Visual Studio作为Git的合并工具">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/如何用VS作为Git的合并工具/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。补充：非VS工程不能用……
+
+要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  
+  
+怎么制造冲突我就不说了，结">
+<meta property="og:image" content="http://ablee.cc/blog/img/git/conflict.png">
+<meta property="og:image" content="http://ablee.cc/blog/img/git/teamexplorer.png">
+<meta property="og:image" content="http://ablee.cc/blog/img/git/teamexplorer2.png">
+<meta property="og:image" content="http://ablee.cc/blog/img/git/resolveconflicts.png">
+<meta property="og:image" content="http://ablee.cc/blog/img/git/merge.png">
+<meta property="og:image" content="http://ablee.cc/blog/img/git/acceptmerge.png">
+<meta property="og:image" content="http://ablee.cc/blog/img/git/mergend.png">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何用Visual Studio作为Git的合并工具">
+<meta name="twitter:description" content="今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。补充：非VS工程不能用……
+
+要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  
+  
+怎么制造冲突我就不说了，结">
+<meta name="twitter:image" content="http://ablee.cc/blog/img/git/conflict.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-如何用VS作为Git的合并工具" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/如何用VS作为Git的合并工具/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何用Visual Studio作为Git的合并工具
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。<br>补充：非VS工程不能用……</p>
+<hr>
+<p>要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  </p>
+<p><img src="http://ablee.cc/blog/img/git/conflict.png" alt="conflict">  </p>
+<p>怎么制造冲突我就不说了，结果如上图。冲突就位之后我们打开VS的团队界面，如下图。</p>
+<p><img src="http://ablee.cc/blog/img/git/teamexplorer.png" alt="team">  </p>
+<p>打开之后，点击一下’Changes’按钮（其实点除了Settings另外那三个都可以），然后就会发现VS提示我们了。  </p>
+<p><img src="http://ablee.cc/blog/img/git/teamexplorer2.png" alt="team2">  </p>
+<p>那我们肯定要点’Resolve the conflicts’了，点击之后是这样的：  </p>
+<p><img src="http://ablee.cc/blog/img/git/resolveconflicts.png" alt="resolveconflicts">  </p>
+<p>当然点击之后不是直接跟上图一模一样的，因为VS会给你标记出现在有冲突的文件有几个，当然我现在只是人为制造了一个冲突，所以只有一个，点击那个冲突就会展开上图那样的。然后我们点击’Merge’，就会开始合并了。  </p>
+<p><img src="http://ablee.cc/blog/img/git/merge.png" alt="merge">  </p>
+<p>这个时候你就可以”为所欲为”了，干完一票之后别忘了’Accept Merge’  </p>
+<p><img src="http://ablee.cc/blog/img/git/acceptmerge.png" alt="acceptmerge">  </p>
+<p>那么让我们看看合并之后的样子：  </p>
+<p><img src="http://ablee.cc/blog/img/git/mergend.png" alt="mergend">  </p>
+<hr>
+<p>就是这样啦，看起来像是个比较合格的教程了，除了那些大小不一的图片之外……<br>P.S.比较可惜的是Visual Studio提供的原生Git不支持除了微软自己的remote repository之外的其他remote repository。</p>
+<hr>
+<p><strong>非VS工程不能用以上的方法</strong><br><strong>在VS里面提交竟然遇到了换行符被自动改变</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/如何用VS作为Git的合并工具/" data-id="ciu2osn49000v8cygzdcww3j9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/如何清除U盘的分区/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          如何清除U盘的分区
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/研究生开学了/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">研究生开学了</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

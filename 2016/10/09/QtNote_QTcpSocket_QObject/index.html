@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>QtNote:QTcpSocket与QThread，QObject的拷贝问题 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="昨晚在做ModBus的时候遇到了两个问题，第一个是tcpsocket突然无法发送数据了，显示tcpsocket无法跨进程调用；第二个是编译时一直显示无法访问QObject的私有变量。
+
+##一、QTcpSocket无法跨进程调用的问题当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  
+最后发现问题">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QtNote:QTcpSocket与QThread，QObject的拷贝问题">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/QtNote_QTcpSocket_QObject/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="昨晚在做ModBus的时候遇到了两个问题，第一个是tcpsocket突然无法发送数据了，显示tcpsocket无法跨进程调用；第二个是编译时一直显示无法访问QObject的私有变量。
+
+##一、QTcpSocket无法跨进程调用的问题当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  
+最后发现问题">
+<meta property="og:image" content="http://ablee.cc/blog/img/qobjectclass.png">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QtNote:QTcpSocket与QThread，QObject的拷贝问题">
+<meta name="twitter:description" content="昨晚在做ModBus的时候遇到了两个问题，第一个是tcpsocket突然无法发送数据了，显示tcpsocket无法跨进程调用；第二个是编译时一直显示无法访问QObject的私有变量。
+
+##一、QTcpSocket无法跨进程调用的问题当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  
+最后发现问题">
+<meta name="twitter:image" content="http://ablee.cc/blog/img/qobjectclass.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-QtNote_QTcpSocket_QObject" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_QTcpSocket_QObject/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      QtNote:QTcpSocket与QThread，QObject的拷贝问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨晚在做ModBus的时候遇到了两个问题，第一个是tcpsocket突然无法发送数据了，显示tcpsocket无法跨进程调用；第二个是编译时一直显示无法访问QObject的私有变量。</p>
+<hr>
+<p>##一、QTcpSocket无法跨进程调用的问题<br>当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  </p>
+<p>最后发现问题是出在启动线程的<code>start()</code>函数上，之前我的所有线程都是在主线程初始化的时候就start。主进程里面有线程的对象（不是指针），线程的对象会随着主进程初始化而初始化，tcpsocket对象（不是指针）在线程初始化的时候初始化，同时通过tcp/ip连接模拟程序。这样线程初始化完成之后就立刻开始运行。  </p>
+<p>后来我写了一个按钮响应，把线程的<code>start()</code>给挪到按钮响应里去了，这样之后每次tcpsocket发送数据的时候就是出错，输出“tcpsocket无法跨线程调用”，于是我又把start给挪回构造函数里了，下一步准备试一下在按钮响应里面new一个线程的对象。  </p>
+<p>这个问题我觉得可能是因为主进程和线程的关系的原因？</p>
+<hr>
+<p>##二、无法访问QObject私有变量<br>这个问题其实是发生在上一个问题之前的，这个问题在之前的我看来其实是蛮无厘头的。光说可能没啥感觉，上个图先。<br><img src="http://ablee.cc/blog/img/qobjectclass.png" alt="qobjectclass.png">  </p>
+<p>上图就是这次问题的三个主角，<code>DataBlock</code>、<code>CollectionThread</code>、<code>DBManager</code>。  <del>需要交代的是DataBlock这个主角中的主角是一个关系户，他爸爸是QObject（传说中Qt大家庭里面大部分人的爷爷or太爷爷…）</del>  也就是说DataBlock直接继承自QObject。然后编译的时候就一直提示我“无法访问QObject的私有成员”，我还真信了，跑去看了几个DataBlock里面的变量，后来想不可能啊，以我这奇葩的命名方式，怎么可能会那么巧合的重名！于是我百度了。  </p>
+<p>然后我发现是因为QObject不允许copy或者opeartor=，然后我看了看我的代码，果真有地方用了等于号。</p>
+<p>本来是想借用Qt的QObject的管理机制来管理这个DataBlock的，原来这么多限制，  <del>于是就取消了DataBlock和QObject的父子关系</del>，  于是就不让DataBlock继承QObject了，也不用Q_OBJECT宏了。这样就解决了。  </p>
+<p><strong>需要注意的是之前我以为必须纳入Qt的体系中才可以用QList管理数据，现在发现不需要纳入Qt的体系也可以用QList管理数据。</strong></p>
+<hr>
+<p>##三、在非QObject子类中使用connect函数<br>（2015.10.20补充）<br>今天我又遇到Qobject的子类不能copy和operator=的问题了，但是我需要在那个类里面使用connect函数连接槽函数和消息，这该怎么办呢？  </p>
+<p>我想了一个麻烦的办法和一个简单的办法。麻烦的办法就是传给它一个是Qobject子类的对象的指针，用这个指针来调用connect函数。  </p>
+<p>简单的办法有效，所以我就没有尝试麻烦的办法究竟可行不可行，<strong><code>QObject::connect(...)</code></strong>，这样就行了。<br>我理解的qt程序是都运行在一个core上，所以只需要通知它绑定了什么信号和槽就行了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/QtNote_QTcpSocket_QObject/" data-id="ciu2osn3b000e8cygxzv3nn39" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          QtNote:QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">QtNote:Qt5.6缺少QODBC驱动</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

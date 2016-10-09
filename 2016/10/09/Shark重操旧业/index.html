@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>重操旧业——Shark | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="好了，闲话不多说，我的本科毕设是用的Shark库，最近要重新做实验，所以需要把原来的程序跑起来，想跑起原来的程序就必须有原来的环境，所以首先要把shark给编译好。那么下面就是编译shark的全过程：  
+
+shark版本 Shark3.0boost版本 boost1.59（注：boost1.60把ice_not给取消了，会导致shark编译错误，所以使用boost1.59，也不知道现在这个错误修">
+<meta property="og:type" content="article">
+<meta property="og:title" content="重操旧业——Shark">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/Shark重操旧业/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="好了，闲话不多说，我的本科毕设是用的Shark库，最近要重新做实验，所以需要把原来的程序跑起来，想跑起原来的程序就必须有原来的环境，所以首先要把shark给编译好。那么下面就是编译shark的全过程：  
+
+shark版本 Shark3.0boost版本 boost1.59（注：boost1.60把ice_not给取消了，会导致shark编译错误，所以使用boost1.59，也不知道现在这个错误修">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="重操旧业——Shark">
+<meta name="twitter:description" content="好了，闲话不多说，我的本科毕设是用的Shark库，最近要重新做实验，所以需要把原来的程序跑起来，想跑起原来的程序就必须有原来的环境，所以首先要把shark给编译好。那么下面就是编译shark的全过程：  
+
+shark版本 Shark3.0boost版本 boost1.59（注：boost1.60把ice_not给取消了，会导致shark编译错误，所以使用boost1.59，也不知道现在这个错误修">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Shark重操旧业" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Shark重操旧业/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      重操旧业——Shark
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>好了，闲话不多说，我的本科毕设是用的Shark库，最近要重新做实验，所以需要把原来的程序跑起来，想跑起原来的程序就必须有原来的环境，所以首先要把shark给编译好。那么下面就是编译shark的全过程：  </p>
+<hr>
+<p>shark版本 <a href="http://image.diku.dk/shark/" target="_blank" rel="external">Shark3.0</a><br>boost版本 <a href="http://www.boost.org/" target="_blank" rel="external">boost1.59</a>（注：boost1.60把ice_not给取消了，会导致shark编译错误，所以使用boost1.59，也不知道现在这个错误修复了没有）  </p>
+<hr>
+<p>##编译boost  </p>
+<p>boost下载完成之后进入目录运行bootstrap.bat，运行完成之后会发现目录下面生成了bjam.exe和b2.exe两个可执行文件，运行这两个中的任意一个就会开始编译boost了，编译完成之后需要给环境变量添加<code>BOOST_ROOT</code>，值为boost的根目录。  </p>
+<p>如果有特殊要求需要编译64位boost的话可以按照下面的方式：<br>用VS的64位命令行工具（可以在开始菜单栏里面找到），打开这个工具之后进入boost的目录，执行bootstrap.bat然后执行以下命令：  </p>
+<pre><code>bjam --build-type=complete toolset=msvc-12.0 threading=multi link=static address-model=64
+</code></pre><p>上面的命令编译出来是静态库，如果是想要动态库的话就把static变成shared即可。  </p>
+<hr>
+<p>##编译shark3.0<br>运行CMake，进入shark目录，生成目录我也选择在其目录，点击configure之后出错，告诉我找不到boost的lib，然后有一个选项是<code>USE_STATIC_BOOST_LIB</code>，把这个勾选上（因为之前我生成的是boost的静态库），点击configure，成功（即没有错误），然后generate。  </p>
+<p>这时候在shark目录下面已经有VS工程文件了，打开工程，点击编译，等待许久之后可能会遇到错误，显示不认识什么什么东西来着，具体是什么忘记了，笔记本上也没记载，需要手动改三个工程的属性，把一个什么东西当作变量来着……忘记了……记着应该是这里的问题。反正问题也不难，百度了一下立刻就出来了。  </p>
+<hr>
+<p>##使用shark<br>使用shark的工程需要添加附加引用目录、附加库引用目录以及附加库依赖（一个重要的库文件）。附加引用目录添加boost的根目录和shark的include目录，附加库引用目录添加shark/lib/Debug( or Release)和boost/stage/lib，shark的Debug库和Release库并不兼容。  </p>
+<p>附加引用目录（Linker-&gt;Input-&gt;Addtional Dependencies）要添加shark_debug.lib或shark.lib，根据工程当前是发布还是调试来调整。  </p>
+<p>另外，在VC++ Directories里面设定附加引用目录和附加库引用目录和在C++与Linker里面分别设定是一样的，但是附加库依赖必须在Linker里面设置。  </p>
+<hr>
+<p>##位数相关  </p>
+<p>boost 32位可以支持编译32位shark。<br>boost 64位可以支持编译64位shark。<br>编译多少位的shark要从CMake那里选择，如果是要编译64位的shark的话需要选择带Win64的编译器。  </p>
+<hr>
+<p>##另外，现在shark3.1.0已经修复了不支持boost1.60的错误。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/Shark重操旧业/" data-id="ciu2osn3o000k8cygqpfjy73m" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/SetupStationNote/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          建站记录
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/SqlServer触发器/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">SqlServer数据库触发器</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何调试一个链接库工程工程 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="近来我突发奇想想要把原来的一个功能发布成一个链接库，但是还需要完善，所以需要对它进行调试，所以我就学会了如何调试一个链接库工程。  
+那么如何才能对一个链接库工程进行调试呢？这个方法的核心思想就是再给它专门建立一个测试工程（突然回想起大四的时候春雷哥一直跟我们说的测试工程，没想到现在我也用上了这个词）。这个测试工程与链接库工程处于同一个解决方案内。  
+当然不是新建一个测试工程就可以直接测试了，如">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何调试一个链接库工程工程">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/调试链接库工程/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="近来我突发奇想想要把原来的一个功能发布成一个链接库，但是还需要完善，所以需要对它进行调试，所以我就学会了如何调试一个链接库工程。  
+那么如何才能对一个链接库工程进行调试呢？这个方法的核心思想就是再给它专门建立一个测试工程（突然回想起大四的时候春雷哥一直跟我们说的测试工程，没想到现在我也用上了这个词）。这个测试工程与链接库工程处于同一个解决方案内。  
+当然不是新建一个测试工程就可以直接测试了，如">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何调试一个链接库工程工程">
+<meta name="twitter:description" content="近来我突发奇想想要把原来的一个功能发布成一个链接库，但是还需要完善，所以需要对它进行调试，所以我就学会了如何调试一个链接库工程。  
+那么如何才能对一个链接库工程进行调试呢？这个方法的核心思想就是再给它专门建立一个测试工程（突然回想起大四的时候春雷哥一直跟我们说的测试工程，没想到现在我也用上了这个词）。这个测试工程与链接库工程处于同一个解决方案内。  
+当然不是新建一个测试工程就可以直接测试了，如">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-调试链接库工程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/调试链接库工程/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何调试一个链接库工程工程
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>近来我突发奇想想要把原来的一个功能发布成一个链接库，但是还需要完善，所以需要对它进行调试，所以我就学会了如何调试一个链接库工程。  </p>
+<p>那么如何才能对一个链接库工程进行调试呢？这个方法的核心思想就是再给它专门建立一个测试工程（突然回想起大四的时候春雷哥一直跟我们说的测试工程，没想到现在我也用上了这个词）。这个测试工程与链接库工程处于同一个解决方案内。  </p>
+<p>当然不是新建一个测试工程就可以直接测试了，如果你直接打开文件写代码会发现无法引用链接库工程的头文件。  </p>
+<p>那是因为还需要在测试工程的属性中添加几个内容。一个是附加引用目录，这个就写链接库工程根目录就行（注意不是解决方案根目录）；第二就是附加库目录，这个要写库文件生成的地方；第三个就是把库文件名字添加到附加依赖项上。  </p>
+<p>这样就好啦，尽情测试吧。  </p>
+<hr>
+<p>以上为Visual Studio 2013环境下。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/调试链接库工程/" data-id="ciu2osn4p000z8cygevmu0yyr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/sublime/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          配置sublime
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/大数据机器学习并行算法综述/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">大数据机器学习并行算法综述</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>SqlServer数据库触发器 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="触发器这个东西这是第一次真正接触，是因为用视图实现了分片透明性之后还想要实现操作透明性。闲话不多说，先上一段代码：  
+create trigger rtuwell_trigger_insteadof_insert
+on RTU_WELL
+    instead of insert
+as
+    declare @RTUID int, @WELLID int;
+    select @RTUID=">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SqlServer数据库触发器">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/SqlServer触发器/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="触发器这个东西这是第一次真正接触，是因为用视图实现了分片透明性之后还想要实现操作透明性。闲话不多说，先上一段代码：  
+create trigger rtuwell_trigger_insteadof_insert
+on RTU_WELL
+    instead of insert
+as
+    declare @RTUID int, @WELLID int;
+    select @RTUID=">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SqlServer数据库触发器">
+<meta name="twitter:description" content="触发器这个东西这是第一次真正接触，是因为用视图实现了分片透明性之后还想要实现操作透明性。闲话不多说，先上一段代码：  
+create trigger rtuwell_trigger_insteadof_insert
+on RTU_WELL
+    instead of insert
+as
+    declare @RTUID int, @WELLID int;
+    select @RTUID=">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-SqlServer触发器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/SqlServer触发器/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      SqlServer数据库触发器
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>触发器这个东西这是第一次真正接触，是因为用视图实现了分片透明性之后还想要实现操作透明性。闲话不多说，先上一段代码：  </p>
+<pre><code>create trigger rtuwell_trigger_insteadof_insert
+on RTU_WELL
+    instead of insert
+as
+    declare @RTUID int, @WELLID int;
+    select @RTUID=RTU_ID,@WELLID=WELL_ID from inserted;
+    if(@RTUID&gt;6)
+        insert into rtuwell_2 values(@RTUID,@WELLID);
+    else
+        insert into rtuwell_1 values(@RTUID,@WELLID);
+go
+</code></pre><p>最重要的部分是<code>as</code>和<code>go</code>中间的部分，首先需要定义变量，这个定义的变量就是你想要触发器操作的所有变量，我的这个表里面只有两列，一列是RTUID，一列是WELLID，这两个都是int型的。  </p>
+<p>然后因为这个是<code>instead of insert</code>所以需要把要操作的内容从<code>inserted</code>黑洞中拉出来，然后再进行处理。当然如果是<code>instead of delete</code>那么就是<code>deleted</code>黑洞了。  </p>
+<p>最后附上原文链接(这里面有详细的内容)：<br><a href="http://www.cnblogs.com/hoojo/archive/2011/07/20/2111316.html" target="_blank" rel="external">SQL Server 触发器</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/SqlServer触发器/" data-id="ciu2osn3r000l8cygwru28fq9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/Shark重操旧业/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          重操旧业——Shark
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/Win10无声音/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">关于Win10无声音的问题以及解决办法。</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

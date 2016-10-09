@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>自动检测文件夹改动情况 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="之前我并没有遇到其他Gitblog使用者遇到的每次发布新博客都要手动删除缓存的问题，原因是我的Gitblog根本无法产生缓存，每次访问都需要解析博客文件，访客少的时候自然没有问题，但是访客多了的话就有很大的隐患了。
+所以我检查了Gitblog无法缓存的原因，发现是文件所有者出了问题，因为nginx服务器和php服务的owner是apache，而我之前把整个网站文件的owner改为了root，所以G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动检测文件夹改动情况">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/自动检测是否有新博文/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="之前我并没有遇到其他Gitblog使用者遇到的每次发布新博客都要手动删除缓存的问题，原因是我的Gitblog根本无法产生缓存，每次访问都需要解析博客文件，访客少的时候自然没有问题，但是访客多了的话就有很大的隐患了。
+所以我检查了Gitblog无法缓存的原因，发现是文件所有者出了问题，因为nginx服务器和php服务的owner是apache，而我之前把整个网站文件的owner改为了root，所以G">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自动检测文件夹改动情况">
+<meta name="twitter:description" content="之前我并没有遇到其他Gitblog使用者遇到的每次发布新博客都要手动删除缓存的问题，原因是我的Gitblog根本无法产生缓存，每次访问都需要解析博客文件，访客少的时候自然没有问题，但是访客多了的话就有很大的隐患了。
+所以我检查了Gitblog无法缓存的原因，发现是文件所有者出了问题，因为nginx服务器和php服务的owner是apache，而我之前把整个网站文件的owner改为了root，所以G">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-自动检测是否有新博文" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/自动检测是否有新博文/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      自动检测文件夹改动情况
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前我并没有遇到其他Gitblog使用者遇到的每次发布新博客都要手动删除缓存的问题，原因是我的Gitblog根本无法产生缓存，每次访问都需要解析博客文件，访客少的时候自然没有问题，但是访客多了的话就有很大的隐患了。</p>
+<p>所以我检查了Gitblog无法缓存的原因，发现是文件所有者出了问题，因为nginx服务器和php服务的owner是<strong>apache</strong>，而我之前把整个网站文件的owner改为了root，所以Gitblog无法产生缓存。</p>
+<p>既然发现了问题就好办了，把文件的owner改回来就好了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown -Rf apache ./*</div></pre></td></tr></table></figure>
+<p>-R参数会让系统递归的检索所有文件夹。</p>
+<p>这时候Gitblog已经可以产生缓存了，但是又有新的问题，缓存的有效期为1个小时，时间有点长，我发布了博文，希望立即能够看到，所以使用了群内大神写的一个简单守护脚本，这个脚本会遍历blog文件夹下面所有的文件，以最后修改时间作为判断标准，如果有更新，就删除cache。下面是文件内容：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"></div><div class="line"># 脚本说明：监控..../blog/文件夹，如果文件夹和内容发生改变(根据时间来判断)，</div><div class="line"># 则自动删除..../app/cache/目录里面的所有内容。请根据实际情况将下面的变量赋值为绝对路径</div><div class="line"></div><div class="line">OLD=&quot;..../tmp/old.txt&quot;</div><div class="line">NEW=&quot;..../tmp/new.txt&quot;</div><div class="line">BLOG=&quot;..../blog/&quot;</div><div class="line">CACHE=&quot;..../app/cache/&quot;</div><div class="line"></div><div class="line">while :; do</div><div class="line">    if [ -e &quot;$OLD&quot; ]; then</div><div class="line">        mv &quot;$OLD&quot; &quot;$NEW&quot;</div><div class="line">        ls -lR &quot;$BLOG&quot; | awk &apos;&#123;print $8&#125;&apos;  &gt; &quot;$OLD&quot;</div><div class="line">        diff &quot;$OLD&quot; &quot;$NEW&quot;</div><div class="line">        if [ $? == 0 ]; then</div><div class="line">            echo &quot;$BLOG&quot; Not changed</div><div class="line">        else</div><div class="line">            echo &quot;$BLOG&quot; Changed</div><div class="line">	        echo Delete files in &quot;$CACHE&quot; </div><div class="line">	        rm -rf &quot;$CACHE&quot;/*</div><div class="line">        fi</div><div class="line">    else</div><div class="line">        ls -lR &quot;$BLOG&quot; | awk &apos;&#123;print $8&#125;&apos;  &gt; &quot;$OLD&quot;</div><div class="line">    fi</div><div class="line">    # 可以通过调整sleep的时间来更改频率,也可以加到crontab里面</div><div class="line">	# crontab -e 添加 */1 * * * * /root/monitor.sh</div><div class="line">    sleep 60</div><div class="line">done</div></pre></td></tr></table></figure>
+<p>这样就好多了。以上脚本由<strong>︻┳═一</strong>大神提供。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/自动检测是否有新博文/" data-id="ciu2osn4o000y8cyg0eibywhc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          适用于Modbus协议的CRC16校验（查表法）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/sqlserver express/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">如何远程连接Sqlserver 2014 Express版本</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

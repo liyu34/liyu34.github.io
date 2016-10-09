@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>NARTU通信协议（翻译） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="NARTU通常装备有串行端口或者以太网端口，串行端口支持MODBUS协议，以太网端口支持MODBUS TCP/IP协议（注释：MODBUS协议和MODBUS TCP/IP协议是生产PLC的施耐德电气公司制定的，NARTU完全遵循以上两种标准协议）。  
+#1、概要介绍
+##（1）信息交换属性MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="NARTU通信协议（翻译）">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/RTU通信协议（翻译）/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="NARTU通常装备有串行端口或者以太网端口，串行端口支持MODBUS协议，以太网端口支持MODBUS TCP/IP协议（注释：MODBUS协议和MODBUS TCP/IP协议是生产PLC的施耐德电气公司制定的，NARTU完全遵循以上两种标准协议）。  
+#1、概要介绍
+##（1）信息交换属性MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接">
+<meta property="og:image" content="http://ablee.cc/blog/img/RTU_fg1.png">
+<meta property="og:image" content="http://ablee.cc/blog/img/RTU_fg2.png">
+<meta property="og:image" content="http://ablee.cc/blog/img/RTU_t1.png">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="NARTU通信协议（翻译）">
+<meta name="twitter:description" content="NARTU通常装备有串行端口或者以太网端口，串行端口支持MODBUS协议，以太网端口支持MODBUS TCP/IP协议（注释：MODBUS协议和MODBUS TCP/IP协议是生产PLC的施耐德电气公司制定的，NARTU完全遵循以上两种标准协议）。  
+#1、概要介绍
+##（1）信息交换属性MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接">
+<meta name="twitter:image" content="http://ablee.cc/blog/img/RTU_fg1.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-RTU通信协议（翻译）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/RTU通信协议（翻译）/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      NARTU通信协议（翻译）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NARTU通常装备有串行端口或者以太网端口，串行端口支持MODBUS协议，以太网端口支持MODBUS TCP/IP协议（注释：MODBUS协议和MODBUS TCP/IP协议是生产PLC的施耐德电气公司制定的，NARTU完全遵循以上两种标准协议）。  </p>
+<p>#1、概要介绍</p>
+<p>##（1）信息交换属性<br>MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接读写单个byte。<br>除去广播信息之外，所有的信息交换都是由主方发起的，所有完整的信息交换流程都包含下行（downlink）和上行（uplink）两个消息。  </p>
+<ul>
+<li>下行消息：一个由主方发出的请求消息  </li>
+<li>上行消息：一个由从方发出的回应消息<br><img src="http://ablee.cc/blog/img/RTU_fg1.png" alt="fg1"><br><img src="http://ablee.cc/blog/img/RTU_fg2.png" alt="fg2"></li>
+</ul>
+<p>如图Fig.12.1，主方的请求信号一般是向特定的从属设备发出的（通过请求信息的第一个字节我们可以知道目标从属设备的地址）。如图Fig.12.2，如果从属设备地址为0的话，那么这条消息就是一条广播消息，广播消息会被发送到所有的从属设备，但是ModBus通信协议规定这种信息只能是写入指令，从属设备也不会对广播消息作出回应（发出回应消息）。  </p>
+<p>##（2）信息格式<br>所有的RTU交换信息（包括上行消息和下行消息）都遵循相同的信息格式。信息格式如下：<br><img src="http://ablee.cc/blog/img/RTU_t1.png" alt="t1"><br>每条信息具有四种信息：</p>
+<p>###从属设备地址<br>从属设备的地址长度为一个字节（取值范围为0-FFH），但是如果从属设备地址为0的话，这条消息实际上是一个广播消息，所以从属设备的真正的取值范围为01H-FFH（即1-255）。</p>
+<p>###操作码<br>操作码的长度也为一个字节，操作码用来告诉设备这条消息选择了哪一个指令（读、写、回答正确还是不正确等等）。操作码的有效范围为1-255，各种操作码的指令含义会在本手册的后续部分进行详细讲解。</p>
+<p>###数据区<br>数据区均为16进制的数据，数据区的长度并不固定，实际长度与操作码有关。</p>
+<p>###CRC16检测<br>CRC16检测占每条信息的最后两个字节。这是一个遵循CRC16算法的检测，检测范围是从第一个字节（从属设备地址）到数据区的最后一个字节。<br>【例子】CRC16算法的C语言实现：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="title">CRC16</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* buf, <span class="keyword">unsigned</span> <span class="keyword">short</span> len)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> crc=<span class="number">0xffff</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> i,j,k;</div><div class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;len;i++)</div><div class="line">	&#123;</div><div class="line">		crc =crc ^ buf[i];</div><div class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">8</span>;j++)</div><div class="line">		&#123;</div><div class="line">			k=crc &amp; <span class="number">01</span>;</div><div class="line">			crc=crc &gt;&gt; <span class="number">1</span>;</div><div class="line">			<span class="keyword">if</span> (k==<span class="number">0</span>) <span class="keyword">continue</span>;</div><div class="line">			crc =crc ^ <span class="number">0xA001</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> crc;</div></pre></td></tr></table></figure></p>
+<p>#2、寻址方式<br>如上图Fig.12.1和Fig12.2所示，主方设备可以与n（1≤n≤255）个从属设备进行通话。当然，n=0（即从属设备地址为0）的时候是广播消息。  </p>
+<p>从Fig.12.1和Fig.12.2可以得出，主方设备访问从属设备这一行为实际上是主方设备访问特定从属设备中的特定装置中的一系列寄存器。所以主方设备访问的地址应该由三个方面共同决定：从属设备地址，从属设备中的装置号，装置中寄存器的地址。</p>
+<p>在信息中，装置号和装置中寄存器的地址被合称为”word address”。</p>
+<hr>
+<p>未完待续  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/RTU通信协议（翻译）/" data-id="ciu2osn3l000i8cygnssowtfg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/QtNote_of_file_event/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          QtNote:QTextEdit、QEvent和QFile
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/SetupStationNote/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">建站记录</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

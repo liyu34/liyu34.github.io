@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>站点迁移&amp;远程传送文件命令（scp） | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="由于之前的VPS是月付的，算下来的话比年付要贵接近一倍，所以趁这次VPS要到期，重新开了一个一样配置的年付VPS，新东西当然要玩一下，这一玩可不得了，成功找到了用Git发布博文的办法。之前把系统装成了centos7，安装nginx有点问题，所以把系统又重装了，然后现在一切从零开始搭建GitBlog、使用Git发布博文。
+
+##搭建GitBlog首先让我们来安装Nginx！在centos6上面安装！">
+<meta property="og:type" content="article">
+<meta property="og:title" content="站点迁移&远程传送文件命令（scp）">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/站点迁移/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="由于之前的VPS是月付的，算下来的话比年付要贵接近一倍，所以趁这次VPS要到期，重新开了一个一样配置的年付VPS，新东西当然要玩一下，这一玩可不得了，成功找到了用Git发布博文的办法。之前把系统装成了centos7，安装nginx有点问题，所以把系统又重装了，然后现在一切从零开始搭建GitBlog、使用Git发布博文。
+
+##搭建GitBlog首先让我们来安装Nginx！在centos6上面安装！">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="站点迁移&远程传送文件命令（scp）">
+<meta name="twitter:description" content="由于之前的VPS是月付的，算下来的话比年付要贵接近一倍，所以趁这次VPS要到期，重新开了一个一样配置的年付VPS，新东西当然要玩一下，这一玩可不得了，成功找到了用Git发布博文的办法。之前把系统装成了centos7，安装nginx有点问题，所以把系统又重装了，然后现在一切从零开始搭建GitBlog、使用Git发布博文。
+
+##搭建GitBlog首先让我们来安装Nginx！在centos6上面安装！">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-站点迁移" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/站点迁移/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      站点迁移&amp;远程传送文件命令（scp）
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于之前的VPS是月付的，算下来的话比年付要贵接近一倍，所以趁这次VPS要到期，重新开了一个一样配置的年付VPS，新东西当然要玩一下，这一玩可不得了，成功找到了用Git发布博文的办法。<br>之前把系统装成了centos7，安装nginx有点问题，所以把系统又重装了，然后现在一切从零开始搭建GitBlog、使用Git发布博文。</p>
+<hr>
+<p>##搭建GitBlog<br>首先让我们来安装Nginx！在centos6上面安装！<br>好吧，第一步就出现了问题<code>yum install nginx</code>之后显示没有安装包？！于是百度之，解决办法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//1.下载rpm包</div><div class="line">wget http:\/\/nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm</div><div class="line">//2.安装rpm包</div><div class="line">rpm -ivh nginx-release-centos-6-0.el6.ngx.noarch.rpm</div><div class="line">```  </div><div class="line">这样之后就可以用yum安装nginx了。  </div><div class="line">安装好nginx之后就要配置它，然后我发现我不知道该死的系统把nginx安到哪里去了，于是百度，于是发现好多无用信息，于是`whereis nginx`。发现Nginx在安装目录`/etc/nginx`。进入安装目录之后会看到`conf.d`文件夹，里面就是配置文件啦。  </div><div class="line">新建一个文件，把Gitbolg官网配置范例粘贴上去保存为default.conf就好了，当然要先修改网站目录。（因为我对nginx也一知半解，所以就直接粘贴了）  </div><div class="line">GitBlog还需要php和mbstring扩展库，所以安装php和mbstring扩展库！</div></pre></td></tr></table></figure></p>
+<p>yum install php<br>yum install php-fpm<br>yum install php-mbstring<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">这样前期环境就算是搭建好了，让我们下载下来GitBlog的源码，并把它放到我的网站目录`/data/vhost/liyu34.xyz`下。</div><div class="line">下载下来tar.gz压缩包之后需要解压，我在网上搜罗了一个tar命令介绍粘到下面：</div></pre></td></tr></table></figure></p>
+<p>tar</p>
+<p>-c: 建立压缩档案<br>-x：解压<br>-t：查看内容<br>-r：向压缩归档文件末尾追加文件<br>-u：更新原压缩包中的文件</p>
+<p>这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。<br>下面的参数是根据需要在压缩或解压档案时可选的。</p>
+<p>-z：有gzip属性的<br>-j：有bz2属性的<br>-Z：有compress属性的<br>-v：显示所有过程<br>-O：将文件解开到标准输出</p>
+<p>解压常用命令：</p>
+<p>tar –xvf file.tar  解压 tar包<br>tar -xzvf file.tar.gz 解压tar.gz<br>tar -xjvf file.tar.bz2   解压 tar.bz2<br>tar –xZvf file.tar.Z   解压tar.Z<br>unrar e file.rar 解压rar<br>unzip file.zip 解压zip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">完成这些之后还要启动nginx和php-fpm，这样`service nginx start`和`service php-fpm start`。</div><div class="line">这样GitBlog就搭建完成了。下面进入Git的环节。</div><div class="line"></div><div class="line">---</div><div class="line">如果想要自启动某个服务的话，可以用`chkconfig service_name on`如果想要关闭的话可以`chkconfig service_name off`。  </div><div class="line">之前一直没有自启动php-fpm服务，所以每次重启服务器还得去手动重启php-fpm麻烦的很。</div><div class="line"></div><div class="line">---</div><div class="line">下面是从网上摘录的scp远程传送文件命令。  </div><div class="line"></div><div class="line">复制文件：  </div><div class="line">（1）将本地文件拷贝到远程  </div><div class="line">scp 文件名用户名@计算机IP或者计算机名称:远程路径  </div><div class="line"></div><div class="line"></div><div class="line">（2）从远程将文件拷回本地  </div><div class="line">scp 用户名@计算机IP或者计算机名称:文件名本地路径  </div><div class="line"></div><div class="line">复制目录：  </div><div class="line">（1）将本地目录拷贝到远程  </div><div class="line">scp -r 目录名用户名@计算机IP或者计算机名称:远程路径  </div><div class="line"></div><div class="line">（2）从远程将目录拷回本地  </div><div class="line">scp -r 用户名@计算机IP或者计算机名称:目录名本地路径  </div><div class="line"></div><div class="line">---</div><div class="line">2016年3月3日补充</div><div class="line"></div><div class="line">nginx配置可以参照下面：</div></pre></td></tr></table></figure></p>
+<p>server {<br>        listen       80;<br>        server_name  liyu34.xyz;<br>        root         /data/vhost/liyu34.xyz;<br>        index        index.html index.htm index.php;</p>
+<pre><code>location ~ \.(jpg|png|gif|js|css|swf|flv|ico)$ {
+         expires 12h;
+}
+
+location / {
+        if (!-e $request_filename) {
+            rewrite ^(.*)$ /index.php?$1 last ;
+            break;
+        }
+}
+
+location ~* ^/(doc|logs|app|sys)/ {
+        return 403;
+}
+
+location ~ .*\.(php|php5)?$
+{
+        fastcgi_connect_timeout 300;
+        fastcgi_send_timeout 300;
+        fastcgi_read_timeout 300;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+}
+</code></pre><p>}<br>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/站点迁移/" data-id="ciu2osn4m000x8cyg5311hgec" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/研究生开学了/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          研究生开学了
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/QtNote_QTableView_Button/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">QtNote:在QTableView里面添加按钮&amp;QMessageBox按钮</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

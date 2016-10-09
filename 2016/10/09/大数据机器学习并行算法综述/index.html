@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>大数据机器学习并行算法综述 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="把现有的传统机器学习算法并行化是将其运用于大数据环境中的一种典型策略。把现有的传统机器学习算法并行化主要问题有两个，第一个是如何重新设计传统算法使之能够并行化，二是选择何种手段实现并行化。目前的常用手段有三种，第一种是借助于众核设备对常规机器学习算法进行并行化；第二种是基于Hadoop MapReduce模式的并行化，这种方法扩展性好但是由于Hadoop MapReduce本身对于IO开销较大所以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="大数据机器学习并行算法综述">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/大数据机器学习并行算法综述/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="把现有的传统机器学习算法并行化是将其运用于大数据环境中的一种典型策略。把现有的传统机器学习算法并行化主要问题有两个，第一个是如何重新设计传统算法使之能够并行化，二是选择何种手段实现并行化。目前的常用手段有三种，第一种是借助于众核设备对常规机器学习算法进行并行化；第二种是基于Hadoop MapReduce模式的并行化，这种方法扩展性好但是由于Hadoop MapReduce本身对于IO开销较大所以">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.526Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="大数据机器学习并行算法综述">
+<meta name="twitter:description" content="把现有的传统机器学习算法并行化是将其运用于大数据环境中的一种典型策略。把现有的传统机器学习算法并行化主要问题有两个，第一个是如何重新设计传统算法使之能够并行化，二是选择何种手段实现并行化。目前的常用手段有三种，第一种是借助于众核设备对常规机器学习算法进行并行化；第二种是基于Hadoop MapReduce模式的并行化，这种方法扩展性好但是由于Hadoop MapReduce本身对于IO开销较大所以">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-大数据机器学习并行算法综述" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/大数据机器学习并行算法综述/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      大数据机器学习并行算法综述
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>把现有的传统机器学习算法并行化是将其运用于大数据环境中的一种典型策略。把现有的传统机器学习算法并行化主要问题有两个，第一个是如何重新设计传统算法使之能够并行化，二是选择何种手段实现并行化。目前的常用手段有三种，第一种是借助于众核设备对常规机器学习算法进行并行化；第二种是基于Hadoop MapReduce模式的并行化，这种方法扩展性好但是由于Hadoop MapReduce本身对于IO开销较大所以效率比较差；第三种是基于Spark的并行化算法，Spark基于内存计算也有较好的可扩展性。  </p>
+<hr>
+<p>Wang等[1]提出一种将蚁群算法并行化的策略，其思路是通过将蚂蚁构造为弹性分布式数据集，由此给出相应的一系列转换算子，实现了蚂蚁构造解过程的并行化。实验表明并行的蚁群优化算法大幅提升了优化速度。  </p>
+<p>Guo等[2]首先针对CLOPE算法受输入数据顺序影响较大的不足提出了MRCLOPE算法，MRCLOPE算法通过等分划分再排列的方式将输入数据等分划分形成不同顺序的输入数据集，然后对各种输入数据集进行分别聚类；然后使用MapReduce并行编程模型对MRCLOPE算法进行并行化处理，实验结果表明并行化的MRCLOPE算法对比于CLOPE算法在没有显著扩大聚类时间的情况下，提高了收益值。  </p>
+<p>文献[3] 基于SparkR设计并实现了并行化的Multinomial NaiveBayes多分类算法、SVM以及Logistic Regression二分类算法并评估了基于Hadoop MapReduce实现的并行化算法的性能差别。实验结果表明，基于SparkR设计并实现的并行化Multinomial NaiveBayes多分类算法比较于基于Hadoop MapReduce实现的并行化算法效率要高。  </p>
+<p>Gu等[4]提出了一种基于Tesla K10 GPU的误差反向传播算法，该算法采取MiniBatch结构作为BP算法的并行结构，并充分利用了PCI-E3. 0 传输特性，并结合了 peer-to-peer 以及异步传输的特性来降低计算任务在划分和合并过程中带来的额外开销。实验证明，该算法拥有双卡超过 1. 87 的并行加速比，且算法执行过程中不会引入计算误差，可有效保证训练过程中的收敛效率，拥有理想的并行加速效果。  </p>
+<p>Yu[5]提出了一种K-means算法的一种优化方式和并行化手段，通过结合K-means++算法和密度提出了一种初始点选择的优化算法，以及结合K-means++算法和Mean Shift算法给出了另外一种初始点选择的优化算法，并提出了K-means算法的一种并行化手段，将计算点距离和更新簇中心点位置并行，实验结果表明，并行化的K-means算法在不损害精确度的情况下较大的提升了效率。  </p>
+<hr>
+<p>综上所述，并行策略是传统机器学习运用于大数据的典型策略之一，并且在一定范围内取得了一些进展，能够处理一定量级的大数据。如何为传统机器学习算法设计高效的并行策略也是当今的研究热点之一。</p>
+<hr>
+<p>参考文献：<br>[1]王诏远,王宏杰,邢焕来,李天瑞.基于Spark的蚁群优化算法[J].计算机应用,2015,10:2777-2780+2797.  </p>
+<p>[2]刘志强,顾荣,袁春风,黄宜华.基于SparkR的分类算法并行化研究[J].计算机科学与探索,2015,11:1281-1294.  </p>
+<p>[3]郭涛.分类数据的并行聚类算法研究[D].东华大学,2015.  </p>
+<p>[4]宇斌彬.基于数据划分的迭代算法的并行与优化[D].中国科学技术大学,2015.  </p>
+<p>[5]顾乃杰,赵增,吕亚飞,张致江.基于多GPU的深度神经网络训练算法[J].小型微型计算机系统,2015,05:1042-1046.  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/大数据机器学习并行算法综述/" data-id="ciu2osn46000t8cyg52bkoh4i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/调试链接库工程/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          如何调试一个链接库工程工程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/如何清除U盘的分区/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">如何清除U盘的分区</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

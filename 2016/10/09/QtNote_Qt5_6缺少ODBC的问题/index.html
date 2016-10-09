@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>QtNote:Qt5.6缺少QODBC驱动 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前阵子发现Qt5.6终于发布了之后，满心欢喜的安装了Visual Studio 2015和Qt5.6，最近发现Qt5.6默认不带QODBC驱动了，以前的程序连接不上SqlServer了，很是苦恼，于是尝试了以下两种解决办法，其中第一种是不可行的，大家不要尝再去试。
+##从Qt5.5中拷贝QODBC（不可行）秉承着少什么给什么的朴素主义程序员原则，我重新安装了Qt5.5，并且从Qt5.5.0\5.5">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QtNote:Qt5.6缺少QODBC驱动">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前阵子发现Qt5.6终于发布了之后，满心欢喜的安装了Visual Studio 2015和Qt5.6，最近发现Qt5.6默认不带QODBC驱动了，以前的程序连接不上SqlServer了，很是苦恼，于是尝试了以下两种解决办法，其中第一种是不可行的，大家不要尝再去试。
+##从Qt5.5中拷贝QODBC（不可行）秉承着少什么给什么的朴素主义程序员原则，我重新安装了Qt5.5，并且从Qt5.5.0\5.5">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QtNote:Qt5.6缺少QODBC驱动">
+<meta name="twitter:description" content="前阵子发现Qt5.6终于发布了之后，满心欢喜的安装了Visual Studio 2015和Qt5.6，最近发现Qt5.6默认不带QODBC驱动了，以前的程序连接不上SqlServer了，很是苦恼，于是尝试了以下两种解决办法，其中第一种是不可行的，大家不要尝再去试。
+##从Qt5.5中拷贝QODBC（不可行）秉承着少什么给什么的朴素主义程序员原则，我重新安装了Qt5.5，并且从Qt5.5.0\5.5">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-QtNote_Qt5_6缺少ODBC的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      QtNote:Qt5.6缺少QODBC驱动
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前阵子发现Qt5.6终于发布了之后，满心欢喜的安装了Visual Studio 2015和Qt5.6，最近发现Qt5.6默认不带QODBC驱动了，以前的程序连接不上SqlServer了，很是苦恼，于是尝试了以下两种解决办法，<strong>其中第一种是不可行的，大家不要尝再去试。</strong></p>
+<p>##从Qt5.5中拷贝QODBC（不可行）<br>秉承着少什么给什么的朴素主义程序员原则，我重新安装了Qt5.5，并且从Qt5.5.0\5.5\msvc2015\plugins\sqldrivers\下面拷贝出了以<code>qsqlodbc</code>开头的三个文件到Qt5.6对应的文件夹中，运行程序，还是显示无法加载QODBC，但是系统已经检测到sqldriver文件夹下面有QODBC了，但是由于版本不同无法使用，所以此路不通。  </p>
+<p>##从Qt5.6源码中编译QODBC<br>虽然不知道为什么Qt5.6默认不自带QODBC了，但是还是可以从源码中编译出QODBC的，方法步骤也挺简单的，取自<a href="http://blog.csdn.net/sniper_bing/article/details/51018783" target="_blank" rel="external">Qt5.6 windows下vs2015编译QODBC</a>作者：蜗牛的信仰。  </p>
+<p>主要有五步：  </p>
+<ol>
+<li>打开Visual Studio提供的CMD（我这里是<code>VS2015 x64 Native Tools Command Prompt</code>）</li>
+<li>进入<code>Qt5.6.0\5.6\msvc2015\bin</code>，执行<code>qtenv2.bat</code></li>
+<li>进入<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc</code>，执行<code>qmake odbc.pro</code></li>
+<li>执行<code>nmake</code>（开始编译）</li>
+<li>编译完成之后进入<code>Qt5.6.0\5.6\Src\qtbase\plugins\sqldrivers</code>中将所有<code>qsqlodbc</code>开头的文件（<strong>注意是所有的文件，不只是三个</strong>）拷贝到<code>Qt5.6.0\5.6\msvc2015\plugins\sqldrivers</code>  </li>
+</ol>
+<hr>
+<p>但是当我想要编译32位QODBC的时候（我同时也安装了32位Qt），上面的方法却行不通了，就算我用的是<code>VS2015 x86 Native Tools Command Prompt</code>也不行，说模型是x86的，但是目标机器是x64的，编译失败。  </p>
+<p>这时候可以打开Visual Studio，使用Qt的菜单栏<code>Open Qt Project File(.pro)</code>打开<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc</code>中的odbc.pro文件，然后将用Configuration Manager新建一个solution platform为x86的，然后分别Debug build一下和Release build一下。然后去<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc\Debug|Release</code>里面拷贝东西就好了。  </p>
+<p>另外，其实Debug build的时候会在<code>Qt5.6.0\5.6\Src\qtbase\plugins\sqldrivers</code>里面生成Debug的库文件，但是Release的时候不会在那个目录下生成，因为新建solution platfrom的时候没有设置生成地点，所以就默认在odbc工程根目录下生成了。 </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" data-id="ciu2osn3d000f8cygvmhdo9ok" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/QtNote_QTcpSocket_QObject/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          QtNote:QTcpSocket与QThread，QObject的拷贝问题
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">QtNote:Qt连接SqlServer | Qt中的相互引用问题 | Qt发布数据库程序</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

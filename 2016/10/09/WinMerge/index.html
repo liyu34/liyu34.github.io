@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>如何配置WinMerge作为Git-for-windows的mergetool | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="前几天和同学协同开发的时候遇到了合并冲突问题，git的默认gui又只能Use remote edtionorUse local edtion 无法进行更加细致的合并。所以我就想配置一个合并工具。
+搜索了一番决定使用WinMerge，然后就展开了为期两天的探索。
+搜索Git和WinMerge就会出来很多配置教程，我尝试了很多都不行，后来我发现了问题的所在。先说一下我是怎么做的。
+
+我的环境是32位w">
+<meta property="og:type" content="article">
+<meta property="og:title" content="如何配置WinMerge作为Git-for-windows的mergetool">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/WinMerge/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="前几天和同学协同开发的时候遇到了合并冲突问题，git的默认gui又只能Use remote edtionorUse local edtion 无法进行更加细致的合并。所以我就想配置一个合并工具。
+搜索了一番决定使用WinMerge，然后就展开了为期两天的探索。
+搜索Git和WinMerge就会出来很多配置教程，我尝试了很多都不行，后来我发现了问题的所在。先说一下我是怎么做的。
+
+我的环境是32位w">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="如何配置WinMerge作为Git-for-windows的mergetool">
+<meta name="twitter:description" content="前几天和同学协同开发的时候遇到了合并冲突问题，git的默认gui又只能Use remote edtionorUse local edtion 无法进行更加细致的合并。所以我就想配置一个合并工具。
+搜索了一番决定使用WinMerge，然后就展开了为期两天的探索。
+搜索Git和WinMerge就会出来很多配置教程，我尝试了很多都不行，后来我发现了问题的所在。先说一下我是怎么做的。
+
+我的环境是32位w">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-WinMerge" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/WinMerge/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      如何配置WinMerge作为Git-for-windows的mergetool
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前几天和同学协同开发的时候遇到了合并冲突问题，git的默认gui又只能<code>Use remote edtion</code>or<code>Use local edtion</code> 无法进行更加细致的合并。所以我就想配置一个合并工具。</p>
+<p>搜索了一番决定使用WinMerge，然后就展开了为期两天的探索。</p>
+<p>搜索Git和WinMerge就会出来很多配置教程，我尝试了很多都不行，后来我发现了问题的所在。先说一下我是怎么做的。</p>
+<hr>
+<p><strong>我的环境是32位win7+Git-for-windows2.4.5+WinMerge</strong></p>
+<hr>
+<ol>
+<li><p>首先安装好<a href="http://winmerge.org/" target="_blank" rel="external">WinMerge</a>，这一步没什么好说的，就是点击下一步就好。记得要点那个把WinMerge添加到环境变量里的选项，如果没选的话下一步需要修改profile文件。</p>
+</li>
+<li><p>然后配置Git Bash的<code>PATH</code>变量，之前很多教程都在说这个<code>PATH</code>但是都不甚详细。我摸索了一下（怪我自己Linux知识不熟），直接上代码大家应该能看明白。<br><code>export PATH=&quot;$PATH:/c/Program Files/WinMerge/&quot;</code>。<br>不过还有一个问题就是上面那句命令只能在不关闭bash前生效，可以去<code>../Git/etc/</code>里面修改profile文件，在最后一行加上上面那行命令就行。</p>
+</li>
+<li><p>第三步需要下载其他文件，由于我的Git版本是2.4.5，mergetool里面并没有添加对winmerge的支持，但是自从2.5.0之后Git添加了对winmerge的支持，所以我就从Git在github的主页上下载了最新的源码，从源码的<code>/mergetool/</code>目录下面copy了一份winmerge文件到<code>../Git/mingw32/libexec/git-core/mergetool/</code>下面。如果是Git2.x一下的版本目录应该是<code>../Git/libexec/git-core/mergetool/</code>。</p>
+</li>
+<li><p>完成这三步之后就可以尝试一下了，在bash里面输入<br><code>git mergetool --tool-help</code>。<br>这时候bash就会列出能够使用的工具，如果winmerge在可用的那一栏里，就标志着可以用了。这时候还得让git知道你要用winmerge了。还需要在bash里面输入以下命令：<br><code>git config --global merge.tool winmerge</code>。</p>
+</li>
+</ol>
+<hr>
+<p><strong>但是！但是！</strong>这时候<code>git difftool</code>还是不能打开winmerge，但是<code>git mergetool</code>已经可以用winmerge了。更详细的原因还没有研究。<br>不要吐槽是因为没有设置diff.tool，设置了也不行，所以上面就没说。</p>
+<hr>
+<p>##2015.10.21补充<br>经过我的实际验证，新版本的git-for-windows 2.6.1已经可以无视上面那些繁杂的配置了，安装完WinMerge之后直接在Git Bash里面一句话<code>git config --global merge.tool winmerge</code>就行了。  </p>
+<p>对了我现在的环境是64位win10+Git-for-windows2.6.1+WinMerge。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/WinMerge/" data-id="ciu2osn3u000n8cygx2vkd9zd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/Win10无声音/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          关于Win10无声音的问题以及解决办法。
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/friends/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">友情链接</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

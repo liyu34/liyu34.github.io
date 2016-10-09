@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Shark重操旧业" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Shark重操旧业/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Shark重操旧业/">重操旧业——Shark</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>好了，闲话不多说，我的本科毕设是用的Shark库，最近要重新做实验，所以需要把原来的程序跑起来，想跑起原来的程序就必须有原来的环境，所以首先要把shark给编译好。那么下面就是编译shark的全过程：  </p>
+<hr>
+<p>shark版本 <a href="http://image.diku.dk/shark/" target="_blank" rel="external">Shark3.0</a><br>boost版本 <a href="http://www.boost.org/" target="_blank" rel="external">boost1.59</a>（注：boost1.60把ice_not给取消了，会导致shark编译错误，所以使用boost1.59，也不知道现在这个错误修复了没有）  </p>
+<hr>
+<p>##编译boost  </p>
+<p>boost下载完成之后进入目录运行bootstrap.bat，运行完成之后会发现目录下面生成了bjam.exe和b2.exe两个可执行文件，运行这两个中的任意一个就会开始编译boost了，编译完成之后需要给环境变量添加<code>BOOST_ROOT</code>，值为boost的根目录。  </p>
+<p>如果有特殊要求需要编译64位boost的话可以按照下面的方式：<br>用VS的64位命令行工具（可以在开始菜单栏里面找到），打开这个工具之后进入boost的目录，执行bootstrap.bat然后执行以下命令：  </p>
+<pre><code>bjam --build-type=complete toolset=msvc-12.0 threading=multi link=static address-model=64
+</code></pre><p>上面的命令编译出来是静态库，如果是想要动态库的话就把static变成shared即可。  </p>
+<hr>
+<p>##编译shark3.0<br>运行CMake，进入shark目录，生成目录我也选择在其目录，点击configure之后出错，告诉我找不到boost的lib，然后有一个选项是<code>USE_STATIC_BOOST_LIB</code>，把这个勾选上（因为之前我生成的是boost的静态库），点击configure，成功（即没有错误），然后generate。  </p>
+<p>这时候在shark目录下面已经有VS工程文件了，打开工程，点击编译，等待许久之后可能会遇到错误，显示不认识什么什么东西来着，具体是什么忘记了，笔记本上也没记载，需要手动改三个工程的属性，把一个什么东西当作变量来着……忘记了……记着应该是这里的问题。反正问题也不难，百度了一下立刻就出来了。  </p>
+<hr>
+<p>##使用shark<br>使用shark的工程需要添加附加引用目录、附加库引用目录以及附加库依赖（一个重要的库文件）。附加引用目录添加boost的根目录和shark的include目录，附加库引用目录添加shark/lib/Debug( or Release)和boost/stage/lib，shark的Debug库和Release库并不兼容。  </p>
+<p>附加引用目录（Linker-&gt;Input-&gt;Addtional Dependencies）要添加shark_debug.lib或shark.lib，根据工程当前是发布还是调试来调整。  </p>
+<p>另外，在VC++ Directories里面设定附加引用目录和附加库引用目录和在C++与Linker里面分别设定是一样的，但是附加库依赖必须在Linker里面设置。  </p>
+<hr>
+<p>##位数相关  </p>
+<p>boost 32位可以支持编译32位shark。<br>boost 64位可以支持编译64位shark。<br>编译多少位的shark要从CMake那里选择，如果是要编译64位的shark的话需要选择带Win64的编译器。  </p>
+<hr>
+<p>##另外，现在shark3.1.0已经修复了不支持boost1.60的错误。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/Shark重操旧业/" data-id="ciu2osn3o000k8cygqpfjy73m" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SqlServer触发器" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/SqlServer触发器/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/SqlServer触发器/">SqlServer数据库触发器</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>触发器这个东西这是第一次真正接触，是因为用视图实现了分片透明性之后还想要实现操作透明性。闲话不多说，先上一段代码：  </p>
+<pre><code>create trigger rtuwell_trigger_insteadof_insert
+on RTU_WELL
+    instead of insert
+as
+    declare @RTUID int, @WELLID int;
+    select @RTUID=RTU_ID,@WELLID=WELL_ID from inserted;
+    if(@RTUID&gt;6)
+        insert into rtuwell_2 values(@RTUID,@WELLID);
+    else
+        insert into rtuwell_1 values(@RTUID,@WELLID);
+go
+</code></pre><p>最重要的部分是<code>as</code>和<code>go</code>中间的部分，首先需要定义变量，这个定义的变量就是你想要触发器操作的所有变量，我的这个表里面只有两列，一列是RTUID，一列是WELLID，这两个都是int型的。  </p>
+<p>然后因为这个是<code>instead of insert</code>所以需要把要操作的内容从<code>inserted</code>黑洞中拉出来，然后再进行处理。当然如果是<code>instead of delete</code>那么就是<code>deleted</code>黑洞了。  </p>
+<p>最后附上原文链接(这里面有详细的内容)：<br><a href="http://www.cnblogs.com/hoojo/archive/2011/07/20/2111316.html" target="_blank" rel="external">SQL Server 触发器</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/SqlServer触发器/" data-id="ciu2osn3r000l8cygwru28fq9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Win10无声音" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Win10无声音/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨天帮刘硕修理了她的笔记本电脑，她的电脑突然就没有声音了，没有摔过也没有下载什么奇怪的东西，就是突然没有声音了。</p>
+<p>像这种离奇的事件也就只有离奇的软件能够作为其原因了，所以我理所当然的想到是不是声卡驱动出了问题，然后我就让她重装了声卡驱动，然而没有什么效果。</p>
+<p>昨天我拿到了她的电脑，然后开始了检查，使用搜狗音乐播放音乐，进度条始终无法前进，然后换网易云音乐，也是一样的情况，用网易云音乐下载了一首歌曲然后播放提示我“无法播放请更换输出介质”之类的提示语。看视频只有动画没有声音。</p>
+<hr>
+<p>了解了这个问题的所有表征之后我向百度提了一个问题：<br><strong>Win10无法播放所有音频文件</strong><br>然后我找到了这个连接：<a href="http://zhidao.baidu.com/question/426103597708091812.html" target="_blank" rel="external">win10无法播放音乐文件</a></p>
+<hr>
+<p>右键点击那个小喇叭，选择“播放设备”，选中“扬声器”，点击“属性”，进入“高级”之后选择不同的Hz。<br><img src="http://ablee.cc/blog/img/sound.JPG" alt="sound"><br>就是上图的界面，我发现16位的高于48000Hz的选项是没有声音的，24位的高于44100Hz的选项是没有声音的。所以我想应该是存储位不足的原因吧。声卡内存？</p>
+<hr>
+<p>这次能够免于重装系统，我还是很开心的~</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/Win10无声音/" data-id="ciu2osn3t000m8cyg54yeo18f" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-WinMerge" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/WinMerge/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/WinMerge/">如何配置WinMerge作为Git-for-windows的mergetool</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前几天和同学协同开发的时候遇到了合并冲突问题，git的默认gui又只能<code>Use remote edtion</code>or<code>Use local edtion</code> 无法进行更加细致的合并。所以我就想配置一个合并工具。</p>
+<p>搜索了一番决定使用WinMerge，然后就展开了为期两天的探索。</p>
+<p>搜索Git和WinMerge就会出来很多配置教程，我尝试了很多都不行，后来我发现了问题的所在。先说一下我是怎么做的。</p>
+<hr>
+<p><strong>我的环境是32位win7+Git-for-windows2.4.5+WinMerge</strong></p>
+<hr>
+<ol>
+<li><p>首先安装好<a href="http://winmerge.org/" target="_blank" rel="external">WinMerge</a>，这一步没什么好说的，就是点击下一步就好。记得要点那个把WinMerge添加到环境变量里的选项，如果没选的话下一步需要修改profile文件。</p>
+</li>
+<li><p>然后配置Git Bash的<code>PATH</code>变量，之前很多教程都在说这个<code>PATH</code>但是都不甚详细。我摸索了一下（怪我自己Linux知识不熟），直接上代码大家应该能看明白。<br><code>export PATH=&quot;$PATH:/c/Program Files/WinMerge/&quot;</code>。<br>不过还有一个问题就是上面那句命令只能在不关闭bash前生效，可以去<code>../Git/etc/</code>里面修改profile文件，在最后一行加上上面那行命令就行。</p>
+</li>
+<li><p>第三步需要下载其他文件，由于我的Git版本是2.4.5，mergetool里面并没有添加对winmerge的支持，但是自从2.5.0之后Git添加了对winmerge的支持，所以我就从Git在github的主页上下载了最新的源码，从源码的<code>/mergetool/</code>目录下面copy了一份winmerge文件到<code>../Git/mingw32/libexec/git-core/mergetool/</code>下面。如果是Git2.x一下的版本目录应该是<code>../Git/libexec/git-core/mergetool/</code>。</p>
+</li>
+<li><p>完成这三步之后就可以尝试一下了，在bash里面输入<br><code>git mergetool --tool-help</code>。<br>这时候bash就会列出能够使用的工具，如果winmerge在可用的那一栏里，就标志着可以用了。这时候还得让git知道你要用winmerge了。还需要在bash里面输入以下命令：<br><code>git config --global merge.tool winmerge</code>。</p>
+</li>
+</ol>
+<hr>
+<p><strong>但是！但是！</strong>这时候<code>git difftool</code>还是不能打开winmerge，但是<code>git mergetool</code>已经可以用winmerge了。更详细的原因还没有研究。<br>不要吐槽是因为没有设置diff.tool，设置了也不行，所以上面就没说。</p>
+<hr>
+<p>##2015.10.21补充<br>经过我的实际验证，新版本的git-for-windows 2.6.1已经可以无视上面那些繁杂的配置了，安装完WinMerge之后直接在Git Bash里面一句话<code>git config --global merge.tool winmerge</code>就行了。  </p>
+<p>对了我现在的环境是64位win10+Git-for-windows2.6.1+WinMerge。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/WinMerge/" data-id="ciu2osn3u000n8cygx2vkd9zd" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-friends" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/friends/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/friends/">友情链接</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#友链见下方：  </p>
+<hr>
+<p>##<a href="http://www.gitblog.cn/index.html" target="_blank" rel="external">GitBlog官网</a></p>
+<p>##<a href="http://www.lihuanyu.com" target="_blank" rel="external">环宇博客</a></p>
+<p>虽然我很想再写上几个，但是现在就只能写这些了，希望以后能够多起来。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/friends/" data-id="ciu2osn3v000o8cyghtbp94je" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Gitblog升级记录" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Gitblog升级记录/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Gitblog升级记录/">Gitblog升级记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天晚上Gitblog又发布新版本了，于是又是一次更新换代的时间，我第一时间在我的VPS上更新了Gitblog2.2，期间还做了些小改动。Gitblog版本的更新细则请参见<a href="https://github.com/jockchou/gitblog/releases" target="_blank" rel="external">这里</a>。</p>
+<p>那么每次更新Gitblog版本的时候都要注意不要把博文和自己的配置给弄丢，我之前是把所有的博文放到了Dropbox中，所以这次我直接把更新包里面的东西全部丢进了我的站点目录，然后暂时停掉Dropbox服务，把Dropbox自动更新目录重新指向正确的目录就OK啦！这时候博客已经可以打开了。</p>
+<p>但是由于这时候我忘记了把配置文件放进去，所以网站有点奇奇怪怪的，我不得不打开WinSCP把配置文件拷贝进去，这样倒是可以，不过每当我想要更改什么配置的时候还得打开WinSCP什么的，好麻烦。所以我就把配置文件放到了Dropbox里面同时备份，这样配置文件就会出现在blog/文件夹下，那么我在网站根目录下做一个配置文件的软连接即可。</p>
+<p>我也尝试过硬链接，但是我在本地改了配置文件之后只有blog文件夹里面的配置文件发生了变化，但是根目录下的硬连接文件并没有改变，可能是因为Dropbox在同步的时候把旧文件内容和新内容加在一起生成了一个新文件，然后旧文件依旧在原处作为备份，硬链接依旧指向原来的地址，所以并没有发生变化。</p>
+<p>所以现在我的所有配置和博文都在Dropbox里面了，下次更新Gitblog只需要更新一下配置文件的软连接就行了。</p>
+<ol>
+<li>停止Dropbox服务<code>killall dropbox</code></li>
+<li>把网站根目录下的blog文件夹拷贝到别处<code>cp -Rf blog/* ../blog/</code></li>
+<li>解压Gitblog<code>tar -xvzf v2.2</code></li>
+<li>把解压目录下的blog文件夹删除</li>
+<li>把解压目录下所有的东西拷贝到网站根目录</li>
+<li>将blog文件夹拷贝回来</li>
+<li>重新建立配置文件的软连接<code>ln -s blog/conf.yaml conf.yaml</code></li>
+<li>启动Dropbox服务<code>~/.dropbox-dist/dropboxd &amp;</code>  </li>
+</ol>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/Gitblog升级记录/" data-id="ciu2osn2g00038cygv38br5j6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Gitblog邮戳（GitblogPostmark）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Gitblog邮戳（GitblogPostmark）/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Gitblog邮戳（GitblogPostmark）/">Gitblog邮戳（GitblogPostmark）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Gitblog邮戳使用Qt进行开发，现在只有windows版本，可以在<a href="https://github.com/liyu34/GitblogPostmark/releases" target="_blank" rel="external">GitblogPostmark</a>的Github的发行版本页面进行下载。提供zip格式和exe格式两种。  </p>
+<p>##一、简介<br>Gitblog邮戳（GitblogPostmark）（以下简称邮戳）是为更加方便的发布Gitblog博文而开发的为Gitblog博文加盖特定格式的文件前缀的程序，使用它可以方便的为Gitblog提供“作者”、“日期”、“主题”等等信息。<a href="https://github.com/jockchou/gitblog" target="_blank" rel="external">Gitblog</a>的详细信息请参见其Github主页。  </p>
+<p>##二、功能特点</p>
+<ol>
+<li>根据填写的信息可便捷的为Gitblog博文添加文件前缀。</li>
+<li>可以选择已有md文件或者自动生成md文件。</li>
+<li>可以设置默认生成博文的文件夹路径。</li>
+<li>可以本地保存已有文集名称。</li>
+<li>支持中文输入。  </li>
+</ol>
+<p>##三、环境要求<br>Windows7+  </p>
+<p>##四、安装步骤</p>
+<ol>
+<li>下载Zip包或者EXE安装包。</li>
+<li>解压缩或者安装到本地。  </li>
+</ol>
+<p>##五、软件界面<br><img src="http://ablee.cc/blog/img/GPostmark_main.png" alt="MainWindow">  </p>
+<p>##六、问题及Bug反馈<br>请直接在<a href="https://github.com/liyu34/GitblogPostmark" target="_blank" rel="external">GitblogPostmark</a>的Github主页发起issue或直接提交。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/Gitblog邮戳（GitblogPostmark）/" data-id="ciu2osn2h00048cygqijlv9vh" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Git发布博文" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Git发布博文/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Git发布博文/">使用Git来发布博文</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>##使用Git发布博文<br>其实之前也尝试过使用Git发布博文，但是totally失败了，上次方法很可笑，这次用git的hook工具。<br>首先在服务器上安装git，这个就不说了。安装好git之后需要在服务器上面给git分配一个用户<code>adduser git</code>并给它一个密码。<br>切换到git用户之后创建一个git远程代码仓库（myblog.git），然后再去博文目录创建git仓库。（在这一步我遇到了问题……权限问题，最后无奈的我把blog目录所有者改为了git）在博文目录添加myblog.git作为远程仓库。<br>然后去myblog.git的目录，进入hooks目录之后新建post-receive脚本文件，这个文件会在每次接收到客户端push之后执行，其余hook用法可以看<a href="http://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">这里</a><br>下面是脚本文件的内容，保存好之后还得给它+x<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="built_in">unset</span> GIT_DIR</div><div class="line">B<span class="built_in">log</span>Path=/data/vhost/liyu34.xyz/blog</div><div class="line"></div><div class="line"><span class="built_in">cd</span> <span class="variable">$BlogPath</span></div><div class="line">git add . -A &amp;&amp; git stash</div><div class="line">git pull orig master</div><div class="line">cp -r conf.yaml ../conf.yaml</div><div class="line">rm -rf ../app/cache/*</div><div class="line">```  </div><div class="line">这样钩子就设定好了，接下来得把网站服务器上的git搭建为服务器git，</div><div class="line">参照[这里](https://ruby-china.org/topics/5040)（我就是偷懒了……）  </div><div class="line"></div><div class="line">**然后vps的ssh端口变了怎么办，也请参照[这里](http://zengrong.net/post/1544.htm)。**  </div><div class="line"></div><div class="line">权限问题？刚刚我遇到了一个问题就是我按照之前的办法来写了post-receive脚本，就是无法执行，后来发现是权限问题，我把blog目录的权限设为765之后git就不能pull了，暂时还不清楚是什么原因。  </div><div class="line">权限问题真混乱，缓存目录下面的东西是apache用户的,我把cache目录设为777之后apache用户产生的目录还是755的，git无法去操作那些目录。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2015.10.21补充</span></div><div class="line">经过今天的事情我充分认识到我的Linux水平就跟海平面一样。。。稍稍高一点的东西就不懂了……  </div><div class="line">之前我每次在本地提交的时候还需要输入登陆密码，作为一个合格程序员（就是懒），我觉得我得做点什么，比如ssh什么的。</div><div class="line">然后我就把ssh的key传到了服务器上，然后……就不用输密码了。。。由于我的Linux水平低下，所以我并不准备说太多。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2016年3月3日补充</span></div><div class="line">如果是SCP命令想要使用除了22以外的端口的话，需要加上端口参数如下：</div></pre></td></tr></table></figure></p>
+<p>SCP -P port_number user@serviceip:floder<br>```  </p>
+<p>也必须在blog目录下面初始化git目录。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/Git发布博文/" data-id="ciu2osn2l00058cygyw1dsxwo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-HowToUpdateBlogWithGit" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/HowToUpdateBlogWithGit/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/HowToUpdateBlogWithGit/">如何使用Git更新博客（一次失败的尝试）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开门见山，先来说一下我用git发布博文的整体结构。  </p>
+<ul>
+<li>博客服务器一枚  </li>
+<li>Git@OSC帐号一枚  </li>
+<li>本地电脑一台</li>
+</ul>
+<p>发布工作的流程是这样的：  </p>
+<ol>
+<li>本地编写完成之后在博文目录提交并push到OSC的仓库  </li>
+<li>博客服务器从OSC的仓库中pull得最新博文。</li>
+</ol>
+<p>这样博客服务器和本地电脑上面的git都是充当客户端的git，本来想看一看有没有直接上传的办法，找了一会没找到就采取这种办法了，不过这样也好，我的博文有<strong>四处</strong>存放点（本地+博客服务器+OSC仓库+坚果云）。  </p>
+<p>为了保证每次打开博客看到的都是最新的情况，我在GitBlog的index.php里面加了一句运行本地shell文件的命令，如下：<br><code>exec(&quot;.../gitpull.sh&quot;);</code><br>这样每次打开博客都会自动去远程仓库pull一下，总感觉pull频繁了会有安全隐患呢。。。先不管了，以后再说吧。其实刚才也尝试了crontab的方法（linux的定时器），设定的是每五分钟pull一次，但是好像没什么效果，加上这么做可能不能实时更新，就放弃了。以后的话看看改善一下gitpull这个脚本吧。  </p>
+<hr>
+<p>对了，我现在用的MarkDown是一个开源的Qt的本地编辑器CuteMarkEd，每次打开都要手动复制博文的前缀也是很麻烦的，所以最近想要在这个CuteMarkEd的基础上添加一些适合GitBlog的功能，这样用起来应该会方便一些吧。  </p>
+<hr>
+<p>但是Git的方案失败了，因为在网页里面的php代码不能执行git pull，有说是权限问题的，我尝试了几次不行就放弃了，因为对php不熟悉。  </p>
+<hr>
+<p><strong>但是！我现在也实现了自动发布博文功能！是用Dropbox实现的，稍等我就来记载一下</strong>  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/HowToUpdateBlogWithGit/" data-id="ciu2osn2p00068cygj42tgd8x" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Linux-MySql" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Linux-MySql/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Linux-MySql/">在Linux服务器上安装MySql并用Qt连接它</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因为项目需要，我需要在一个服务器上面安装MySql然后用客户端程序去访问它，之前以为SAE可以用，后来发现，SAE提供的数据库服务只能用于它本地的程序，根本就不能用外网访问。于是我就在我的VPS上安上了MySql。  </p>
+<p>在CentOs上面安装MySql挺简单的，可以用一个命令完成安装。<code>yum groupinstall &quot;mysql&quot;</code>安装上之后  <code>service mysqld start</code><br>然后就可以进入<code>mysql</code>的命令行模式了。  </p>
+<hr>
+<p>然后用Qt连接数据库需要知道mysql的端口号和一个账户，所以需要新建一个账户，新建账户的命令如下：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GRANT USAGE ON *数据库* TO &apos;用户名&apos;@&apos;主机&apos; IDENTIFIED BY &apos;密码&apos;;</div><div class="line">```  </div><div class="line"></div><div class="line">USAGE指的就是权限范围，范围就是增删查改（insert,delete,select,update），可以都写上，也可以写`all privileges`那么下面是一个例子：</div></pre></td></tr></table></figure>
+<p>grant select,insert,update,delete on <em>.</em> to ‘sa’ identified by “sa”;<br>```<br>这个就是说新建一个用户名和密码都是sa的账户，在所有数据库上赋予所有权限。  </p>
+<p>新建好了账户之后我们需要知道数据库的服务端口，可以用<code>show variables;</code>来查看mysql的所有属性，端口号是report_port。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/Linux-MySql/" data-id="ciu2osn2s00078cyg9vddarq2" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

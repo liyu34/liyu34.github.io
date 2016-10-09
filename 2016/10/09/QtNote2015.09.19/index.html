@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>QtNote:QTcpSocket、Qt位运算、QTableView、QLineEdit焦点问题 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="开门见山，这里是QtNote。注意，本文中的所有代码均取自我写的ModBus程序，阅读时请适当忽略上下文。
+
+##QTcpSocket由于项目需要，我需要使用ModBus TCP协议与RTU通信，所以需要使用套接字。套接字的使用现在只是实现了特定的功能，容错性什么的暂时没有考虑。
+Socket编程的步骤就是连接-》发送消息-》接收消息（出错处理）。QT对Socket进行了封装，封装为了QTcpSo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="QtNote:QTcpSocket、Qt位运算、QTableView、QLineEdit焦点问题">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/QtNote2015.09.19/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="开门见山，这里是QtNote。注意，本文中的所有代码均取自我写的ModBus程序，阅读时请适当忽略上下文。
+
+##QTcpSocket由于项目需要，我需要使用ModBus TCP协议与RTU通信，所以需要使用套接字。套接字的使用现在只是实现了特定的功能，容错性什么的暂时没有考虑。
+Socket编程的步骤就是连接-》发送消息-》接收消息（出错处理）。QT对Socket进行了封装，封装为了QTcpSo">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="QtNote:QTcpSocket、Qt位运算、QTableView、QLineEdit焦点问题">
+<meta name="twitter:description" content="开门见山，这里是QtNote。注意，本文中的所有代码均取自我写的ModBus程序，阅读时请适当忽略上下文。
+
+##QTcpSocket由于项目需要，我需要使用ModBus TCP协议与RTU通信，所以需要使用套接字。套接字的使用现在只是实现了特定的功能，容错性什么的暂时没有考虑。
+Socket编程的步骤就是连接-》发送消息-》接收消息（出错处理）。QT对Socket进行了封装，封装为了QTcpSo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-QtNote2015.09.19" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote2015.09.19/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      QtNote:QTcpSocket、Qt位运算、QTableView、QLineEdit焦点问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开门见山，这里是QtNote。<br>注意，本文中的所有代码均取自我写的ModBus程序，阅读时请适当忽略上下文。</p>
+<hr>
+<p>##QTcpSocket<br>由于项目需要，我需要使用ModBus TCP协议与RTU通信，所以需要使用套接字。<br>套接字的使用现在只是实现了特定的功能，容错性什么的暂时没有考虑。</p>
+<p>Socket编程的步骤就是<strong>连接</strong>-》<strong>发送消息</strong>-》<strong>接收消息</strong>（出错处理）。<br>QT对Socket进行了封装，封装为了QTcpSocket类，调用这个类的<code>connectToHost</code>函数即可对目标进行一次连接尝试。（如果连接不上会返回连接错误）<br>我写了一个自己的MyTcp，在这个类里面有一个QTcpSocket变量。<br>通过Qt的信号与槽的机制，将消息发送成功与接收消息绑定在一起。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">connect(&amp;tcpSocket, SIGNAL(readyRead()), this, SLOT(ReadData()));</div><div class="line">```  </div><div class="line">通过学习我知道了TCP协议氛围**块**和**行**，ModBus是面向行的，一行内的信息是使用QByteArray编辑的（参照发送消息的函数）。</div><div class="line">发送消息使用如下函数</div></pre></td></tr></table></figure></p>
+<p>void MyTCP::SendRequest(qint8 slaveaddress, qint8 functioncode, qint16 startaddress, qint16 datanumber)<br>{<br>    QByteArray line;<br>    QDataStream out(&amp;line, QIODevice::WriteOnly);<br>    out.setVersion(QDataStream::Qt_DefaultCompiledVersion);<br>    out &lt;&lt; qint8(00) &lt;&lt; qint8(00) &lt;&lt; qint8(00) &lt;&lt; qint8(00);//protocal identifier 4byte<br>    qint16 messagelen = sizeof(slaveaddress) + sizeof(functioncode) + sizeof(startaddress) + sizeof(datanumber);<br>    out &lt;&lt; messagelen;//High 8-bit ModBus &amp; Low 8-bit message length<br>    out &lt;&lt; slaveaddress;//slave address<br>    out &lt;&lt; functioncode;//function code<br>    out &lt;&lt; startaddress;//High 8-bit &amp; Low 8-bit of start address<br>    out &lt;&lt; datanumber;//High 8-bit &amp; Low 8-bit of data number<br>    tcpSocket.write(line);</p>
+<p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">注，这里都是针对ModBus发送的信息。可以参照我翻译的RTU文档（还未翻译完）。</div><div class="line">接收消息如下。</div></pre></td></tr></table></figure></p>
+<p>void MyTCP::ReadData()<br>{<br>    QDataStream in(&amp;tcpSocket);<br>    in.setVersion(QDataStream::Qt_DefaultCompiledVersion);<br>    qint64 availabelnum = tcpSocket.bytesAvailable();<br>    QByteArray res = tcpSocket.readAll();<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">##Qt位运算</div><div class="line">由于Modbus返回的信息都是特定格式的字节数据，有的数据会分为高低两块，所以需要位运算来将数据合并。其实这里叫C++位运算更合适一点。下面是位运算操作符。</div></pre></td></tr></table></figure></p>
+<p>“&amp;”与<br>“|”或<br>“&gt;&gt;”右移<br>“&lt;&lt;”左移</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">下面是一个高位与低位合并的函数：</div></pre></td></tr></table></figure>
+<p>qint16 MyTCP::Combine(qint8 high, qint8 low)<br>{<br>    return (high &lt;&lt; 8 | low);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">##QTableView</div><div class="line">注：本部分摘自网络，因为ModBus只用到了其中一部分，不全。</div><div class="line">添加表头：</div></pre></td></tr></table></figure></p>
+<p>QStandardItemModel  *model = new QStandardItemModel();<br>model-&gt;setColumnCount(2);<br>model-&gt;setHeaderData(0,Qt::Horizontal,QString::fromLocal8Bit(“卡号”));<br>model-&gt;setHeaderData(1,Qt::Horizontal,QString::fromLocal8Bit(“姓名”));<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">设置表格属性：</div></pre></td></tr></table></figure></p>
+<p>ui-&gt;tableView-&gt;setModel(model);<br>//表头信息显示居左<br>ui-&gt;tableView-&gt;horizontalHeader()-&gt;setDefaultAlignment(Qt::AlignLeft);<br>//设置列宽不可变<br>ui-&gt;tableView-&gt;horizontalHeader()-&gt;setResizeMode(0,QHeaderView::Fixed);<br>ui-&gt;tableView-&gt;horizontalHeader()-&gt;setResizeMode(1,QHeaderView::Fixed);<br>ui-&gt;tableView-&gt;setColumnWidth(0,101);<br>ui-&gt;tableView-&gt;setColumnWidth(1,102);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">注：在进行表格设置时必须是“ui-&gt;tableView-&gt;setModel(model);”在前，属性具体设置在后，</div><div class="line"></div><div class="line">反之则设置不会生效。如上述代码所示。</div><div class="line"></div><div class="line">添加行（添加三行一样的信息）：</div></pre></td></tr></table></figure></p>
+<p> for(int i = 0; i &lt; 3; i++)<br> {<br>     model-&gt;setItem(i,0,new QStandardItem(“2009441676”));<br>        //设置字符颜色<br>     model-&gt;item(i,0)-&gt;setForeground(QBrush(QColor(255, 0, 0)));<br>        //设置字符位置<br>     model-&gt;item(i,0)-&gt;setTextAlignment(Qt::AlignCenter);<br>     model-&gt;setItem(i,1,new QStandardItem(QString::fromLocal8Bit(“哈哈”)));<br> }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">删除行：</div></pre></td></tr></table></figure></p>
+<p>//x是指定删除哪一行<br>model-&gt;removeRow(x);<br>//删除所有行<br>model-&gt;removeRows(0,model-&gt;rowCount());<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">##QLineEdit焦点问题</div><div class="line">一般如果能够使用Tab键来更换焦点的话会很方便，我发现QLineEdit自带了Tab键的响应，或者说是MainWindow，具体机制没有研究。</div><div class="line">我进行了布局之后Tab键顺序混乱了，然后我发现了问题在ui_modbus.h文件里面，先上代码。</div></pre></td></tr></table></figure></p>
+<pre><code>SlaveAddress = new QLineEdit(centralWidget);
+SlaveAddress-&gt;setObjectName(QStringLiteral(&quot;SlaveAddress&quot;));
+SlaveAddress-&gt;setFocusPolicy(Qt::StrongFocus);
+
+gridLayout-&gt;addWidget(SlaveAddress, 0, 1, 1, 1);
+
+FuntionCode = new QLineEdit(centralWidget);
+FuntionCode-&gt;setObjectName(QStringLiteral(&quot;FunctionCode&quot;));
+
+gridLayout-&gt;addWidget(FuntionCode, 1, 1, 1, 1);
+
+StartAddress = new QLineEdit(centralWidget);
+StartAddress-&gt;setObjectName(QStringLiteral(&quot;StartAddress&quot;));
+
+gridLayout-&gt;addWidget(StartAddress, 2, 1, 1, 1);
+
+DataNumber = new QLineEdit(centralWidget);
+DataNumber-&gt;setObjectName(QStringLiteral(&quot;DataNumber&quot;));
+
+gridLayout-&gt;addWidget(DataNumber, 3, 1, 1, 1);
+
+OKButton = new QPushButton(centralWidget);
+OKButton-&gt;setObjectName(QStringLiteral(&quot;OKButton&quot;));
+
+gridLayout-&gt;addWidget(OKButton, 4, 1, 1, 1);
+</code></pre><p>```<br>添加的顺序就是光标移动的顺序。即SlaveAddress-&gt;FunctionCode-&gt;StartAddress-&gt;DataNumber-&gt;OKButton。其实这并不是QLineEdit独有的，QPushButton也可以。然后我还发现了选中OKButton按钮之后按Enter键没有反应，按Space倒是响应了。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/QtNote2015.09.19/" data-id="ciu2osn33000a8cygubm3pu4d" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/Oracle连接/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Oracle数据库&amp;远程连接&amp;ODBC驱动
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/QtNote_QDate、QTextCodec、QFileDialog以及Q_OBJECT/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">QtNote:QDate、QTextCodec、QFileDialog以及Q_OBJECT</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

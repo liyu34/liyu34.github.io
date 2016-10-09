@@ -48,9 +48,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -61,10 +61,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-HowToUpdateBlogWithGit" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-使用Dropbox自动发布博文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/08/HowToUpdateBlogWithGit/" class="article-date">
-  <time datetime="2016-10-08T14:06:50.067Z" itemprop="datePublished">2016-10-08</time>
+    <a href="/2016/10/09/使用Dropbox自动发布博文/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -75,7 +75,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/08/HowToUpdateBlogWithGit/">如何使用Git更新博客（一次失败的尝试）</a>
+      <a class="article-title" href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
     </h1>
   
 
@@ -83,30 +83,25 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>开门见山，先来说一下我用git发布博文的整体结构。  </p>
+        <p>今天中午尝试了使用Git作为自动发布博客的工具，思想就是本地一个Git，OSC仓库，博客服务器一个Git，每次本地写完之后push到OSC仓库，然后刷新博客页面的时候自动pull一下。结果是失败的。  </p>
+<hr>
+<p>然后就开始尝试同步盘的方式，国内最好的坚果云可惜没有LinuxCLI版本，小VPS又安不上图形界面，再给坚果云官方提了建议之后就不了了之了。然后视线自然的挪向了Dropbox，因为Dropbox有CLI版本。</p>
+<hr>
+<p>一番折腾之后在我的小VPS上安装上了Dropbox，然后我把原来Dropbox里面的文件全部删除了只用来做GitBlog的中转站。可是突然发现Dropbox并没有指定文件夹同步功能（<del>被坚果云宠坏了。。。</del>）一时之间陷入了困境。<br>好在Linux还有种神奇的东西叫做<strong>连接</strong>（link），连接分为软连接和硬连接，硬连接不能连接目录所以只能用软连接。我做了如下两次尝试：  </p>
+<hr>
 <ul>
-<li>博客服务器一枚  </li>
-<li>Git@OSC帐号一枚  </li>
-<li>本地电脑一台</li>
+<li><p>将网站根目录下的posts文件夹删除之后建立一个从Dropbox同步目录到博文目录posts的软连接（<del><code>ln -s ~/Dropbox/ posts</code></del>）这样一来网站根目录下的博文目录就会连接到Dropbox的同步目录中去。不过这种方法行不通，可能是因为GitBlog暂时还不支持这种做法吧。  </p>
+</li>
+<li><p>第二种方法是倒过来的，这种方法事实证明是可行的。如果把posts连接到Dropbox不行的话，那就试试把Dropbox连接到posts，让Dropbox直接网博文目录下进行同步。这么做的话先关闭Dropbox服务<strong><code>killall Dropbox</code></strong>然后趁机把同步目录删除，然后建立一个从posts到Dropbox的软连接<strong>‘ln -s …/posts/ ~/Dropbox’</strong>，最后打开Dropbox<strong><code>~/.dropbox-dist/dropboxd &amp;</code></strong>即可。这样就大功告成了！  </p>
+</li>
 </ul>
-<p>发布工作的流程是这样的：  </p>
-<ol>
-<li>本地编写完成之后在博文目录提交并push到OSC的仓库  </li>
-<li>博客服务器从OSC的仓库中pull得最新博文。</li>
-</ol>
-<p>这样博客服务器和本地电脑上面的git都是充当客户端的git，本来想看一看有没有直接上传的办法，找了一会没找到就采取这种办法了，不过这样也好，我的博文有<strong>四处</strong>存放点（本地+博客服务器+OSC仓库+坚果云）。  </p>
-<p>为了保证每次打开博客看到的都是最新的情况，我在GitBlog的index.php里面加了一句运行本地shell文件的命令，如下：<br><code>exec(&quot;.../gitpull.sh&quot;);</code><br>这样每次打开博客都会自动去远程仓库pull一下，总感觉pull频繁了会有安全隐患呢。。。先不管了，以后再说吧。其实刚才也尝试了crontab的方法（linux的定时器），设定的是每五分钟pull一次，但是好像没什么效果，加上这么做可能不能实时更新，就放弃了。以后的话看看改善一下gitpull这个脚本吧。  </p>
 <hr>
-<p>对了，我现在用的MarkDown是一个开源的Qt的本地编辑器CuteMarkEd，每次打开都要手动复制博文的前缀也是很麻烦的，所以最近想要在这个CuteMarkEd的基础上添加一些适合GitBlog的功能，这样用起来应该会方便一些吧。  </p>
-<hr>
-<p>但是Git的方案失败了，因为在网页里面的php代码不能执行git pull，有说是权限问题的，我尝试了几次不行就放弃了，因为对php不熟悉。  </p>
-<hr>
-<p><strong>但是！我现在也实现了自动发布博文功能！是用Dropbox实现的，稍等我就来记载一下</strong>  </p>
+<p>折腾了一下午加一晚上终于可以自动发布博文了！<br>现在可以放心的写博客了！剩下的交给Dropbox！<strong>：）</strong>  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/08/HowToUpdateBlogWithGit/" data-id="ciu19yjhg0000j5yg52379har" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/10/09/使用Dropbox自动发布博文/" data-id="ciu2osn45000s8cygzychb0d8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -116,10 +111,10 @@
 
 
   
-    <article id="post-Git发布博文" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-适用于Modbus协议的CRC16校验（查表法）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/08/Git发布博文/" class="article-date">
-  <time datetime="2016-10-08T13:58:09.129Z" itemprop="datePublished">2016-10-08</time>
+    <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -130,7 +125,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/08/Git发布博文/">使用Git来发布博文</a>
+      <a class="article-title" href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
     </h1>
   
 
@@ -138,14 +133,72 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##使用Git发布博文<br>其实之前也尝试过使用Git发布博文，但是totally失败了，上次方法很可笑，这次用git的hook工具。<br>首先在服务器上安装git，这个就不说了。安装好git之后需要在服务器上面给git分配一个用户<code>adduser git</code>并给它一个密码。<br>切换到git用户之后创建一个git远程代码仓库（myblog.git），然后再去博文目录创建git仓库。（在这一步我遇到了问题……权限问题，最后无奈的我把blog目录所有者改为了git）在博文目录添加myblog.git作为远程仓库。<br>然后去myblog.git的目录，进入hooks目录之后新建post-receive脚本文件，这个文件会在每次接收到客户端push之后执行，其余hook用法可以看<a href="http://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">这里</a><br>下面是脚本文件的内容，保存好之后还得给它+x<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="built_in">unset</span> GIT_DIR</div><div class="line">B<span class="built_in">log</span>Path=/data/vhost/liyu34.xyz/blog</div><div class="line"></div><div class="line"><span class="built_in">cd</span> <span class="variable">$BlogPath</span></div><div class="line">git add . -A &amp;&amp; git stash</div><div class="line">git pull orig master</div><div class="line">cp -r conf.yaml ../conf.yaml</div><div class="line">rm -rf ../app/cache/*</div><div class="line">```  </div><div class="line">这样钩子就设定好了，接下来得把网站服务器上的git搭建为服务器git，</div><div class="line">参照[这里](https://ruby-china.org/topics/5040)（我就是偷懒了……）  </div><div class="line"></div><div class="line">**然后vps的ssh端口变了怎么办，也请参照[这里](http://zengrong.net/post/1544.htm)。**  </div><div class="line"></div><div class="line">权限问题？刚刚我遇到了一个问题就是我按照之前的办法来写了post-receive脚本，就是无法执行，后来发现是权限问题，我把blog目录的权限设为765之后git就不能pull了，暂时还不清楚是什么原因。  </div><div class="line">权限问题真混乱，缓存目录下面的东西是apache用户的,我把cache目录设为777之后apache用户产生的目录还是755的，git无法去操作那些目录。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2015.10.21补充</span></div><div class="line">经过今天的事情我充分认识到我的Linux水平就跟海平面一样。。。稍稍高一点的东西就不懂了……  </div><div class="line">之前我每次在本地提交的时候还需要输入登陆密码，作为一个合格程序员（就是懒），我觉得我得做点什么，比如ssh什么的。</div><div class="line">然后我就把ssh的key传到了服务器上，然后……就不用输密码了。。。由于我的Linux水平低下，所以我并不准备说太多。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2016年3月3日补充</span></div><div class="line">如果是SCP命令想要使用除了22以外的端口的话，需要加上端口参数如下：</div></pre></td></tr></table></figure></p>
-<p>SCP -P port_number user@serviceip:floder<br>```  </p>
-<p>也必须在blog目录下面初始化git目录。</p>
+        <p>下面的代码是适用于Modbus协议中的CRC16校验的，我验证过了，至于为什么其他的CRC16校验在Modbus中不行，并没有深究，没有去看过原理，下面的算法出自<a href="http://blog.csdn.net/zgrjkflmkyc/article/details/41073435" target="_blank" rel="external">zgrjkflmkyc的专栏</a>  </p>
+<pre><code class="cpp">
+uchar auchCRCHi[] =
+{
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>
+};
+
+uchar auchCRCLo[] =
+{
+    <span class="number">0x00</span>, <span class="number">0xC0</span>, <span class="number">0xC1</span>, <span class="number">0x01</span>, <span class="number">0xC3</span>, <span class="number">0x03</span>, <span class="number">0x02</span>, <span class="number">0xC2</span>, <span class="number">0xC6</span>, <span class="number">0x06</span>, <span class="number">0x07</span>, <span class="number">0xC7</span>, <span class="number">0x05</span>, <span class="number">0xC5</span>, <span class="number">0xC4</span>,
+    <span class="number">0x04</span>, <span class="number">0xCC</span>, <span class="number">0x0C</span>, <span class="number">0x0D</span>, <span class="number">0xCD</span>, <span class="number">0x0F</span>, <span class="number">0xCF</span>, <span class="number">0xCE</span>, <span class="number">0x0E</span>, <span class="number">0x0A</span>, <span class="number">0xCA</span>, <span class="number">0xCB</span>, <span class="number">0x0B</span>, <span class="number">0xC9</span>, <span class="number">0x09</span>,
+    <span class="number">0x08</span>, <span class="number">0xC8</span>, <span class="number">0xD8</span>, <span class="number">0x18</span>, <span class="number">0x19</span>, <span class="number">0xD9</span>, <span class="number">0x1B</span>, <span class="number">0xDB</span>, <span class="number">0xDA</span>, <span class="number">0x1A</span>, <span class="number">0x1E</span>, <span class="number">0xDE</span>, <span class="number">0xDF</span>, <span class="number">0x1F</span>, <span class="number">0xDD</span>,
+    <span class="number">0x1D</span>, <span class="number">0x1C</span>, <span class="number">0xDC</span>, <span class="number">0x14</span>, <span class="number">0xD4</span>, <span class="number">0xD5</span>, <span class="number">0x15</span>, <span class="number">0xD7</span>, <span class="number">0x17</span>, <span class="number">0x16</span>, <span class="number">0xD6</span>, <span class="number">0xD2</span>, <span class="number">0x12</span>, <span class="number">0x13</span>, <span class="number">0xD3</span>,
+    <span class="number">0x11</span>, <span class="number">0xD1</span>, <span class="number">0xD0</span>, <span class="number">0x10</span>, <span class="number">0xF0</span>, <span class="number">0x30</span>, <span class="number">0x31</span>, <span class="number">0xF1</span>, <span class="number">0x33</span>, <span class="number">0xF3</span>, <span class="number">0xF2</span>, <span class="number">0x32</span>, <span class="number">0x36</span>, <span class="number">0xF6</span>, <span class="number">0xF7</span>,
+    <span class="number">0x37</span>, <span class="number">0xF5</span>, <span class="number">0x35</span>, <span class="number">0x34</span>, <span class="number">0xF4</span>, <span class="number">0x3C</span>, <span class="number">0xFC</span>, <span class="number">0xFD</span>, <span class="number">0x3D</span>, <span class="number">0xFF</span>, <span class="number">0x3F</span>, <span class="number">0x3E</span>, <span class="number">0xFE</span>, <span class="number">0xFA</span>, <span class="number">0x3A</span>,
+    <span class="number">0x3B</span>, <span class="number">0xFB</span>, <span class="number">0x39</span>, <span class="number">0xF9</span>, <span class="number">0xF8</span>, <span class="number">0x38</span>, <span class="number">0x28</span>, <span class="number">0xE8</span>, <span class="number">0xE9</span>, <span class="number">0x29</span>, <span class="number">0xEB</span>, <span class="number">0x2B</span>, <span class="number">0x2A</span>, <span class="number">0xEA</span>, <span class="number">0xEE</span>,
+    <span class="number">0x2E</span>, <span class="number">0x2F</span>, <span class="number">0xEF</span>, <span class="number">0x2D</span>, <span class="number">0xED</span>, <span class="number">0xEC</span>, <span class="number">0x2C</span>, <span class="number">0xE4</span>, <span class="number">0x24</span>, <span class="number">0x25</span>, <span class="number">0xE5</span>, <span class="number">0x27</span>, <span class="number">0xE7</span>, <span class="number">0xE6</span>, <span class="number">0x26</span>,
+    <span class="number">0x22</span>, <span class="number">0xE2</span>, <span class="number">0xE3</span>, <span class="number">0x23</span>, <span class="number">0xE1</span>, <span class="number">0x21</span>, <span class="number">0x20</span>, <span class="number">0xE0</span>, <span class="number">0xA0</span>, <span class="number">0x60</span>, <span class="number">0x61</span>, <span class="number">0xA1</span>, <span class="number">0x63</span>, <span class="number">0xA3</span>, <span class="number">0xA2</span>,
+    <span class="number">0x62</span>, <span class="number">0x66</span>, <span class="number">0xA6</span>, <span class="number">0xA7</span>, <span class="number">0x67</span>, <span class="number">0xA5</span>, <span class="number">0x65</span>, <span class="number">0x64</span>, <span class="number">0xA4</span>, <span class="number">0x6C</span>, <span class="number">0xAC</span>, <span class="number">0xAD</span>, <span class="number">0x6D</span>, <span class="number">0xAF</span>, <span class="number">0x6F</span>,
+    <span class="number">0x6E</span>, <span class="number">0xAE</span>, <span class="number">0xAA</span>, <span class="number">0x6A</span>, <span class="number">0x6B</span>, <span class="number">0xAB</span>, <span class="number">0x69</span>, <span class="number">0xA9</span>, <span class="number">0xA8</span>, <span class="number">0x68</span>, <span class="number">0x78</span>, <span class="number">0xB8</span>, <span class="number">0xB9</span>, <span class="number">0x79</span>, <span class="number">0xBB</span>,
+    <span class="number">0x7B</span>, <span class="number">0x7A</span>, <span class="number">0xBA</span>, <span class="number">0xBE</span>, <span class="number">0x7E</span>, <span class="number">0x7F</span>, <span class="number">0xBF</span>, <span class="number">0x7D</span>, <span class="number">0xBD</span>, <span class="number">0xBC</span>, <span class="number">0x7C</span>, <span class="number">0xB4</span>, <span class="number">0x74</span>, <span class="number">0x75</span>, <span class="number">0xB5</span>,
+    <span class="number">0x77</span>, <span class="number">0xB7</span>, <span class="number">0xB6</span>, <span class="number">0x76</span>, <span class="number">0x72</span>, <span class="number">0xB2</span>, <span class="number">0xB3</span>, <span class="number">0x73</span>, <span class="number">0xB1</span>, <span class="number">0x71</span>, <span class="number">0x70</span>, <span class="number">0xB0</span>, <span class="number">0x50</span>, <span class="number">0x90</span>, <span class="number">0x91</span>,
+    <span class="number">0x51</span>, <span class="number">0x93</span>, <span class="number">0x53</span>, <span class="number">0x52</span>, <span class="number">0x92</span>, <span class="number">0x96</span>, <span class="number">0x56</span>, <span class="number">0x57</span>, <span class="number">0x97</span>, <span class="number">0x55</span>, <span class="number">0x95</span>, <span class="number">0x94</span>, <span class="number">0x54</span>, <span class="number">0x9C</span>, <span class="number">0x5C</span>,
+    <span class="number">0x5D</span>, <span class="number">0x9D</span>, <span class="number">0x5F</span>, <span class="number">0x9F</span>, <span class="number">0x9E</span>, <span class="number">0x5E</span>, <span class="number">0x5A</span>, <span class="number">0x9A</span>, <span class="number">0x9B</span>, <span class="number">0x5B</span>, <span class="number">0x99</span>, <span class="number">0x59</span>, <span class="number">0x58</span>, <span class="number">0x98</span>, <span class="number">0x88</span>,
+    <span class="number">0x48</span>, <span class="number">0x49</span>, <span class="number">0x89</span>, <span class="number">0x4B</span>, <span class="number">0x8B</span>, <span class="number">0x8A</span>, <span class="number">0x4A</span>, <span class="number">0x4E</span>, <span class="number">0x8E</span>, <span class="number">0x8F</span>, <span class="number">0x4F</span>, <span class="number">0x8D</span>, <span class="number">0x4D</span>, <span class="number">0x4C</span>, <span class="number">0x8C</span>,
+    <span class="number">0x44</span>, <span class="number">0x84</span>, <span class="number">0x85</span>, <span class="number">0x45</span>, <span class="number">0x87</span>, <span class="number">0x47</span>, <span class="number">0x46</span>, <span class="number">0x86</span>, <span class="number">0x82</span>, <span class="number">0x42</span>, <span class="number">0x43</span>, <span class="number">0x83</span>, <span class="number">0x41</span>, <span class="number">0x81</span>, <span class="number">0x80</span>,
+    <span class="number">0x40</span>
+};
+
+<span class="function">uint   <span class="title">N_CRC16</span><span class="params">(uchar *updata, uint len)</span>
+</span>{
+    uchar uchCRCHi = <span class="number">0xff</span>;
+    uchar uchCRCLo = <span class="number">0xff</span>;
+    uint  uindex;
+    <span class="keyword">while</span> (len--)
+    {
+        uindex = uchCRCHi^*updata++;
+        uchCRCHi = uchCRCLo^auchCRCHi[uindex];
+        uchCRCLo = auchCRCLo[uindex];
+    }
+    <span class="keyword">return</span> (uchCRCHi &lt;&lt; <span class="number">8</span> | uchCRCLo);
+}
+</code></pre>
+<p>很久都没用过数组指针了，在第一眼看到<code>uchar *updata</code>的时候都懵逼了……过了一会才反应过来，就是传个数组进去嘛……</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/08/Git发布博文/" data-id="ciu19el030000jtygh5go6omb" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" data-id="ciu2osn4q00108cyg9xvu68au" class="article-share-link">Share</a>
       
       
     </footer>
@@ -155,10 +208,10 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-自动检测是否有新博文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/08/hello-world/" class="article-date">
-  <time datetime="2016-10-08T13:37:46.048Z" itemprop="datePublished">2016-10-08</time>
+    <a href="/2016/10/09/自动检测是否有新博文/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -169,7 +222,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/08/hello-world/">Hello World</a>
+      <a class="article-title" href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
     </h1>
   
 
@@ -177,20 +230,19 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+        <p>之前我并没有遇到其他Gitblog使用者遇到的每次发布新博客都要手动删除缓存的问题，原因是我的Gitblog根本无法产生缓存，每次访问都需要解析博客文件，访客少的时候自然没有问题，但是访客多了的话就有很大的隐患了。</p>
+<p>所以我检查了Gitblog无法缓存的原因，发现是文件所有者出了问题，因为nginx服务器和php服务的owner是<strong>apache</strong>，而我之前把整个网站文件的owner改为了root，所以Gitblog无法产生缓存。</p>
+<p>既然发现了问题就好办了，把文件的owner改回来就好了。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">chown -Rf apache ./*</div></pre></td></tr></table></figure>
+<p>-R参数会让系统递归的检索所有文件夹。</p>
+<p>这时候Gitblog已经可以产生缓存了，但是又有新的问题，缓存的有效期为1个小时，时间有点长，我发布了博文，希望立即能够看到，所以使用了群内大神写的一个简单守护脚本，这个脚本会遍历blog文件夹下面所有的文件，以最后修改时间作为判断标准，如果有更新，就删除cache。下面是文件内容：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">#!/bin/bash</div><div class="line"></div><div class="line"># 脚本说明：监控..../blog/文件夹，如果文件夹和内容发生改变(根据时间来判断)，</div><div class="line"># 则自动删除..../app/cache/目录里面的所有内容。请根据实际情况将下面的变量赋值为绝对路径</div><div class="line"></div><div class="line">OLD=&quot;..../tmp/old.txt&quot;</div><div class="line">NEW=&quot;..../tmp/new.txt&quot;</div><div class="line">BLOG=&quot;..../blog/&quot;</div><div class="line">CACHE=&quot;..../app/cache/&quot;</div><div class="line"></div><div class="line">while :; do</div><div class="line">    if [ -e &quot;$OLD&quot; ]; then</div><div class="line">        mv &quot;$OLD&quot; &quot;$NEW&quot;</div><div class="line">        ls -lR &quot;$BLOG&quot; | awk &apos;&#123;print $8&#125;&apos;  &gt; &quot;$OLD&quot;</div><div class="line">        diff &quot;$OLD&quot; &quot;$NEW&quot;</div><div class="line">        if [ $? == 0 ]; then</div><div class="line">            echo &quot;$BLOG&quot; Not changed</div><div class="line">        else</div><div class="line">            echo &quot;$BLOG&quot; Changed</div><div class="line">	        echo Delete files in &quot;$CACHE&quot; </div><div class="line">	        rm -rf &quot;$CACHE&quot;/*</div><div class="line">        fi</div><div class="line">    else</div><div class="line">        ls -lR &quot;$BLOG&quot; | awk &apos;&#123;print $8&#125;&apos;  &gt; &quot;$OLD&quot;</div><div class="line">    fi</div><div class="line">    # 可以通过调整sleep的时间来更改频率,也可以加到crontab里面</div><div class="line">	# crontab -e 添加 */1 * * * * /root/monitor.sh</div><div class="line">    sleep 60</div><div class="line">done</div></pre></td></tr></table></figure>
+<p>这样就好多了。以上脚本由<strong>︻┳═一</strong>大神提供。  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/08/hello-world/" data-id="ciu195rb500012byg083hmoy9" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/10/09/自动检测是否有新博文/" data-id="ciu2osn4o000y8cyg0eibywhc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -200,10 +252,10 @@
 
 
   
-    <article id="post-Linux-MySql" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-sqlserver express" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/08/Linux-MySql/" class="article-date">
-  <time datetime="2016-10-08T13:32:15.815Z" itemprop="datePublished">2016-10-08</time>
+    <a href="/2016/10/09/sqlserver express/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -214,7 +266,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/08/Linux-MySql/">Linux-MySql</a>
+      <a class="article-title" href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
     </h1>
   
 
@@ -222,18 +274,337 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>因为项目需要，我需要在一个服务器上面安装MySql然后用客户端程序去访问它，之前以为SAE可以用，后来发现，SAE提供的数据库服务只能用于它本地的程序，根本就不能用外网访问。于是我就在我的VPS上安上了MySql。  </p>
-<p>在CentOs上面安装MySql挺简单的，可以用一个命令完成安装。<code>yum groupinstall &quot;mysql&quot;</code>安装上之后  <code>service mysqld start</code><br>然后就可以进入<code>mysql</code>的命令行模式了。  </p>
+        <p>因为sqlserver的express版本是免费的，而且又小巧，所以我就安装了一个sqlserver 2014 express，然而express版本默认是只能本地连接的，而我的项目又需要小伙伴连接我的数据库，于是我谷歌了。<del>其实我也百度了。</del>2015.10.21补录作死记录，如何让你的Sqlserver成功的启动不起来。  </p>
+<p>闲话不多说，首先说的是我安装的sqlserver express是最简版本，就是说只有一个数据库系统，没有任何管理软件，创建数据库都得用<code>sqlcmd</code>。所以网络上好多使用sqlserver management studio的对我来说就不适用了。但是我发现要想远程访问sqlserver其实并不难，所需要做的事情也不多。（最起码我是这样的）。我也在网络上面找到了一个很简单的版本，在<a href="http://www.veryhuo.com/a/view/180.html" target="_blank" rel="external">这里</a>。  </p>
 <hr>
-<p>然后用Qt连接数据库需要知道mysql的端口号和一个账户，所以需要新建一个账户，新建账户的命令如下：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GRANT USAGE ON *数据库* TO &apos;用户名&apos;@&apos;主机&apos; IDENTIFIED BY &apos;密码&apos;;</div><div class="line">```  </div><div class="line"></div><div class="line">USAGE指的就是权限范围，范围就是增删查改（insert,delete,select,update），可以都写上，也可以写`all privileges`那么下面是一个例子：</div></pre></td></tr></table></figure>
-<p>grant select,insert,update,delete on <em>.</em> to ‘sa’ identified by “sa”;<br>```<br>这个就是说新建一个用户名和密码都是sa的账户，在所有数据库上赋予所有权限。  </p>
-<p>新建好了账户之后我们需要知道数据库的服务端口，可以用<code>show variables;</code>来查看mysql的所有属性，端口号是report_port。</p>
+<p>##如何配置Sql Server 2014 Express</p>
+<p>###1.配置SQL网络配置<br>在这一步我们需要启用两个服务，第一个是<code>Named Pipes</code>，第二个是<code>TCP/IP</code>。默认是不启用的，右键点击启用即可，它可能会提示你重启之后才会生效什么的，这个重启服务指的就是sqlserver服务，去第一个Sql Server服务里面重启一下那个Sqlserver就行了。下面是启动好的图片。<br><img src="http://ablee.cc/blog/img/sqlserverconfigs.png" alt="sqlserverconfigs.png"><br>可能有的教程还需要你启动什么Sql Server Browser什么的，我发现这个不是必须的，因为我安装的最简版本连安装都没安装。  </p>
+<p>###2.配置TCP/IP属性<br>在这一步我们需要配置刚刚启动的两个服务中的tcp协议。首先我们需要把一个’全部侦听’设置为’否’（这个我是按照教程来的，没有测试设置为’是’的情况），如图：<br><img src="http://ablee.cc/blog/img/sqlservertcpip1.png" alt="sqlservertcpip1.png"><br>这一页就ok了，然后我们需要配置你想远程的那个ip地址的端口等参数，如图：<br><img src="http://ablee.cc/blog/img/sqlservertcpip2.png" alt="sqlservertcpip2.png"><br>要注意画红线的部分，要把这个设置为启动才可以。我之前并没有发现刚刚那个<a href="http://www.veryhuo.com/a/view/180.html" target="_blank" rel="external">教程</a>其实也说了这个了，因为没有注意，所以做了好多次尝试。  </p>
+<hr>
+<p>这样就可以远程访问数据库啦，另外我之前安装Sqlserver的时候设置了sa账户，如果使用Windows登陆验证能不能login就不清楚了。  </p>
+<hr>
+<p>另外，经过今晚的尝试我还为我自己解答了之前的一个疑惑。之前我用qt连接这个数据库的时候用ip地址连接怎么都不行，只有在管理面板里面的数据源设置好了之后才能在程序里访问。原来就是因为我其实并没有启用那个本地ip啊。</p>
+<hr>
+<p>##2015.10.21作死记录  </p>
+<p>###把TCP/IP协议里面的IP地址都清空！</p>
+<p>作为一个用精神洁癖的人，看着SQL Server网络服务TCP/IP协议属性框那一堆堆的ipv6地址就难受。  </p>
+<p><img src="http://ablee.cc/blog/img/sqlservertcpip03.png" alt="sqlservertcpip3.png">  </p>
+<p>所以我曾经无数次的点击每个ip地址前面的减号想要把它删掉，但是每次也只能把它收起来而已。为了删掉它们，我尝试了把多余的ip地址都清空（就是把ip地址那一栏里面的内容删掉），然后Sqlserver服务器就启动不起来了，尝试了三遍确定它确实启动不起来之后我就意识到是我刚刚的所作所为要为它的事故负责。  </p>
+<p>为了更加精确的明白它到底哪里出了问题，所以我就去看了errorlog，然后找到了最为关键的一句话。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">TDSSNIClient initialization failed with error 0x57, status code 0x1e. </div><div class="line">Reason: The SQL Server Network Interface found a duplicate IP address in the SQL Server TCP listening settings.  </div><div class="line">Remove the duplicate IP address by using SQL Server Configuration Manager. </div><div class="line">The parameter is incorrect. </div><div class="line">```  </div><div class="line">其实最关键的三个词就是`duplicate IP address`（重复的ip地址），然后我还看到了`Remove ... by using SQL Server Configuration Manager`，就是这个remove让我又去SQL Server Configuration Manager里面右键了很多次。  </div><div class="line"></div><div class="line">删除无果之后我猜想那几个空位其实是Sqlserver预留的，没法删除，但是留空之后就重复了（***空白也是一种重复呢***），那么我就自然而然的想到了修复，拿安装管理器修复一通，它给我填上了几个ipv6的地址，仍然还有很多留空。  </div><div class="line"></div><div class="line">没有办法的我只好实行权宜之计咯。</div></pre></td></tr></table></figure></p>
+<p>127.0.0.2<br>127.0.0.3<br>127.0.0.4<br>127.0.0.5<br>127.0.0.6<br>…<br>```<br>然后运行，就可以了。。。</p>
+<hr>
+<p>要注意Windows防火墙设置！！！Windows防火墙默认会把sqlserver给屏蔽掉的，所以要么把sqlserver置为例外，要么关掉Windows防火墙。<br>我因为sqlserver实例位置不好找就关闭了专用网络的防火墙。</p>
+<hr>
+<p>##2016年3月4日补充<br>电脑ip地址更改，会导致SqlServer服务器监听程序监听失败，从而导致SqlServer实例启动失败，如图：<br><img src="http://ablee.cc/blog/img/sqlserver_listener_error.png" alt="sqlserver_listener_error"><br>进入SqlServer的TCPIP设置里面把原来的地址更改为新地址即可，我这里使懒，直接把老地址设置为了不启用，反正暂时用不到远程访问我的SqlServer服务器。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/08/Linux-MySql/" data-id="ciu195ras00002bygpkjt095g" class="article-share-link">Partager</a>
+      <a data-url="http://yoursite.com/2016/10/09/sqlserver express/" data-id="ciu2osn40000p8cygojp3yff6" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sqlserver命令行导入数据库文件" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/sqlserver命令行导入数据库文件/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前就想把这个记录到博客里面，但是觉得以后用的机会不多，就没记录，但是今天课题组的同志需要用我的电脑当数据库服务器，需要我导入数据库，所以又用到了，我就记录下来吧。（摘自<a href="http://zhidao.baidu.com/link?url=eqX1lFIyksakIty9eWmXifVK_EkQ_Nk4KXkRyCR3WW80jK_pCrPaXYQ7d96MUG3D3FqY5E2tUaXyZcf9YmtKHTPinr67fyFKiIOFMLE6YSG" target="_blank" rel="external">百度知道</a>）  </p>
+<hr>
+<p>sqlcmd<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sqlcmd -S &quot;localhost\SQLEXPRESS&quot;</div><div class="line">USE [master]</div><div class="line">GO</div><div class="line">CREATE DATABASE [TEST] ON</div><div class="line">( FILENAME = N&apos;C:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS\MSSQL\DATA\TEST.mdf&apos; ),</div><div class="line">( FILENAME = N&apos;C:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS\MSSQL\DATA\TEST_log.ldf&apos; )</div><div class="line"> FOR ATTACH ;</div><div class="line">GO</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/sqlserver命令行导入数据库文件/" data-id="ciu2osn41000q8cygkj01q8p5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-sublime" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/sublime/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/sublime/">配置sublime</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#1. Package Control<br>使用sublime3最方便的安装package的方法就是使用<strong>Package Control</strong>，Package Control安装起来还是很容易的，在sublime的控制台中输入一句话（这句话看起来有点长）就好了，控制台的快捷键是<code>Ctrl + ~</code>，也可以从菜单View - Show Console打开，打开之后复制如下一句话（注意这真的是一句话）：  </p>
+<p><code>import urllib.request,os; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), &#39;wb&#39;).write(urllib.request.urlopen( &#39;http://sublime.wbond.net/&#39; + pf.replace(&#39; &#39;,&#39;%20&#39;)).read())</code>  </p>
+<p>如果发现这种简单的方法不能用的话可以试试手动安装的方法，方法连接在<a href="http://www.imjeff.cn/blog/62/" target="_blank" rel="external">这里</a>。  </p>
+<p>安装好之后可以打开sublime的命令模式（<code>Ctrl + Shift + P</code>），输入<code>Package Control</code>就可以看到Package Control的菜单了，可以在里面安装package，也可以删除，如果只是想安装package的话可以输入<code>install</code>作为关键字，回车之后就可以看到网络上的sublime3的各种package了。  </p>
+<hr>
+<p>#2. Python<br>当时买sublime的第一原因就是想要找个写python的IDE，然后配置一通下来之后发现sublime无愧于神器之称，充分的满足了程序员们想要敲命令的癖好……  </p>
+<p>##2.1 Anaconda<br>这里说的<strong>Anaconda</strong>不是那个python的集成科学计算库，而是sublime的一个package，使用Anaconda可以方便的进行命令补全，而且可以自动的给你的python代码进行pep8格式化，那么安装Anaconda非常简单，只需要在选择package control的安装功能后输入Anaconda进行搜索，然后点击全字匹配的那个就好了，package control会帮你把Anaconda安装好的。  </p>
+<p>然后的问题就是把Anaconda配置的让自己喜欢就好了。  </p>
+<p>###2.1.1 让Anaconda以dot为命令补全触发器<br>作为一个被Visual Studio惯坏的程序员，不能<strong>点</strong>出点什么东西来是很难受的一件事，虽然按<strong>tab</strong>补全也很正常，但是我还是喜欢能够点出点东西来。<br>那么需要在用户自定义设置中添加一句话：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;auto_complete_triggers&quot;: [&#123;&quot;selector&quot;: &quot;source.python - string - comment</div><div class="line">    - constant.numeric&quot;, &quot;characters&quot;: &quot;.&quot;&#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个用户自定义设置有两个选择，你可以直接在Preferences - Settings-User里面添加这么一句，也可以在Preferences - Browse Packages…打开的文件夹里面新建一个叫做<code>Python.sublime-settings</code>的文件，并把上面的语句添加在里面。  </p>
+<p><em>注意：我之前先是安装了SublimeCodeIntel然后卸载之后再安装的Anaconda的，然后再配置这个就没用了，当时对这个理解还不够深（现在也不够），就卸载了整个sublime然后删掉缓存中的sublime文件夹之后重新安装了sublime再这么配置才好的。</em>    </p>
+<p>###2.1.2 让回车不再输错代码<br>sublime在代码补全的时候默认会用tab和enter作为确认的按键，所以我很经常误输入一些东西（特别是添加了以dot作为命令补全的触发器之后），那么就得让enter不再作为代码补全的确认按键。  </p>
+<p>方法也很简单，首先在用户自定义设置（Preferences - Settings-User）里面添加一个配置：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;auto_complete_commit_on_tab&quot;: true,</div></pre></td></tr></table></figure>
+<p>然后在Preferences - KeyBindings-User中添加如下配置：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;keys&quot;: [&quot;enter&quot;], &quot;context&quot;:</div><div class="line">    [</div><div class="line">        &#123; &quot;key&quot;: &quot;setting.auto_complete_commit_on_tab&quot;, &quot;operand&quot;: true &#125;</div><div class="line">    ]</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>其实大家可以看到Preferences - KeyBindings-Default里面有这么一段，但是这个Default文件是无法更改的，所以就要放到User里面去。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;keys&quot;: [&quot;enter&quot;], &quot;command&quot;: &quot;commit_completion&quot;, &quot;context&quot;:</div><div class="line">        [</div><div class="line">            &#123; &quot;key&quot;: &quot;auto_complete_visible&quot; &#125;,</div><div class="line">            &#123; &quot;key&quot;: &quot;setting.auto_complete_commit_on_tab&quot;, &quot;operand&quot;: false &#125;</div><div class="line">        ]</div><div class="line">&#125;,</div><div class="line">```  </div><div class="line"></div><div class="line">###2.1.3 PEP8自动格式化宏  </div><div class="line">打开录制宏（Tools - Record Macro）之后，做两部操作，第一步全选（快捷键`Ctrl + A`），第二步PEP8格式化（默认快捷键`Ctrl + Alt + R`），然后结束录制宏（Tools - Stop Record Macro），并且把宏存储为一个文件`PEE8Format.sublime-macro`，然后绑定一个快捷键到这个宏文件上。在KeyBindings-User里面添加：</div></pre></td></tr></table></figure>
+<p>{<br>    “keys”: [“f1”],<br>    “command”: “run_macro_file”,<br>    “args”:{“file”: “Packages/User/PEE8Format.sublime-macro”}<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">###2.1.4 把tab键当作4个空格</div><div class="line">由于PEP8规定缩进是以4个空格为单位的，虽然tab运行起来没错，但是Anaconda会提醒你不符合PEP8标准，所以还是把tab直接替换为4个空格吧。我们需要在`Setting-User`里面添加两句话，含义显而易见的两句话。</div></pre></td></tr></table></figure></p>
+<pre><code>&quot;tab_size&quot;: 4,
+&quot;translate_tabs_to_spaces&quot;: true
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">##2.2 运行Python  </div><div class="line">###2.2.1 Tool - Build</div><div class="line">我希望写完代码直接就可以运行看看，sublime支持build，但是build有点问题，默认的build-system中的python在遇到中文字符时就傻了，而且没法输入字符到python解释器中，也就是说按`Ctrl + B`（默认Build的快捷键）出来的窗口中是无法用`input()`这个函数的，虽然有这个不能输入的致命缺点，但是我还是决定解决中文字符的问题先。  </div><div class="line"></div><div class="line">解决这个问题也很简单，可以Tool - Build System - New Build System...然后把下面的文本粘贴进去，并且保存为`Python3.sublime-build`文件名（后缀前面的那部分）可以随意起，但是要注意的是到时候在sublime菜单栏里面显示的就是这个文件名，要能够方便与原来的区别。</div></pre></td></tr></table></figure>
+<p>{<br>    “cmd”: [“python”, “-u”, “$file”],<br>    “file_regex”: “^[ ]<em>File \”(…</em>?)\”, line ([0-9]*)”,<br>    “selector”: “source.python”,<br>    “encoding”: “cp936”<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">这个编译设定指定了编码格式为&apos;cp936&apos;。  </div><div class="line"></div><div class="line">###2.2.2 SublimeREPL  </div><div class="line">这是一个神奇的东西，可以新建一个新的交互窗口，并且不存在上面所有的问题，中文没问题，也可以输入，简直神奇，就是有一点，每次要运行都太麻烦了。。。`Tools - SublimeREPL - Python - Python-RUN current file`其实要是能够忍受的话也倒是没什么问题啦，但是我忍不了，所以我绑定了F5作为运行的快捷键，恩，方便多了。  </div><div class="line"></div><div class="line">同样，在KeyBindings-User里面添加如下配置：</div></pre></td></tr></table></figure></p>
+<p>{<br>    “keys”:[“f5”],<br>    “caption”: “SublimeREPL: Python - RUN current file”,<br>    “command”: “run_existing_window_command”, “args”:<br>    {“id”: “repl_python_run”,”file”: “config/Python/Main.sublime-menu”}<br>},<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">#3. Markdown  </div><div class="line">其实Sublime也可以编写Markdown文件，并且预览也挺方便的，这一部分需要配置的就不多了，比较简单，只需要通过package control安装&apos;Markdown Preview&apos;就好了，安装好之后就可以用啦。  </div><div class="line"></div><div class="line">当然做一点点小配置也会大大提升使用幸福感。比如把下面的配置放到Preferences - Package Settings - Markdown Preview - Settings-User里面就会让你按下`Ctrl + B`之后自动打开浏览器预览：</div></pre></td></tr></table></figure></p>
+<p>{</p>
+<pre><code>&quot;enable_mathjax&quot;: true,
+
+&quot;enable_highlight&quot;: true,
+
+&quot;parser&quot;: &quot;markdown&quot;,
+
+&quot;build_action&quot;: &quot;browser&quot;,
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">其中把parser（解释器）设定为`markdown`是因为`github`解释器会去访问网络资源，所以比较慢。其他的设定是什么意思可以去Markdown Preview的默认设置里面看是什么意思。  </div><div class="line"></div><div class="line">##3.1 编码问题  </div><div class="line">不可避免的遇到了编码问题，这得益于我之前写的GitblogPostmark，它生成的文档是GB2312编码的，弄到gitblog里面全是乱码（看来之前的Markdown Pad做了编码转化自动处理啊，当然也有可能是Sublime对中文处理太蛋疼了），然后幸亏之前安装了`ConvertToUTF-8`这个神奇的东西，可以把编码变成utf-8的，具体操作是`Ctrl + Shift + P`然后打上`Convert`作为关键字找到`ConvertToUTF-8: Reload and Encoding`回车选择之后选择编码方式为`UTF-8`就好了。  </div><div class="line"></div><div class="line">其实也可以选择使用菜单栏中的`File - Reload and Encoding: UTF-8`  </div><div class="line"></div><div class="line">---</div><div class="line">#4. 给菜单项自定义快捷键的办法  </div><div class="line">如果可以的话，我想给每个菜单项都设上快捷键——不设快捷键不舒服斯基。  </div><div class="line"></div><div class="line">我学到了给菜单项设置快捷键的办法，首先，打开控制台（`Ctrl + ~`），然后让sublime把所有的命令都显示（log）出来，即输入`sublime.log_commands(True)`回车后你就会发现世界不一样了，然后直奔主题，去点击一下你的目标菜单项，观察控制台的输出。控制台的输出一般类似于`command: reload_with_encoding&#123;&quot;encoding&quot;: &quot;UTF-8&quot;&#125;`，从这里面我们可以知道那个菜单项的命令名字，以及传递的参数（大括号内的是参数名以及内容）。那么我们就可以定义一个快捷键了。</div></pre></td></tr></table></figure></p>
+<p>{<br>    “keys”: [“f10”],<br>    “command”: “reload_with_encoding”, “args”:<br>    {“encoding”: “UTF-8”}<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">另外我总结了一下可以放心拿去用的F系列快捷键，即没有被KeyBindings-Default绑定的F系列快捷键：</div></pre></td></tr></table></figure></p>
+<p>F1：没被占用，可放心使用<br>F2：默认书签快捷键，建议不要再绑定<br>F3：寻找下一个快捷键，建议不要再绑定<br>F4：下一个结果快捷键（不太清楚什么意思），建议不要再绑定<br>F5：没被占用，可放心使用<br>F6：开启拼写检查快捷键，讨厌拼写检查，可以再绑定<br>F7：编译快捷键，Ctrl+B感觉已经够方便了，可以再绑定<br>F8：没被占用，可放心使用<br>F9：sort_lines快捷键，建议不要再绑定<br>F10：没被占用，可放心使用<br>F11：全屏快捷键，建议不要再绑定<br>F12：Goto_Definition快捷键，建议不要再绑定<br>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/sublime/" data-id="ciu2osn43000r8cygq9aw8hp9" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-调试链接库工程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/调试链接库工程/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>近来我突发奇想想要把原来的一个功能发布成一个链接库，但是还需要完善，所以需要对它进行调试，所以我就学会了如何调试一个链接库工程。  </p>
+<p>那么如何才能对一个链接库工程进行调试呢？这个方法的核心思想就是再给它专门建立一个测试工程（突然回想起大四的时候春雷哥一直跟我们说的测试工程，没想到现在我也用上了这个词）。这个测试工程与链接库工程处于同一个解决方案内。  </p>
+<p>当然不是新建一个测试工程就可以直接测试了，如果你直接打开文件写代码会发现无法引用链接库工程的头文件。  </p>
+<p>那是因为还需要在测试工程的属性中添加几个内容。一个是附加引用目录，这个就写链接库工程根目录就行（注意不是解决方案根目录）；第二就是附加库目录，这个要写库文件生成的地方；第三个就是把库文件名字添加到附加依赖项上。  </p>
+<p>这样就好啦，尽情测试吧。  </p>
+<hr>
+<p>以上为Visual Studio 2013环境下。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/调试链接库工程/" data-id="ciu2osn4p000z8cygevmu0yyr" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-大数据机器学习并行算法综述" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/大数据机器学习并行算法综述/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/大数据机器学习并行算法综述/">大数据机器学习并行算法综述</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>把现有的传统机器学习算法并行化是将其运用于大数据环境中的一种典型策略。把现有的传统机器学习算法并行化主要问题有两个，第一个是如何重新设计传统算法使之能够并行化，二是选择何种手段实现并行化。目前的常用手段有三种，第一种是借助于众核设备对常规机器学习算法进行并行化；第二种是基于Hadoop MapReduce模式的并行化，这种方法扩展性好但是由于Hadoop MapReduce本身对于IO开销较大所以效率比较差；第三种是基于Spark的并行化算法，Spark基于内存计算也有较好的可扩展性。  </p>
+<hr>
+<p>Wang等[1]提出一种将蚁群算法并行化的策略，其思路是通过将蚂蚁构造为弹性分布式数据集，由此给出相应的一系列转换算子，实现了蚂蚁构造解过程的并行化。实验表明并行的蚁群优化算法大幅提升了优化速度。  </p>
+<p>Guo等[2]首先针对CLOPE算法受输入数据顺序影响较大的不足提出了MRCLOPE算法，MRCLOPE算法通过等分划分再排列的方式将输入数据等分划分形成不同顺序的输入数据集，然后对各种输入数据集进行分别聚类；然后使用MapReduce并行编程模型对MRCLOPE算法进行并行化处理，实验结果表明并行化的MRCLOPE算法对比于CLOPE算法在没有显著扩大聚类时间的情况下，提高了收益值。  </p>
+<p>文献[3] 基于SparkR设计并实现了并行化的Multinomial NaiveBayes多分类算法、SVM以及Logistic Regression二分类算法并评估了基于Hadoop MapReduce实现的并行化算法的性能差别。实验结果表明，基于SparkR设计并实现的并行化Multinomial NaiveBayes多分类算法比较于基于Hadoop MapReduce实现的并行化算法效率要高。  </p>
+<p>Gu等[4]提出了一种基于Tesla K10 GPU的误差反向传播算法，该算法采取MiniBatch结构作为BP算法的并行结构，并充分利用了PCI-E3. 0 传输特性，并结合了 peer-to-peer 以及异步传输的特性来降低计算任务在划分和合并过程中带来的额外开销。实验证明，该算法拥有双卡超过 1. 87 的并行加速比，且算法执行过程中不会引入计算误差，可有效保证训练过程中的收敛效率，拥有理想的并行加速效果。  </p>
+<p>Yu[5]提出了一种K-means算法的一种优化方式和并行化手段，通过结合K-means++算法和密度提出了一种初始点选择的优化算法，以及结合K-means++算法和Mean Shift算法给出了另外一种初始点选择的优化算法，并提出了K-means算法的一种并行化手段，将计算点距离和更新簇中心点位置并行，实验结果表明，并行化的K-means算法在不损害精确度的情况下较大的提升了效率。  </p>
+<hr>
+<p>综上所述，并行策略是传统机器学习运用于大数据的典型策略之一，并且在一定范围内取得了一些进展，能够处理一定量级的大数据。如何为传统机器学习算法设计高效的并行策略也是当今的研究热点之一。</p>
+<hr>
+<p>参考文献：<br>[1]王诏远,王宏杰,邢焕来,李天瑞.基于Spark的蚁群优化算法[J].计算机应用,2015,10:2777-2780+2797.  </p>
+<p>[2]刘志强,顾荣,袁春风,黄宜华.基于SparkR的分类算法并行化研究[J].计算机科学与探索,2015,11:1281-1294.  </p>
+<p>[3]郭涛.分类数据的并行聚类算法研究[D].东华大学,2015.  </p>
+<p>[4]宇斌彬.基于数据划分的迭代算法的并行与优化[D].中国科学技术大学,2015.  </p>
+<p>[5]顾乃杰,赵增,吕亚飞,张致江.基于多GPU的深度神经网络训练算法[J].小型微型计算机系统,2015,05:1042-1046.  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/大数据机器学习并行算法综述/" data-id="ciu2osn46000t8cyg52bkoh4i" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-如何清除U盘的分区" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/如何清除U盘的分区/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前我把我的新U盘装成了win7的安装U盘，但是我用UltraISO写入硬盘映像的时候选择了高端隐藏，把我的U盘分成了两部分，我发现了在磁盘管理里面无法进行扩展U盘分区等操作，所以我百度了。  </p>
+<p>然后我发现了这个网址<a href="http://jingyan.baidu.com/article/86112f1346ec5227379787df.html" target="_blank" rel="external">怎样为u盘分区</a>。  </p>
+<p>我按照教程做的，成功的清楚了U盘的分区，但是这个教程中有个让我非常疑惑的地方（幸好我成功了），所以来记录下来。  </p>
+<p>教程是这样的，先打开<code>cmd</code>，然后输入<code>diskpart</code>进入分区程序，然后选择你要进行操作的disk，即输入<code>select disk *N*</code>，这个N在教程中是1，然后教程注释说：“写1就是一个u盘，两个就写2，以此类推”，这完全把我弄混了，然后看了看他的后续操作，输入clean，删除U盘所有信息，假如我选中的是我的系统硬盘，那后果很严重（虽然我感觉系统不会让clean在系统盘上执行，但我不想冒险）。  </p>
+<p>所以这个教程的问题就在这了，这个N到底应该是多少，后来我发现这个N就是硬盘管理里面的那个N，你可以打开磁盘管理，然后看看你的U盘是磁盘几。如下图所示：  </p>
+<p><img src="http://ablee.cc/blog/img/diskn.png" alt="diskn">  </p>
+<p>知道是磁盘几了之后继续那个教程的操作就行了，<code>clean</code>之后就可以去磁盘管理里面进行新建分区操作了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/如何清除U盘的分区/" data-id="ciu2osn47000u8cygpasfl4pm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-如何用VS作为Git的合并工具" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/如何用VS作为Git的合并工具/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。<br>补充：非VS工程不能用……</p>
+<hr>
+<p>要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  </p>
+<p><img src="http://ablee.cc/blog/img/git/conflict.png" alt="conflict">  </p>
+<p>怎么制造冲突我就不说了，结果如上图。冲突就位之后我们打开VS的团队界面，如下图。</p>
+<p><img src="http://ablee.cc/blog/img/git/teamexplorer.png" alt="team">  </p>
+<p>打开之后，点击一下’Changes’按钮（其实点除了Settings另外那三个都可以），然后就会发现VS提示我们了。  </p>
+<p><img src="http://ablee.cc/blog/img/git/teamexplorer2.png" alt="team2">  </p>
+<p>那我们肯定要点’Resolve the conflicts’了，点击之后是这样的：  </p>
+<p><img src="http://ablee.cc/blog/img/git/resolveconflicts.png" alt="resolveconflicts">  </p>
+<p>当然点击之后不是直接跟上图一模一样的，因为VS会给你标记出现在有冲突的文件有几个，当然我现在只是人为制造了一个冲突，所以只有一个，点击那个冲突就会展开上图那样的。然后我们点击’Merge’，就会开始合并了。  </p>
+<p><img src="http://ablee.cc/blog/img/git/merge.png" alt="merge">  </p>
+<p>这个时候你就可以”为所欲为”了，干完一票之后别忘了’Accept Merge’  </p>
+<p><img src="http://ablee.cc/blog/img/git/acceptmerge.png" alt="acceptmerge">  </p>
+<p>那么让我们看看合并之后的样子：  </p>
+<p><img src="http://ablee.cc/blog/img/git/mergend.png" alt="mergend">  </p>
+<hr>
+<p>就是这样啦，看起来像是个比较合格的教程了，除了那些大小不一的图片之外……<br>P.S.比较可惜的是Visual Studio提供的原生Git不支持除了微软自己的remote repository之外的其他remote repository。</p>
+<hr>
+<p><strong>非VS工程不能用以上的方法</strong><br><strong>在VS里面提交竟然遇到了换行符被自动改变</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/如何用VS作为Git的合并工具/" data-id="ciu2osn49000v8cygzdcww3j9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -244,6 +615,10 @@
 
   
 
+
+  <nav id="page-nav">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">__('next') &raquo;</a>
+  </nav>
 </section>
         
           <aside id="sidebar">
@@ -268,24 +643,28 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2016/10/08/HowToUpdateBlogWithGit/">如何使用Git更新博客（一次失败的尝试）</a>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
           </li>
         
           <li>
-            <a href="/2016/10/08/Git发布博文/">使用Git来发布博文</a>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
           </li>
         
           <li>
-            <a href="/2016/10/08/hello-world/">Hello World</a>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
           </li>
         
           <li>
-            <a href="/2016/10/08/Linux-MySql/">Linux-MySql</a>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
           </li>
         
       </ul>
@@ -301,7 +680,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

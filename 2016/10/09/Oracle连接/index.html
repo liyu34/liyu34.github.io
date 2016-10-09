@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Oracle数据库&amp;远程连接&amp;ODBC驱动 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="因为高级数据库课程需要，开始学习Oracle数据库，学习Oracle首先要安装，我尝试在linux上安装，结果失败了，然后把笔记本重新安装成Windows之后在上面安装上了Oracle。（在Windows上面安装Oracle也会提示很多错误，全部忽略就行了）
+
+Oracle安装完成之后，可以通过SQLplus进行连接，但是sqlplus不是图形化界面不利于保存SQL语句，还是想要通过图形界面访问，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Oracle数据库&远程连接&ODBC驱动">
+<meta property="og:url" content="http://yoursite.com/2016/10/09/Oracle连接/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="因为高级数据库课程需要，开始学习Oracle数据库，学习Oracle首先要安装，我尝试在linux上安装，结果失败了，然后把笔记本重新安装成Windows之后在上面安装上了Oracle。（在Windows上面安装Oracle也会提示很多错误，全部忽略就行了）
+
+Oracle安装完成之后，可以通过SQLplus进行连接，但是sqlplus不是图形化界面不利于保存SQL语句，还是想要通过图形界面访问，">
+<meta property="og:updated_time" content="2016-10-09T13:46:42.482Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Oracle数据库&远程连接&ODBC驱动">
+<meta name="twitter:description" content="因为高级数据库课程需要，开始学习Oracle数据库，学习Oracle首先要安装，我尝试在linux上安装，结果失败了，然后把笔记本重新安装成Windows之后在上面安装上了Oracle。（在Windows上面安装Oracle也会提示很多错误，全部忽略就行了）
+
+Oracle安装完成之后，可以通过SQLplus进行连接，但是sqlplus不是图形化界面不利于保存SQL语句，还是想要通过图形界面访问，">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Oracle连接" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Oracle连接/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Oracle数据库&amp;远程连接&amp;ODBC驱动
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因为高级数据库课程需要，开始学习Oracle数据库，学习Oracle首先要安装，我尝试在linux上安装，结果失败了，然后把笔记本重新安装成Windows之后在上面安装上了Oracle。（在Windows上面安装Oracle也会提示很多错误，全部忽略就行了）</p>
+<hr>
+<p>Oracle安装完成之后，可以通过SQLplus进行连接，但是sqlplus不是图形化界面不利于保存SQL语句，还是想要通过图形界面访问，一开始使用PLSQL，但是一直连接不上，后来直接用Oracle提供的sqldeveloper进行连接。</p>
+<hr>
+<p>本地连接没什么特殊的，很容易就连接成功了，让我头疼的是如何远程连接，我按照网络上的教程，使用Net Managment配置本地服务和监听器，但是在远端使用Sqldeveloper就是通过不了测试，后来发现网上有教程说我缺少Instant Client（即时客户端），下载之后配置好了发现也不行。  </p>
+<p>我突然想起了之前sqlserver远程连接的时候需要重启服务，于是我去重启了一遍Oracle的TNSListener服务，果真，重启之后配置重新载入就好了。</p>
+<hr>
+<p>Oracle小记：  </p>
+<ol>
+<li>每个Oracle用户一个表方案，访问不同用户的表需要在表名字前面加用户名。  </li>
+<li>Oracle新建数据库是新建一个服务。  </li>
+<li><code>create user *name* identified by *passwd*</code>创建用户  </li>
+<li><code>grant connect,dba,resource to *name*</code>分配权限  </li>
+</ol>
+<hr>
+<p>在Windows上安装Oracle驱动  </p>
+<p>为了做分布式实验，需要在一个没有安装Oracle数据库的Windows上面用ODBC来访问oracle，百度了很多，那些回答、博客都跟傻逼似的，一点用也没有，唯一有用的是<a href="http://www.cnblogs.com/shelvenn/p/3799849.html" target="_blank" rel="external">这个</a>，这篇博客说的是对的。  </p>
+<p>所以我们需要下载两个东西一个是base包(instantclient-basic)，另一个是ODBC包(instantclient-odbc)，下载下来之后是两个压缩包，解压然后合并（其实都把它们解压到一个位置即可，因为里面的文件夹名字都是一样的，会自动合并），然后把这个文件夹放置到随便一个你喜欢的地方，然后进去用管理员权限运行”odbc_install.exe”就行了，这时候ODBC管理程序里面就会出现Oracle in instantclient了。  </p>
+<p>要连接服务器还必须得配置TNS，在instantclient根目录下面新建一个目录叫做”NETWORK”，进去再新建一个目录叫做”ADMIN”，在ADMIN里面新建一个文件叫做”tnsnames.ora”（当然你也可以从Oracle服务器里面直接复制出来），这时候还需要配置两个环境变量，分别是<code>ORACLE_HOME</code>和<code>NLS_LANG</code>。第一个变量值就是instantclient目录（比如<code>D:\instantclient_11_2</code>），第二个变量值等于<code>SIMPLIFIED CHINESE_CHINA.ZHS16GBK</code>，这个变量是解决sql通过odbc查询中文乱码问题的。</p>
+<p>这时候你去ODBC管理程序里面就可以配置Oracle服务器了。TNS Service Name里面可以下拉出你在tnsnames.ora配置的内容（如果下拉不到东西说明你ORACLE_HOME变量没有配置）。  </p>
+<hr>
+<p>后来我发现……想要在SqlServer Management Studio里面连接Oracle数据库最简单的方法还是在电脑上安一个Oracle客户端……  </p>
+<p>最后还是没能逃过安装Oracle……</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/Oracle连接/" data-id="ciu2osn3000098cyghv5e2h1h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          用VS组建一个Qt多工程的解决方案来进行软件开发
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/10/09/QtNote2015.09.19/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">QtNote:QTcpSocket、Qt位运算、QTableView、QLineEdit焦点问题</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

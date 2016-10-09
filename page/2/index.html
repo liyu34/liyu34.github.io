@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Hexo">
+<meta property="og:url" content="http://yoursite.com/page/2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hexo">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-研究生开学了" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/研究生开学了/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/研究生开学了/">研究生开学了</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>研究生的生活终于要开始了，不过每次来到新的环境都要耗费很久来拾掇我的小窝来让我生活的舒服一点。经过了两天时间，现在总算是像模像样了。</p>
+<p>最近好像很多讲座的样子，不过我后天下午要去接我女朋友，所以如果冲突的话只能请假了……</p>
+<p>现在媳妇儿大人也已经开学了，接下来就是用三年的努力来换取以后幸福的生活了。我的方向应该是人工智能，研究生阶段的课程我已经选择好了。下面是我的课程列表。  </p>
+<p><img src="http://ablee.cc/blog/img/my_courses.png" alt="my_course">  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/研究生开学了/" data-id="ciu2osn4c000w8cyg82ybjbs1" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-站点迁移" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/站点迁移/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/站点迁移/">站点迁移&amp;远程传送文件命令（scp）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>由于之前的VPS是月付的，算下来的话比年付要贵接近一倍，所以趁这次VPS要到期，重新开了一个一样配置的年付VPS，新东西当然要玩一下，这一玩可不得了，成功找到了用Git发布博文的办法。<br>之前把系统装成了centos7，安装nginx有点问题，所以把系统又重装了，然后现在一切从零开始搭建GitBlog、使用Git发布博文。</p>
+<hr>
+<p>##搭建GitBlog<br>首先让我们来安装Nginx！在centos6上面安装！<br>好吧，第一步就出现了问题<code>yum install nginx</code>之后显示没有安装包？！于是百度之，解决办法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//1.下载rpm包</div><div class="line">wget http:\/\/nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm</div><div class="line">//2.安装rpm包</div><div class="line">rpm -ivh nginx-release-centos-6-0.el6.ngx.noarch.rpm</div><div class="line">```  </div><div class="line">这样之后就可以用yum安装nginx了。  </div><div class="line">安装好nginx之后就要配置它，然后我发现我不知道该死的系统把nginx安到哪里去了，于是百度，于是发现好多无用信息，于是`whereis nginx`。发现Nginx在安装目录`/etc/nginx`。进入安装目录之后会看到`conf.d`文件夹，里面就是配置文件啦。  </div><div class="line">新建一个文件，把Gitbolg官网配置范例粘贴上去保存为default.conf就好了，当然要先修改网站目录。（因为我对nginx也一知半解，所以就直接粘贴了）  </div><div class="line">GitBlog还需要php和mbstring扩展库，所以安装php和mbstring扩展库！</div></pre></td></tr></table></figure></p>
+<p>yum install php<br>yum install php-fpm<br>yum install php-mbstring<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">这样前期环境就算是搭建好了，让我们下载下来GitBlog的源码，并把它放到我的网站目录`/data/vhost/liyu34.xyz`下。</div><div class="line">下载下来tar.gz压缩包之后需要解压，我在网上搜罗了一个tar命令介绍粘到下面：</div></pre></td></tr></table></figure></p>
+<p>tar</p>
+<p>-c: 建立压缩档案<br>-x：解压<br>-t：查看内容<br>-r：向压缩归档文件末尾追加文件<br>-u：更新原压缩包中的文件</p>
+<p>这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。<br>下面的参数是根据需要在压缩或解压档案时可选的。</p>
+<p>-z：有gzip属性的<br>-j：有bz2属性的<br>-Z：有compress属性的<br>-v：显示所有过程<br>-O：将文件解开到标准输出</p>
+<p>解压常用命令：</p>
+<p>tar –xvf file.tar  解压 tar包<br>tar -xzvf file.tar.gz 解压tar.gz<br>tar -xjvf file.tar.bz2   解压 tar.bz2<br>tar –xZvf file.tar.Z   解压tar.Z<br>unrar e file.rar 解压rar<br>unzip file.zip 解压zip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">完成这些之后还要启动nginx和php-fpm，这样`service nginx start`和`service php-fpm start`。</div><div class="line">这样GitBlog就搭建完成了。下面进入Git的环节。</div><div class="line"></div><div class="line">---</div><div class="line">如果想要自启动某个服务的话，可以用`chkconfig service_name on`如果想要关闭的话可以`chkconfig service_name off`。  </div><div class="line">之前一直没有自启动php-fpm服务，所以每次重启服务器还得去手动重启php-fpm麻烦的很。</div><div class="line"></div><div class="line">---</div><div class="line">下面是从网上摘录的scp远程传送文件命令。  </div><div class="line"></div><div class="line">复制文件：  </div><div class="line">（1）将本地文件拷贝到远程  </div><div class="line">scp 文件名用户名@计算机IP或者计算机名称:远程路径  </div><div class="line"></div><div class="line"></div><div class="line">（2）从远程将文件拷回本地  </div><div class="line">scp 用户名@计算机IP或者计算机名称:文件名本地路径  </div><div class="line"></div><div class="line">复制目录：  </div><div class="line">（1）将本地目录拷贝到远程  </div><div class="line">scp -r 目录名用户名@计算机IP或者计算机名称:远程路径  </div><div class="line"></div><div class="line">（2）从远程将目录拷回本地  </div><div class="line">scp -r 用户名@计算机IP或者计算机名称:目录名本地路径  </div><div class="line"></div><div class="line">---</div><div class="line">2016年3月3日补充</div><div class="line"></div><div class="line">nginx配置可以参照下面：</div></pre></td></tr></table></figure></p>
+<p>server {<br>        listen       80;<br>        server_name  liyu34.xyz;<br>        root         /data/vhost/liyu34.xyz;<br>        index        index.html index.htm index.php;</p>
+<pre><code>location ~ \.(jpg|png|gif|js|css|swf|flv|ico)$ {
+         expires 12h;
+}
+
+location / {
+        if (!-e $request_filename) {
+            rewrite ^(.*)$ /index.php?$1 last ;
+            break;
+        }
+}
+
+location ~* ^/(doc|logs|app|sys)/ {
+        return 403;
+}
+
+location ~ .*\.(php|php5)?$
+{
+        fastcgi_connect_timeout 300;
+        fastcgi_send_timeout 300;
+        fastcgi_read_timeout 300;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+}
+</code></pre><p>}<br>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/站点迁移/" data-id="ciu2osn4m000x8cyg5311hgec" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_QTableView_Button" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_QTableView_Button/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_QTableView_Button/">QtNote:在QTableView里面添加按钮&amp;QMessageBox按钮</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先，我要说明的是，经过我的研究发现，这个事情根本没有我之前看到的博客那么麻烦，原地址如下:<a href="http://www.cnblogs.com/li-peng/p/3961843.html" target="_blank" rel="external">QTableView 添加按钮</a>。这个博文里面有三个类，ButtonDelegate/TableModel/TableView。我发现其实只需要ButtonDelegate一个类即可。   </p>
+<p>废话不多说，先上代码为敬。<br><code>buttondelegate.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#ifndef BUTTONDELEGATE_H</div><div class="line">#define BUTTONDELEGATE_H</div><div class="line"></div><div class="line">#include &lt;QItemDelegate&gt;</div><div class="line"></div><div class="line">class ButtonDelegate : public QItemDelegate</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line">public:</div><div class="line">    explicit ButtonDelegate(QString t, QObject *parent = 0);</div><div class="line"></div><div class="line">    void paint(QPainter *painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const;</div><div class="line">    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index);</div><div class="line"></div><div class="line">signals:</div><div class="line">    void Pressed(QString ID);</div><div class="line"></div><div class="line">private:</div><div class="line">    QMap&lt;QModelIndex, QStyleOptionButton*&gt; m_btns;</div><div class="line">    QString text;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // BUTTONDELEGATE_H</div><div class="line">```  </div><div class="line"></div><div class="line">`buttondelegate.cpp`</div></pre></td></tr></table></figure></p>
+<p>#include “buttondelegate.h”</p>
+<p>#include <qapplication></qapplication></p>
+<p>#include <qmouseevent></qmouseevent></p>
+<p>#include <qdialog></qdialog></p>
+<p>#include <qpainter></qpainter></p>
+<p>#include <qstyleoption></qstyleoption></p>
+<p>#include <qdesktopwidget></qdesktopwidget></p>
+<p>ButtonDelegate::ButtonDelegate(QString t, QObject *parent) :<br>    QItemDelegate(parent)<br>{<br>    text = t;<br>}</p>
+<p>void ButtonDelegate::paint(QPainter <em>painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const<br>{<br>    QStyleOptionButton</em> button = m_btns.value(index);<br>    //if (!button) {//如果有这个if判断的话，当窗口缩小到出现滑块的时候会有异常，因为判断已经有这个按钮了，就不再重画了<br>        button = new QStyleOptionButton();<br>        button-&gt;rect = option.rect.adjusted(3, 3, -3, -3);<br>        button-&gt;text = text;<br>        button-&gt;state |= QStyle::State_Enabled;</p>
+<pre><code>    (const_cast&lt;ButtonDelegate *&gt;(this))-&gt;m_btns.insert(index, button);
+//}
+painter-&gt;save();
+
+if (option.state &amp; QStyle::State_Selected) {
+    painter-&gt;fillRect(option.rect, option.palette.highlight());
+
+}
+painter-&gt;restore();
+QApplication::style()-&gt;drawControl(QStyle::CE_PushButton, button, painter);
+</code></pre><p>}</p>
+<p>bool ButtonDelegate::editorEvent(QEvent <em>event, QAbstractItemModel </em>model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index)<br>{<br>    if (event-&gt;type() == QEvent::MouseButtonPress) {</p>
+<pre><code>    QMouseEvent* e = (QMouseEvent*)event;
+
+    if (option.rect.adjusted(4, 4, -4, -4).contains(e-&gt;x(), e-&gt;y()) &amp;&amp; m_btns.contains(index)) {
+        m_btns.value(index)-&gt;state |= QStyle::State_Sunken;
+    }
+}
+if (event-&gt;type() == QEvent::MouseButtonRelease) {
+    QMouseEvent* e = (QMouseEvent*)event;
+    emit Pressed(index.data().toString());
+}
+return true;
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">(⊙o⊙)…恩，没错，就是直接复制的上面那个博客的源码。不过我发现不需要去定义三个类，并把QTableView提升为“TableView”，只需要在QTableView初始化的时候（我说的是InitTableView()这个我写的函数）定义一个ButtonDelegate类型的指针，然后把你想要实现的功能给绑定到按钮被按到时候发出的消息上即可。以下为部分关键代码。</div></pre></td></tr></table></figure></p>
+<pre><code>ButtonDelegate *m_button = new ButtonDelegate();
+connect(m_button, SIGNAL(DeleteRTU_Signal(QString)), this, SLOT(DeleteRTU(QString)));
+ui.tableView-&gt;setItemDelegateForColumn(3, m_button);
+emit model-&gt;layoutChanged();
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">经过我的初步研究，我发现，这个问题的关键就是ButtonDelegate里面那两个函数，`paint`来负责在制定的位置画上按钮，`editorEvent`负责发出按钮响应信号（和把按钮换成被按的状态）。这个`editorEvent`实际上都不是按钮响应事件，而是编辑事件，因为这个ButtonDelegate实际上继承的是QItemDelegate。  </div><div class="line"></div><div class="line">---</div><div class="line">QMessageBox可以用来做一个简单的再次确认的对话框，上代码为敬：</div></pre></td></tr></table></figure>
+<p>int confirm = QMessageBox::information(this, “Delete”, “Please confirm!”, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);<br>    if (confirm == QMessageBox::No) return;<br>```  </p>
+<p>(⊙o⊙)…我觉得我不需要再记录什么内容了，这些代码就足够了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/QtNote_QTableView_Button/" data-id="ciu2osn37000c8cygjci0cbbm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/">QtNote:QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因为学生会活动需要一个抢答器，之前师兄他们做的硬件抢答器坏掉了，于是我就萌生了做一个C/S结构抢答器的想法，Client比较容易，因为之前做过Qt里面Socket的程序，但是这个Server就有点没有头绪了。  </p>
+<p>还好有百度（百度出来的结果真的不好……）看了几篇博客然后决定动手做了。虽然看到论坛里面有人说Qt的Server不好，不如用C++的其他库，但是我这只是个小程序，顶多同时10个Client，就用Qt吧，反正现在Qt用的顺手（但是也会遇到一堆问题）。  </p>
+<hr>
+<p>做完了之后想来，这个程序还是蛮简单的，最起码Server的监听挺简单的。</p>
+<p>要想用Qt做一个Server程序，只需要在一个类（exp. class MyServer）里面定义一个<code>QTcpServer</code>的对象（或指针），初始化之后可以通过<strong><code>listen()</code></strong>函数告诉它监听哪个端口。然后每当有新的连接接入的时候QTcpServer对象会emit一个<strong><code>newConnection()</code></strong>的信号，然后你可以在你的服务器类里面定义槽函数来处理这个新连接的接入。<br>那么监听哪个端口的函数模版是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">bool MyServer::StartListen()</div><div class="line">&#123;</div><div class="line">	if (!m_server-&gt;isListening())</div><div class="line">	&#123;</div><div class="line">		if (m_server-&gt;listen(QHostAddress::Any, 2333))//开始监听2333窗口</div><div class="line">		&#123;</div><div class="line">			return true;</div><div class="line">		&#125;</div><div class="line">		else</div><div class="line">		&#123;</div><div class="line">			return false;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	else</div><div class="line">	&#123;</div><div class="line">		return true;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我看的博客里面都是定义一个<code>class MySocket : public QThread</code>线程来接收接入的连接。  </p>
+<hr>
+<p>我定义的<code>MySocket</code>是这样的:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class MySocket :public QThread</div><div class="line">&#123;</div><div class="line">	Q_OBJECT</div><div class="line">public:</div><div class="line">	MySocket(QTcpSocket *connection,QObject *parent = 0);</div><div class="line">	~MySocket();</div><div class="line">	void SendMessage(QString text);</div><div class="line"></div><div class="line">private:</div><div class="line">	QTcpSocket *m_socket;</div><div class="line">private:</div><div class="line">	void run();</div><div class="line">private slots:</div><div class="line">	void DataReceived();</div><div class="line">&#125;;</div><div class="line">```  </div><div class="line"></div><div class="line">以上代码中只包括了最主要的部分， 我把软件逻辑功能相关的变量、函数定义删掉了。其中需要说明的是在构造函数里面会把QTcpSocket类型的指针赋值给类里面的`m_socket`。  </div><div class="line"></div><div class="line">那么回到刚刚提到的`MyServer`的处理新连接的槽函数：</div></pre></td></tr></table></figure>
+<p>void MyServer::NewConnectionSlot()<br>{<br>        MySocket <em>temp_socket;<br>        temp_socket = new MySocket(m_server-&gt;nextPendingConnection());<br>        temp_socket-&gt;start();<br>        socketList &lt;&lt; temp_socket;//socketList的类型是QList&lt;MySocket</em>&gt;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">这样这个服务器端的监听程序部分就基本上完成了。</div><div class="line"></div><div class="line">---</div><div class="line">另外我还遇到了TcpSocket传输中文乱码的问题，经查找，我使用的有效方法如下：  </div><div class="line"></div><div class="line">1.发送时：</div></pre></td></tr></table></figure></p>
+<pre><code>QString text = &quot;你要传输的文字&quot;;
+QByteArray datasend = text.toLocal8Bit();
+m_socket-&gt;write(datasend);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2.接收时：</div></pre></td></tr></table></figure>
+<pre><code>QByteArray vTemp;
+vTemp = m_socket-&gt;readLine();
+QString vTempStr = QString::fromLocal8Bit(vTemp);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">完成这个东西之后就直接拿去用了，没有经过完整测试，结果到了现场根本没法用，客户端没有每隔一段时间去汇报情况，过一会连接就自动断掉了，所以完全没法用，解决办法也很简单，既然长时间不汇报情况连接会断，那么就每隔一段时间发送个报文给服务器就好了（其实这个方法早就有，也不能叫方法，因为一般人都会默认加上这个东西来确保两者连接，只是我经验不够老到，吃了大亏）。可以在MyClient类的构造函数里面定义一个Timer（`startTimer(3000);`），到时间之后触发timerEvent函数（在MyClient类里面重载`protected void timerEvent(QTimerEvent *event);`），在这个函数里面给服务器发一个空报文就好了。</div></pre></td></tr></table></figure>
+<p>void MyClient::timerEvent(QTimerEvent *event)<br>{<br>    QString c = “”;<br>    socket-&gt;write(c.toLatin1(), c.length());<br>}<br>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" data-id="ciu2osn39000d8cygfxg074se" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_QTcpSocket_QObject" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_QTcpSocket_QObject/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨晚在做ModBus的时候遇到了两个问题，第一个是tcpsocket突然无法发送数据了，显示tcpsocket无法跨进程调用；第二个是编译时一直显示无法访问QObject的私有变量。</p>
+<hr>
+<p>##一、QTcpSocket无法跨进程调用的问题<br>当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  </p>
+<p>最后发现问题是出在启动线程的<code>start()</code>函数上，之前我的所有线程都是在主线程初始化的时候就start。主进程里面有线程的对象（不是指针），线程的对象会随着主进程初始化而初始化，tcpsocket对象（不是指针）在线程初始化的时候初始化，同时通过tcp/ip连接模拟程序。这样线程初始化完成之后就立刻开始运行。  </p>
+<p>后来我写了一个按钮响应，把线程的<code>start()</code>给挪到按钮响应里去了，这样之后每次tcpsocket发送数据的时候就是出错，输出“tcpsocket无法跨线程调用”，于是我又把start给挪回构造函数里了，下一步准备试一下在按钮响应里面new一个线程的对象。  </p>
+<p>这个问题我觉得可能是因为主进程和线程的关系的原因？</p>
+<hr>
+<p>##二、无法访问QObject私有变量<br>这个问题其实是发生在上一个问题之前的，这个问题在之前的我看来其实是蛮无厘头的。光说可能没啥感觉，上个图先。<br><img src="http://ablee.cc/blog/img/qobjectclass.png" alt="qobjectclass.png">  </p>
+<p>上图就是这次问题的三个主角，<code>DataBlock</code>、<code>CollectionThread</code>、<code>DBManager</code>。  <del>需要交代的是DataBlock这个主角中的主角是一个关系户，他爸爸是QObject（传说中Qt大家庭里面大部分人的爷爷or太爷爷…）</del>  也就是说DataBlock直接继承自QObject。然后编译的时候就一直提示我“无法访问QObject的私有成员”，我还真信了，跑去看了几个DataBlock里面的变量，后来想不可能啊，以我这奇葩的命名方式，怎么可能会那么巧合的重名！于是我百度了。  </p>
+<p>然后我发现是因为QObject不允许copy或者opeartor=，然后我看了看我的代码，果真有地方用了等于号。</p>
+<p>本来是想借用Qt的QObject的管理机制来管理这个DataBlock的，原来这么多限制，  <del>于是就取消了DataBlock和QObject的父子关系</del>，  于是就不让DataBlock继承QObject了，也不用Q_OBJECT宏了。这样就解决了。  </p>
+<p><strong>需要注意的是之前我以为必须纳入Qt的体系中才可以用QList管理数据，现在发现不需要纳入Qt的体系也可以用QList管理数据。</strong></p>
+<hr>
+<p>##三、在非QObject子类中使用connect函数<br>（2015.10.20补充）<br>今天我又遇到Qobject的子类不能copy和operator=的问题了，但是我需要在那个类里面使用connect函数连接槽函数和消息，这该怎么办呢？  </p>
+<p>我想了一个麻烦的办法和一个简单的办法。麻烦的办法就是传给它一个是Qobject子类的对象的指针，用这个指针来调用connect函数。  </p>
+<p>简单的办法有效，所以我就没有尝试麻烦的办法究竟可行不可行，<strong><code>QObject::connect(...)</code></strong>，这样就行了。<br>我理解的qt程序是都运行在一个core上，所以只需要通知它绑定了什么信号和槽就行了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/QtNote_QTcpSocket_QObject/" data-id="ciu2osn3b000e8cygxzv3nn39" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_Qt5_6缺少ODBC的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/">QtNote:Qt5.6缺少QODBC驱动</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前阵子发现Qt5.6终于发布了之后，满心欢喜的安装了Visual Studio 2015和Qt5.6，最近发现Qt5.6默认不带QODBC驱动了，以前的程序连接不上SqlServer了，很是苦恼，于是尝试了以下两种解决办法，<strong>其中第一种是不可行的，大家不要尝再去试。</strong></p>
+<p>##从Qt5.5中拷贝QODBC（不可行）<br>秉承着少什么给什么的朴素主义程序员原则，我重新安装了Qt5.5，并且从Qt5.5.0\5.5\msvc2015\plugins\sqldrivers\下面拷贝出了以<code>qsqlodbc</code>开头的三个文件到Qt5.6对应的文件夹中，运行程序，还是显示无法加载QODBC，但是系统已经检测到sqldriver文件夹下面有QODBC了，但是由于版本不同无法使用，所以此路不通。  </p>
+<p>##从Qt5.6源码中编译QODBC<br>虽然不知道为什么Qt5.6默认不自带QODBC了，但是还是可以从源码中编译出QODBC的，方法步骤也挺简单的，取自<a href="http://blog.csdn.net/sniper_bing/article/details/51018783" target="_blank" rel="external">Qt5.6 windows下vs2015编译QODBC</a>作者：蜗牛的信仰。  </p>
+<p>主要有五步：  </p>
+<ol>
+<li>打开Visual Studio提供的CMD（我这里是<code>VS2015 x64 Native Tools Command Prompt</code>）</li>
+<li>进入<code>Qt5.6.0\5.6\msvc2015\bin</code>，执行<code>qtenv2.bat</code></li>
+<li>进入<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc</code>，执行<code>qmake odbc.pro</code></li>
+<li>执行<code>nmake</code>（开始编译）</li>
+<li>编译完成之后进入<code>Qt5.6.0\5.6\Src\qtbase\plugins\sqldrivers</code>中将所有<code>qsqlodbc</code>开头的文件（<strong>注意是所有的文件，不只是三个</strong>）拷贝到<code>Qt5.6.0\5.6\msvc2015\plugins\sqldrivers</code>  </li>
+</ol>
+<hr>
+<p>但是当我想要编译32位QODBC的时候（我同时也安装了32位Qt），上面的方法却行不通了，就算我用的是<code>VS2015 x86 Native Tools Command Prompt</code>也不行，说模型是x86的，但是目标机器是x64的，编译失败。  </p>
+<p>这时候可以打开Visual Studio，使用Qt的菜单栏<code>Open Qt Project File(.pro)</code>打开<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc</code>中的odbc.pro文件，然后将用Configuration Manager新建一个solution platform为x86的，然后分别Debug build一下和Release build一下。然后去<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc\Debug|Release</code>里面拷贝东西就好了。  </p>
+<p>另外，其实Debug build的时候会在<code>Qt5.6.0\5.6\Src\qtbase\plugins\sqldrivers</code>里面生成Debug的库文件，但是Release的时候不会在那个目录下生成，因为新建solution platfrom的时候没有设置生成地点，所以就默认在odbc工程根目录下生成了。 </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" data-id="ciu2osn3d000f8cygvmhdo9ok" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/">QtNote:Qt连接SqlServer | Qt中的相互引用问题 | Qt发布数据库程序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近要大改项目的一个工程，遇到了两个问题，一个问题是历史遗留的老大难问题，另一个是今天下午遇到的奇怪问题。  </p>
+<hr>
+<p>##Qt连接SqlServer<br>看到这个题目可能有人会说这里之前不是记录过吗？但是今天我又遇到了这个问题，不同的是这次我必须连接远程数据库服务器了。  </p>
+<p>我按照之前的做法，在ODBC里面添加了数据源，然后我就直接把原来的代码改了数据源名字，结果发现不行了。后来发现这个原因很傻，远程服务器上面没有我这个Windows账户的许可，所以我不添加用户名密码程序自动用Windows登陆验证去访问自然就被拒绝了。添加上用户名密码选项就好了。就像下面这样：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">	db.setDatabaseName(&quot;RTUData_DYX&quot;);</div><div class="line">	db.setUserName(&quot;sa&quot;);</div><div class="line">	db.setPassword(&quot;*******&quot;);</div><div class="line">```  </div><div class="line"></div><div class="line">然后，另一种让我神往的直接用连接字符串的方式也让我给摸索出来了，这个方法用语言描述是非常空洞的，所以直接上代码：</div></pre></td></tr></table></figure>
+<pre><code>QString dsn = &quot;DRIVER={SQL SERVER};SERVER=***.***.***.***\\sqlexpress;DATABASE=RTUData&quot;;
+db.setDatabaseName(dsn);
+db.setUserName(&quot;sa&quot;);
+db.setPassword(&quot;*******&quot;);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">需要说明的两点是DRIVER后面的大括号里面必须是`SQL SERVER`必须都是大写中间空格也不能少；第二点是如果你的数据库服务器是express版本的话，在计算机名或ip后面必须跟着`\\sqlexpress`注意是双反斜杠，因为有个字符串转义存在。  </div><div class="line"></div><div class="line">这个dsn其实是我用VS连接了数据库之后从属性的&apos;连接字符串&apos;里面拷贝出来然后加了一个反斜杠的。  </div><div class="line"></div><div class="line">##Qt中的相互引用问题  </div><div class="line">其实C++里面也会遇到相互引用的问题，相互引用问题就是假设有两个类A类和B类，在这两个类里面相互作为成员变量，这在编译的时候会引起链接错误，因为编译A类的时候编译器还不知道B类是什么，所以B类的函数就会引起链接错误。  </div><div class="line"></div><div class="line">那么一般的解决方法是在一个类A的头文件里不引用另一个类B，但是声明一下类B，然后类体里面用这个类B的指针，在A的cpp文件里面引用B的头文件，这样在B类里面就照常使用就好了。  </div><div class="line"></div><div class="line">本来想仔细描述一下这个问题，现在发现解决方案和C++里面的解决方案一样，但是我之前遇到的奇怪问题再也找不回来了。  </div><div class="line"></div><div class="line">---</div><div class="line">##Qt发布数据库程序</div><div class="line">Qt发布数据库程序的时候必须在程序的根目录下面放置sqldriver文件夹，里面是对应的驱动，比如SqlServer就是qsqlodbc.dll。</div></pre></td></tr></table></figure>
+<p>/<br>|…sqldrivers/qsqlodbc.dll<br>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/" data-id="ciu2osn3e000g8cygpyfsl6yo" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_of_file_event" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_of_file_event/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_of_file_event/">QtNote:QTextEdit、QEvent和QFile</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <hr>
+<p>今天在给CuteMarkEd添加gitblog博文前缀功能的时候遇到了不少问题，有的是老问题，有的是新问题，所以既温故又知新了，为了不再忘记，所以得记录。</p>
+<hr>
+<p>最常用又最常忘的文件操作：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function">QFile <span class="title">file</span><span class="params">(<span class="string">"categories.txt"</span>)</span></span>;</div><div class="line"><span class="keyword">if</span> (!file.open(QIODevice::ReadWrite | QIODevice::Text))  </div><div class="line">&#123;</div><div class="line">    QMessageBox::information(<span class="literal">NULL</span>,<span class="string">"Error!"</span>,<span class="string">"Can't open the file!"</span>);</div><div class="line">&#125;</div><div class="line"><span class="function">QTextStream <span class="title">write</span><span class="params">(&amp;file)</span></span>;</div><div class="line">file.close();</div></pre></td></tr></table></figure></p>
+<p>有一点需要记住，可以通过<code>QIODevice::Append</code>来使的文件指针指向文件末尾，这样直接可以往文件末尾添加内容。另外如果是有在指定位置写入东西的话必须要开放Read的权限，不能<code>WriteOnly</code>。</p>
+<hr>
+<p>继承QTextEdit来实现按下Tab转移焦点功能。因为默认的TextEdit默认是按下Tab输入一个制表符，非常不适合使用习惯，所以我重写了<code>MyTextEdit</code>类来支持Tab键转移焦点。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> MyTextEdit : <span class="keyword">public</span> QTextEdit</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    MyTextEdit(QWidget *parent=<span class="number">0</span>);</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetNext</span><span class="params">(MyTextEdit *n)</span></span>&#123;next = n;&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">event</span><span class="params">(QEvent *e)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    MyTextEdit *next;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
+<p>这里还有一个很重要的点，是一个我早就想知道的点，那就是Event事件。为了转移焦点，我试过在编辑框的父窗口类里<code>setFoucus</code>但是调用这个函数的slot无法响应在<code>MyTextEdit</code>里面发出的信号，由于时间有限我也没有去深究哪里的原因。(<del>~可能只是因为函数名写错了？</del>~)既然这种方法不可行那我就直接在他们之间相互转换，可以看到上面的类体里面有一个<code>MyTextEdit *next</code>这个就是指向按下tab键之后跳转的那个编辑框。这里的重点在重写的<code>bool event(QEvent *e)</code>下面是函数实现。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> MyTextEdit::event(QEvent *e)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (e-&gt;type() == QEvent::KeyPress)</div><div class="line">    &#123;</div><div class="line">        QKeyEvent *keyEvent = <span class="keyword">static_cast</span>&lt;QKeyEvent *&gt;(e);</div><div class="line">        <span class="keyword">if</span> (keyEvent-&gt;key() == Qt::Key_Tab)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">// 处理Tab鍵</span></div><div class="line">            <span class="keyword">if</span>(next!=<span class="literal">NULL</span>)</div><div class="line">                next-&gt;setFocus();</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> QWidget::event(e);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>这个事件体系很强大，假如之前我做StandardSeach的时候知道这个体系的话可能就会做的更好了。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">closeEvent(QCloseEvent * event)</div></pre></td></tr></table></figure></p>
+<p>很多时候我只是忘记流程了，只要有一个小提醒就能想起来，比如上面那个就是窗口关闭的时候会出现的<code>closeEvent</code>，有了这个提醒就可以Google了，所以这个写的并不详细。</p>
+<hr>
+<p><strong>不过还是得练习写作啊。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/QtNote_of_file_event/" data-id="ciu2osn3j000h8cyg1n8enl7m" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-RTU通信协议（翻译）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/RTU通信协议（翻译）/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/RTU通信协议（翻译）/">NARTU通信协议（翻译）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>NARTU通常装备有串行端口或者以太网端口，串行端口支持MODBUS协议，以太网端口支持MODBUS TCP/IP协议（注释：MODBUS协议和MODBUS TCP/IP协议是生产PLC的施耐德电气公司制定的，NARTU完全遵循以上两种标准协议）。  </p>
+<p>#1、概要介绍</p>
+<p>##（1）信息交换属性<br>MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接读写单个byte。<br>除去广播信息之外，所有的信息交换都是由主方发起的，所有完整的信息交换流程都包含下行（downlink）和上行（uplink）两个消息。  </p>
+<ul>
+<li>下行消息：一个由主方发出的请求消息  </li>
+<li>上行消息：一个由从方发出的回应消息<br><img src="http://ablee.cc/blog/img/RTU_fg1.png" alt="fg1"><br><img src="http://ablee.cc/blog/img/RTU_fg2.png" alt="fg2"></li>
+</ul>
+<p>如图Fig.12.1，主方的请求信号一般是向特定的从属设备发出的（通过请求信息的第一个字节我们可以知道目标从属设备的地址）。如图Fig.12.2，如果从属设备地址为0的话，那么这条消息就是一条广播消息，广播消息会被发送到所有的从属设备，但是ModBus通信协议规定这种信息只能是写入指令，从属设备也不会对广播消息作出回应（发出回应消息）。  </p>
+<p>##（2）信息格式<br>所有的RTU交换信息（包括上行消息和下行消息）都遵循相同的信息格式。信息格式如下：<br><img src="http://ablee.cc/blog/img/RTU_t1.png" alt="t1"><br>每条信息具有四种信息：</p>
+<p>###从属设备地址<br>从属设备的地址长度为一个字节（取值范围为0-FFH），但是如果从属设备地址为0的话，这条消息实际上是一个广播消息，所以从属设备的真正的取值范围为01H-FFH（即1-255）。</p>
+<p>###操作码<br>操作码的长度也为一个字节，操作码用来告诉设备这条消息选择了哪一个指令（读、写、回答正确还是不正确等等）。操作码的有效范围为1-255，各种操作码的指令含义会在本手册的后续部分进行详细讲解。</p>
+<p>###数据区<br>数据区均为16进制的数据，数据区的长度并不固定，实际长度与操作码有关。</p>
+<p>###CRC16检测<br>CRC16检测占每条信息的最后两个字节。这是一个遵循CRC16算法的检测，检测范围是从第一个字节（从属设备地址）到数据区的最后一个字节。<br>【例子】CRC16算法的C语言实现：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="title">CRC16</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* buf, <span class="keyword">unsigned</span> <span class="keyword">short</span> len)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> crc=<span class="number">0xffff</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> i,j,k;</div><div class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;len;i++)</div><div class="line">	&#123;</div><div class="line">		crc =crc ^ buf[i];</div><div class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">8</span>;j++)</div><div class="line">		&#123;</div><div class="line">			k=crc &amp; <span class="number">01</span>;</div><div class="line">			crc=crc &gt;&gt; <span class="number">1</span>;</div><div class="line">			<span class="keyword">if</span> (k==<span class="number">0</span>) <span class="keyword">continue</span>;</div><div class="line">			crc =crc ^ <span class="number">0xA001</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> crc;</div></pre></td></tr></table></figure></p>
+<p>#2、寻址方式<br>如上图Fig.12.1和Fig12.2所示，主方设备可以与n（1≤n≤255）个从属设备进行通话。当然，n=0（即从属设备地址为0）的时候是广播消息。  </p>
+<p>从Fig.12.1和Fig.12.2可以得出，主方设备访问从属设备这一行为实际上是主方设备访问特定从属设备中的特定装置中的一系列寄存器。所以主方设备访问的地址应该由三个方面共同决定：从属设备地址，从属设备中的装置号，装置中寄存器的地址。</p>
+<p>在信息中，装置号和装置中寄存器的地址被合称为”word address”。</p>
+<hr>
+<p>未完待续  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/RTU通信协议（翻译）/" data-id="ciu2osn3l000i8cygnssowtfg" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-SetupStationNote" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/SetupStationNote/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/SetupStationNote/">建站记录</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>这次的建站还是比较成功的，页面我也很喜欢。</p>
+<hr>
+<p>首先说一下这次冲动的原因。其实之前一直就想要有个博客的，因为这一阵子做了很多东西本以为学了很多，没想到再次遇到同样的问题的时候还是得回去看原来的代码，所以体会到了整理总结并且记录下来的重要性。而且你看那些网站一个个的跟我要个人网站地址，但是我又没有，VPS是有的，域名也是有的，干脆一不做二不休建一个博客吧。  </p>
+<p>其实在准备建站之前也去看了看CSDN的博客，还在上面写了篇文章，但是每次都要审核好麻烦的，而且CSDN有些界面还是那么的丑，然后去SegmentFault上面也看了看那个专栏，并且把之前在CSDN上写的那篇文章复制过去了，我还好心的在后面写了一句“复制自我刚写的CSDN博客”，然后审核就不通过了，原因是“文章质量不高”，我本来以为是我写的太零碎了，没想到还真是因为我的最后一句注释，因为我把它删掉之后再次提交审核竟然通过了，由此我就很不开心。。。  </p>
+<p>所以我昨天晚上开始建站，因为喜欢上了MarkDown，所以在找能用md的博客，不经意间发现了GitBlog，发现这个很适合小巧的VPS，所以我就决定尝试一下。  </p>
+<p>一开始都很顺利，安装nginx，安装php的一些组件，之后配置nginx，然后把GitBlog放到nginx配置的网站根目录下，结果发现主页什么都不显示，然后我就加了GitBlog的交流群，群主很热心的为我解答一些问题，然后还是不行，我就把我的vps帐号给了群主，他帮我检查（那时候已经凌晨一点了），最后检查出来是因为缺少了mbstring扩展库，他帮我安装好了，真的是很感谢群主。  </p>
+<p>到此为止我的博客算是建立成功了，之后就是最为重要的记录了。</p>
+<p>现在是研零的暑假，马上就要开学成为真正的研究生了，我要养成一个记录已经学到的知识的好习惯。与GitBlog共勉。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/SetupStationNote/" data-id="ciu2osn3m000j8cygeri4ygq5" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 John Doe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
