@@ -61,10 +61,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-使用Dropbox自动发布博文" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Hexo建站" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/使用Dropbox自动发布博文/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/Hexo建站/" class="article-date">
+  <time datetime="2016-10-09T14:03:00.000Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -75,7 +75,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+      <a class="article-title" href="/2016/10/09/Hexo建站/">Hexo建站</a>
     </h1>
   
 
@@ -83,122 +83,12 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天中午尝试了使用Git作为自动发布博客的工具，思想就是本地一个Git，OSC仓库，博客服务器一个Git，每次本地写完之后push到OSC仓库，然后刷新博客页面的时候自动pull一下。结果是失败的。  </p>
-<hr>
-<p>然后就开始尝试同步盘的方式，国内最好的坚果云可惜没有LinuxCLI版本，小VPS又安不上图形界面，再给坚果云官方提了建议之后就不了了之了。然后视线自然的挪向了Dropbox，因为Dropbox有CLI版本。</p>
-<hr>
-<p>一番折腾之后在我的小VPS上安装上了Dropbox，然后我把原来Dropbox里面的文件全部删除了只用来做GitBlog的中转站。可是突然发现Dropbox并没有指定文件夹同步功能（<del>被坚果云宠坏了。。。</del>）一时之间陷入了困境。<br>好在Linux还有种神奇的东西叫做<strong>连接</strong>（link），连接分为软连接和硬连接，硬连接不能连接目录所以只能用软连接。我做了如下两次尝试：  </p>
-<hr>
-<ul>
-<li><p>将网站根目录下的posts文件夹删除之后建立一个从Dropbox同步目录到博文目录posts的软连接（<del><code>ln -s ~/Dropbox/ posts</code></del>）这样一来网站根目录下的博文目录就会连接到Dropbox的同步目录中去。不过这种方法行不通，可能是因为GitBlog暂时还不支持这种做法吧。  </p>
-</li>
-<li><p>第二种方法是倒过来的，这种方法事实证明是可行的。如果把posts连接到Dropbox不行的话，那就试试把Dropbox连接到posts，让Dropbox直接网博文目录下进行同步。这么做的话先关闭Dropbox服务<strong><code>killall Dropbox</code></strong>然后趁机把同步目录删除，然后建立一个从posts到Dropbox的软连接<strong>‘ln -s …/posts/ ~/Dropbox’</strong>，最后打开Dropbox<strong><code>~/.dropbox-dist/dropboxd &amp;</code></strong>即可。这样就大功告成了！  </p>
-</li>
-</ul>
-<hr>
-<p>折腾了一下午加一晚上终于可以自动发布博文了！<br>现在可以放心的写博客了！剩下的交给Dropbox！<strong>：）</strong>  </p>
+        <p>先挖个坑，站下</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/09/使用Dropbox自动发布博文/" data-id="ciu2osn45000s8cygzychb0d8" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-适用于Modbus协议的CRC16校验（查表法）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>下面的代码是适用于Modbus协议中的CRC16校验的，我验证过了，至于为什么其他的CRC16校验在Modbus中不行，并没有深究，没有去看过原理，下面的算法出自<a href="http://blog.csdn.net/zgrjkflmkyc/article/details/41073435" target="_blank" rel="external">zgrjkflmkyc的专栏</a>  </p>
-<pre><code class="cpp">
-uchar auchCRCHi[] =
-{
-    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
-    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
-    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>,
-    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
-    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
-    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
-    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>,
-    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>,
-    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
-    <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
-    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>,
-    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
-    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
-    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
-    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>,
-    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
-    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
-    <span class="number">0x40</span>
-};
-
-uchar auchCRCLo[] =
-{
-    <span class="number">0x00</span>, <span class="number">0xC0</span>, <span class="number">0xC1</span>, <span class="number">0x01</span>, <span class="number">0xC3</span>, <span class="number">0x03</span>, <span class="number">0x02</span>, <span class="number">0xC2</span>, <span class="number">0xC6</span>, <span class="number">0x06</span>, <span class="number">0x07</span>, <span class="number">0xC7</span>, <span class="number">0x05</span>, <span class="number">0xC5</span>, <span class="number">0xC4</span>,
-    <span class="number">0x04</span>, <span class="number">0xCC</span>, <span class="number">0x0C</span>, <span class="number">0x0D</span>, <span class="number">0xCD</span>, <span class="number">0x0F</span>, <span class="number">0xCF</span>, <span class="number">0xCE</span>, <span class="number">0x0E</span>, <span class="number">0x0A</span>, <span class="number">0xCA</span>, <span class="number">0xCB</span>, <span class="number">0x0B</span>, <span class="number">0xC9</span>, <span class="number">0x09</span>,
-    <span class="number">0x08</span>, <span class="number">0xC8</span>, <span class="number">0xD8</span>, <span class="number">0x18</span>, <span class="number">0x19</span>, <span class="number">0xD9</span>, <span class="number">0x1B</span>, <span class="number">0xDB</span>, <span class="number">0xDA</span>, <span class="number">0x1A</span>, <span class="number">0x1E</span>, <span class="number">0xDE</span>, <span class="number">0xDF</span>, <span class="number">0x1F</span>, <span class="number">0xDD</span>,
-    <span class="number">0x1D</span>, <span class="number">0x1C</span>, <span class="number">0xDC</span>, <span class="number">0x14</span>, <span class="number">0xD4</span>, <span class="number">0xD5</span>, <span class="number">0x15</span>, <span class="number">0xD7</span>, <span class="number">0x17</span>, <span class="number">0x16</span>, <span class="number">0xD6</span>, <span class="number">0xD2</span>, <span class="number">0x12</span>, <span class="number">0x13</span>, <span class="number">0xD3</span>,
-    <span class="number">0x11</span>, <span class="number">0xD1</span>, <span class="number">0xD0</span>, <span class="number">0x10</span>, <span class="number">0xF0</span>, <span class="number">0x30</span>, <span class="number">0x31</span>, <span class="number">0xF1</span>, <span class="number">0x33</span>, <span class="number">0xF3</span>, <span class="number">0xF2</span>, <span class="number">0x32</span>, <span class="number">0x36</span>, <span class="number">0xF6</span>, <span class="number">0xF7</span>,
-    <span class="number">0x37</span>, <span class="number">0xF5</span>, <span class="number">0x35</span>, <span class="number">0x34</span>, <span class="number">0xF4</span>, <span class="number">0x3C</span>, <span class="number">0xFC</span>, <span class="number">0xFD</span>, <span class="number">0x3D</span>, <span class="number">0xFF</span>, <span class="number">0x3F</span>, <span class="number">0x3E</span>, <span class="number">0xFE</span>, <span class="number">0xFA</span>, <span class="number">0x3A</span>,
-    <span class="number">0x3B</span>, <span class="number">0xFB</span>, <span class="number">0x39</span>, <span class="number">0xF9</span>, <span class="number">0xF8</span>, <span class="number">0x38</span>, <span class="number">0x28</span>, <span class="number">0xE8</span>, <span class="number">0xE9</span>, <span class="number">0x29</span>, <span class="number">0xEB</span>, <span class="number">0x2B</span>, <span class="number">0x2A</span>, <span class="number">0xEA</span>, <span class="number">0xEE</span>,
-    <span class="number">0x2E</span>, <span class="number">0x2F</span>, <span class="number">0xEF</span>, <span class="number">0x2D</span>, <span class="number">0xED</span>, <span class="number">0xEC</span>, <span class="number">0x2C</span>, <span class="number">0xE4</span>, <span class="number">0x24</span>, <span class="number">0x25</span>, <span class="number">0xE5</span>, <span class="number">0x27</span>, <span class="number">0xE7</span>, <span class="number">0xE6</span>, <span class="number">0x26</span>,
-    <span class="number">0x22</span>, <span class="number">0xE2</span>, <span class="number">0xE3</span>, <span class="number">0x23</span>, <span class="number">0xE1</span>, <span class="number">0x21</span>, <span class="number">0x20</span>, <span class="number">0xE0</span>, <span class="number">0xA0</span>, <span class="number">0x60</span>, <span class="number">0x61</span>, <span class="number">0xA1</span>, <span class="number">0x63</span>, <span class="number">0xA3</span>, <span class="number">0xA2</span>,
-    <span class="number">0x62</span>, <span class="number">0x66</span>, <span class="number">0xA6</span>, <span class="number">0xA7</span>, <span class="number">0x67</span>, <span class="number">0xA5</span>, <span class="number">0x65</span>, <span class="number">0x64</span>, <span class="number">0xA4</span>, <span class="number">0x6C</span>, <span class="number">0xAC</span>, <span class="number">0xAD</span>, <span class="number">0x6D</span>, <span class="number">0xAF</span>, <span class="number">0x6F</span>,
-    <span class="number">0x6E</span>, <span class="number">0xAE</span>, <span class="number">0xAA</span>, <span class="number">0x6A</span>, <span class="number">0x6B</span>, <span class="number">0xAB</span>, <span class="number">0x69</span>, <span class="number">0xA9</span>, <span class="number">0xA8</span>, <span class="number">0x68</span>, <span class="number">0x78</span>, <span class="number">0xB8</span>, <span class="number">0xB9</span>, <span class="number">0x79</span>, <span class="number">0xBB</span>,
-    <span class="number">0x7B</span>, <span class="number">0x7A</span>, <span class="number">0xBA</span>, <span class="number">0xBE</span>, <span class="number">0x7E</span>, <span class="number">0x7F</span>, <span class="number">0xBF</span>, <span class="number">0x7D</span>, <span class="number">0xBD</span>, <span class="number">0xBC</span>, <span class="number">0x7C</span>, <span class="number">0xB4</span>, <span class="number">0x74</span>, <span class="number">0x75</span>, <span class="number">0xB5</span>,
-    <span class="number">0x77</span>, <span class="number">0xB7</span>, <span class="number">0xB6</span>, <span class="number">0x76</span>, <span class="number">0x72</span>, <span class="number">0xB2</span>, <span class="number">0xB3</span>, <span class="number">0x73</span>, <span class="number">0xB1</span>, <span class="number">0x71</span>, <span class="number">0x70</span>, <span class="number">0xB0</span>, <span class="number">0x50</span>, <span class="number">0x90</span>, <span class="number">0x91</span>,
-    <span class="number">0x51</span>, <span class="number">0x93</span>, <span class="number">0x53</span>, <span class="number">0x52</span>, <span class="number">0x92</span>, <span class="number">0x96</span>, <span class="number">0x56</span>, <span class="number">0x57</span>, <span class="number">0x97</span>, <span class="number">0x55</span>, <span class="number">0x95</span>, <span class="number">0x94</span>, <span class="number">0x54</span>, <span class="number">0x9C</span>, <span class="number">0x5C</span>,
-    <span class="number">0x5D</span>, <span class="number">0x9D</span>, <span class="number">0x5F</span>, <span class="number">0x9F</span>, <span class="number">0x9E</span>, <span class="number">0x5E</span>, <span class="number">0x5A</span>, <span class="number">0x9A</span>, <span class="number">0x9B</span>, <span class="number">0x5B</span>, <span class="number">0x99</span>, <span class="number">0x59</span>, <span class="number">0x58</span>, <span class="number">0x98</span>, <span class="number">0x88</span>,
-    <span class="number">0x48</span>, <span class="number">0x49</span>, <span class="number">0x89</span>, <span class="number">0x4B</span>, <span class="number">0x8B</span>, <span class="number">0x8A</span>, <span class="number">0x4A</span>, <span class="number">0x4E</span>, <span class="number">0x8E</span>, <span class="number">0x8F</span>, <span class="number">0x4F</span>, <span class="number">0x8D</span>, <span class="number">0x4D</span>, <span class="number">0x4C</span>, <span class="number">0x8C</span>,
-    <span class="number">0x44</span>, <span class="number">0x84</span>, <span class="number">0x85</span>, <span class="number">0x45</span>, <span class="number">0x87</span>, <span class="number">0x47</span>, <span class="number">0x46</span>, <span class="number">0x86</span>, <span class="number">0x82</span>, <span class="number">0x42</span>, <span class="number">0x43</span>, <span class="number">0x83</span>, <span class="number">0x41</span>, <span class="number">0x81</span>, <span class="number">0x80</span>,
-    <span class="number">0x40</span>
-};
-
-<span class="function">uint   <span class="title">N_CRC16</span><span class="params">(uchar *updata, uint len)</span>
-</span>{
-    uchar uchCRCHi = <span class="number">0xff</span>;
-    uchar uchCRCLo = <span class="number">0xff</span>;
-    uint  uindex;
-    <span class="keyword">while</span> (len--)
-    {
-        uindex = uchCRCHi^*updata++;
-        uchCRCHi = uchCRCLo^auchCRCHi[uindex];
-        uchCRCLo = auchCRCLo[uindex];
-    }
-    <span class="keyword">return</span> (uchCRCHi &lt;&lt; <span class="number">8</span> | uchCRCLo);
-}
-</code></pre>
-<p>很久都没用过数组指针了，在第一眼看到<code>uchar *updata</code>的时候都懵逼了……过了一会才反应过来，就是传个数组进去嘛……</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" data-id="ciu2osn4q00108cyg9xvu68au" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/09/Hexo建站/" data-id="ciu2pa6rt0000j2ygr24ihgk0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -243,6 +133,49 @@ uchar auchCRCLo[] =
     </div>
     <footer class="article-footer">
       <a data-url="http://yoursite.com/2016/10/09/自动检测是否有新博文/" data-id="ciu2osn4o000y8cyg0eibywhc" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-调试链接库工程" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/调试链接库工程/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>近来我突发奇想想要把原来的一个功能发布成一个链接库，但是还需要完善，所以需要对它进行调试，所以我就学会了如何调试一个链接库工程。  </p>
+<p>那么如何才能对一个链接库工程进行调试呢？这个方法的核心思想就是再给它专门建立一个测试工程（突然回想起大四的时候春雷哥一直跟我们说的测试工程，没想到现在我也用上了这个词）。这个测试工程与链接库工程处于同一个解决方案内。  </p>
+<p>当然不是新建一个测试工程就可以直接测试了，如果你直接打开文件写代码会发现无法引用链接库工程的头文件。  </p>
+<p>那是因为还需要在测试工程的属性中添加几个内容。一个是附加引用目录，这个就写链接库工程根目录就行（注意不是解决方案根目录）；第二就是附加库目录，这个要写库文件生成的地方；第三个就是把库文件名字添加到附加依赖项上。  </p>
+<p>这样就好啦，尽情测试吧。  </p>
+<hr>
+<p>以上为Visual Studio 2013环境下。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2016/10/09/调试链接库工程/" data-id="ciu2osn4p000z8cygevmu0yyr" class="article-share-link">Share</a>
       
       
     </footer>
@@ -421,9 +354,9 @@ uchar auchCRCLo[] =
 
 
   
-    <article id="post-调试链接库工程" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-适用于Modbus协议的CRC16校验（查表法）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/调试链接库工程/" class="article-date">
+    <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" class="article-date">
   <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -435,7 +368,7 @@ uchar auchCRCLo[] =
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+      <a class="article-title" href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
     </h1>
   
 
@@ -443,18 +376,72 @@ uchar auchCRCLo[] =
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>近来我突发奇想想要把原来的一个功能发布成一个链接库，但是还需要完善，所以需要对它进行调试，所以我就学会了如何调试一个链接库工程。  </p>
-<p>那么如何才能对一个链接库工程进行调试呢？这个方法的核心思想就是再给它专门建立一个测试工程（突然回想起大四的时候春雷哥一直跟我们说的测试工程，没想到现在我也用上了这个词）。这个测试工程与链接库工程处于同一个解决方案内。  </p>
-<p>当然不是新建一个测试工程就可以直接测试了，如果你直接打开文件写代码会发现无法引用链接库工程的头文件。  </p>
-<p>那是因为还需要在测试工程的属性中添加几个内容。一个是附加引用目录，这个就写链接库工程根目录就行（注意不是解决方案根目录）；第二就是附加库目录，这个要写库文件生成的地方；第三个就是把库文件名字添加到附加依赖项上。  </p>
-<p>这样就好啦，尽情测试吧。  </p>
-<hr>
-<p>以上为Visual Studio 2013环境下。</p>
+        <p>下面的代码是适用于Modbus协议中的CRC16校验的，我验证过了，至于为什么其他的CRC16校验在Modbus中不行，并没有深究，没有去看过原理，下面的算法出自<a href="http://blog.csdn.net/zgrjkflmkyc/article/details/41073435" target="_blank" rel="external">zgrjkflmkyc的专栏</a>  </p>
+<pre><code class="cpp">
+uchar auchCRCHi[] =
+{
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>
+};
+
+uchar auchCRCLo[] =
+{
+    <span class="number">0x00</span>, <span class="number">0xC0</span>, <span class="number">0xC1</span>, <span class="number">0x01</span>, <span class="number">0xC3</span>, <span class="number">0x03</span>, <span class="number">0x02</span>, <span class="number">0xC2</span>, <span class="number">0xC6</span>, <span class="number">0x06</span>, <span class="number">0x07</span>, <span class="number">0xC7</span>, <span class="number">0x05</span>, <span class="number">0xC5</span>, <span class="number">0xC4</span>,
+    <span class="number">0x04</span>, <span class="number">0xCC</span>, <span class="number">0x0C</span>, <span class="number">0x0D</span>, <span class="number">0xCD</span>, <span class="number">0x0F</span>, <span class="number">0xCF</span>, <span class="number">0xCE</span>, <span class="number">0x0E</span>, <span class="number">0x0A</span>, <span class="number">0xCA</span>, <span class="number">0xCB</span>, <span class="number">0x0B</span>, <span class="number">0xC9</span>, <span class="number">0x09</span>,
+    <span class="number">0x08</span>, <span class="number">0xC8</span>, <span class="number">0xD8</span>, <span class="number">0x18</span>, <span class="number">0x19</span>, <span class="number">0xD9</span>, <span class="number">0x1B</span>, <span class="number">0xDB</span>, <span class="number">0xDA</span>, <span class="number">0x1A</span>, <span class="number">0x1E</span>, <span class="number">0xDE</span>, <span class="number">0xDF</span>, <span class="number">0x1F</span>, <span class="number">0xDD</span>,
+    <span class="number">0x1D</span>, <span class="number">0x1C</span>, <span class="number">0xDC</span>, <span class="number">0x14</span>, <span class="number">0xD4</span>, <span class="number">0xD5</span>, <span class="number">0x15</span>, <span class="number">0xD7</span>, <span class="number">0x17</span>, <span class="number">0x16</span>, <span class="number">0xD6</span>, <span class="number">0xD2</span>, <span class="number">0x12</span>, <span class="number">0x13</span>, <span class="number">0xD3</span>,
+    <span class="number">0x11</span>, <span class="number">0xD1</span>, <span class="number">0xD0</span>, <span class="number">0x10</span>, <span class="number">0xF0</span>, <span class="number">0x30</span>, <span class="number">0x31</span>, <span class="number">0xF1</span>, <span class="number">0x33</span>, <span class="number">0xF3</span>, <span class="number">0xF2</span>, <span class="number">0x32</span>, <span class="number">0x36</span>, <span class="number">0xF6</span>, <span class="number">0xF7</span>,
+    <span class="number">0x37</span>, <span class="number">0xF5</span>, <span class="number">0x35</span>, <span class="number">0x34</span>, <span class="number">0xF4</span>, <span class="number">0x3C</span>, <span class="number">0xFC</span>, <span class="number">0xFD</span>, <span class="number">0x3D</span>, <span class="number">0xFF</span>, <span class="number">0x3F</span>, <span class="number">0x3E</span>, <span class="number">0xFE</span>, <span class="number">0xFA</span>, <span class="number">0x3A</span>,
+    <span class="number">0x3B</span>, <span class="number">0xFB</span>, <span class="number">0x39</span>, <span class="number">0xF9</span>, <span class="number">0xF8</span>, <span class="number">0x38</span>, <span class="number">0x28</span>, <span class="number">0xE8</span>, <span class="number">0xE9</span>, <span class="number">0x29</span>, <span class="number">0xEB</span>, <span class="number">0x2B</span>, <span class="number">0x2A</span>, <span class="number">0xEA</span>, <span class="number">0xEE</span>,
+    <span class="number">0x2E</span>, <span class="number">0x2F</span>, <span class="number">0xEF</span>, <span class="number">0x2D</span>, <span class="number">0xED</span>, <span class="number">0xEC</span>, <span class="number">0x2C</span>, <span class="number">0xE4</span>, <span class="number">0x24</span>, <span class="number">0x25</span>, <span class="number">0xE5</span>, <span class="number">0x27</span>, <span class="number">0xE7</span>, <span class="number">0xE6</span>, <span class="number">0x26</span>,
+    <span class="number">0x22</span>, <span class="number">0xE2</span>, <span class="number">0xE3</span>, <span class="number">0x23</span>, <span class="number">0xE1</span>, <span class="number">0x21</span>, <span class="number">0x20</span>, <span class="number">0xE0</span>, <span class="number">0xA0</span>, <span class="number">0x60</span>, <span class="number">0x61</span>, <span class="number">0xA1</span>, <span class="number">0x63</span>, <span class="number">0xA3</span>, <span class="number">0xA2</span>,
+    <span class="number">0x62</span>, <span class="number">0x66</span>, <span class="number">0xA6</span>, <span class="number">0xA7</span>, <span class="number">0x67</span>, <span class="number">0xA5</span>, <span class="number">0x65</span>, <span class="number">0x64</span>, <span class="number">0xA4</span>, <span class="number">0x6C</span>, <span class="number">0xAC</span>, <span class="number">0xAD</span>, <span class="number">0x6D</span>, <span class="number">0xAF</span>, <span class="number">0x6F</span>,
+    <span class="number">0x6E</span>, <span class="number">0xAE</span>, <span class="number">0xAA</span>, <span class="number">0x6A</span>, <span class="number">0x6B</span>, <span class="number">0xAB</span>, <span class="number">0x69</span>, <span class="number">0xA9</span>, <span class="number">0xA8</span>, <span class="number">0x68</span>, <span class="number">0x78</span>, <span class="number">0xB8</span>, <span class="number">0xB9</span>, <span class="number">0x79</span>, <span class="number">0xBB</span>,
+    <span class="number">0x7B</span>, <span class="number">0x7A</span>, <span class="number">0xBA</span>, <span class="number">0xBE</span>, <span class="number">0x7E</span>, <span class="number">0x7F</span>, <span class="number">0xBF</span>, <span class="number">0x7D</span>, <span class="number">0xBD</span>, <span class="number">0xBC</span>, <span class="number">0x7C</span>, <span class="number">0xB4</span>, <span class="number">0x74</span>, <span class="number">0x75</span>, <span class="number">0xB5</span>,
+    <span class="number">0x77</span>, <span class="number">0xB7</span>, <span class="number">0xB6</span>, <span class="number">0x76</span>, <span class="number">0x72</span>, <span class="number">0xB2</span>, <span class="number">0xB3</span>, <span class="number">0x73</span>, <span class="number">0xB1</span>, <span class="number">0x71</span>, <span class="number">0x70</span>, <span class="number">0xB0</span>, <span class="number">0x50</span>, <span class="number">0x90</span>, <span class="number">0x91</span>,
+    <span class="number">0x51</span>, <span class="number">0x93</span>, <span class="number">0x53</span>, <span class="number">0x52</span>, <span class="number">0x92</span>, <span class="number">0x96</span>, <span class="number">0x56</span>, <span class="number">0x57</span>, <span class="number">0x97</span>, <span class="number">0x55</span>, <span class="number">0x95</span>, <span class="number">0x94</span>, <span class="number">0x54</span>, <span class="number">0x9C</span>, <span class="number">0x5C</span>,
+    <span class="number">0x5D</span>, <span class="number">0x9D</span>, <span class="number">0x5F</span>, <span class="number">0x9F</span>, <span class="number">0x9E</span>, <span class="number">0x5E</span>, <span class="number">0x5A</span>, <span class="number">0x9A</span>, <span class="number">0x9B</span>, <span class="number">0x5B</span>, <span class="number">0x99</span>, <span class="number">0x59</span>, <span class="number">0x58</span>, <span class="number">0x98</span>, <span class="number">0x88</span>,
+    <span class="number">0x48</span>, <span class="number">0x49</span>, <span class="number">0x89</span>, <span class="number">0x4B</span>, <span class="number">0x8B</span>, <span class="number">0x8A</span>, <span class="number">0x4A</span>, <span class="number">0x4E</span>, <span class="number">0x8E</span>, <span class="number">0x8F</span>, <span class="number">0x4F</span>, <span class="number">0x8D</span>, <span class="number">0x4D</span>, <span class="number">0x4C</span>, <span class="number">0x8C</span>,
+    <span class="number">0x44</span>, <span class="number">0x84</span>, <span class="number">0x85</span>, <span class="number">0x45</span>, <span class="number">0x87</span>, <span class="number">0x47</span>, <span class="number">0x46</span>, <span class="number">0x86</span>, <span class="number">0x82</span>, <span class="number">0x42</span>, <span class="number">0x43</span>, <span class="number">0x83</span>, <span class="number">0x41</span>, <span class="number">0x81</span>, <span class="number">0x80</span>,
+    <span class="number">0x40</span>
+};
+
+<span class="function">uint   <span class="title">N_CRC16</span><span class="params">(uchar *updata, uint len)</span>
+</span>{
+    uchar uchCRCHi = <span class="number">0xff</span>;
+    uchar uchCRCLo = <span class="number">0xff</span>;
+    uint  uindex;
+    <span class="keyword">while</span> (len--)
+    {
+        uindex = uchCRCHi^*updata++;
+        uchCRCHi = uchCRCLo^auchCRCHi[uindex];
+        uchCRCLo = auchCRCLo[uindex];
+    }
+    <span class="keyword">return</span> (uchCRCHi &lt;&lt; <span class="number">8</span> | uchCRCLo);
+}
+</code></pre>
+<p>很久都没用过数组指针了，在第一眼看到<code>uchar *updata</code>的时候都懵逼了……过了一会才反应过来，就是传个数组进去嘛……</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/09/调试链接库工程/" data-id="ciu2osn4p000z8cygevmu0yyr" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" data-id="ciu2osn4q00108cyg9xvu68au" class="article-share-link">Share</a>
       
       
     </footer>
@@ -648,15 +635,15 @@ uchar auchCRCLo[] =
       <ul>
         
           <li>
-            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+            <a href="/2016/10/09/Hexo建站/">Hexo建站</a>
           </li>
         
           <li>
             <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
           </li>
         
           <li>

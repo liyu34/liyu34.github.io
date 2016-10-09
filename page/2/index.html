@@ -174,10 +174,10 @@ location ~ .*\.(php|php5)?$
 
 
   
-    <article id="post-QtNote_QTableView_Button" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-使用Dropbox自动发布博文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/QtNote_QTableView_Button/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/使用Dropbox自动发布博文/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -188,7 +188,7 @@ location ~ .*\.(php|php5)?$
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_QTableView_Button/">QtNote:在QTableView里面添加按钮&amp;QMessageBox按钮</a>
+      <a class="article-title" href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
     </h1>
   
 
@@ -196,53 +196,25 @@ location ~ .*\.(php|php5)?$
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>首先，我要说明的是，经过我的研究发现，这个事情根本没有我之前看到的博客那么麻烦，原地址如下:<a href="http://www.cnblogs.com/li-peng/p/3961843.html" target="_blank" rel="external">QTableView 添加按钮</a>。这个博文里面有三个类，ButtonDelegate/TableModel/TableView。我发现其实只需要ButtonDelegate一个类即可。   </p>
-<p>废话不多说，先上代码为敬。<br><code>buttondelegate.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#ifndef BUTTONDELEGATE_H</div><div class="line">#define BUTTONDELEGATE_H</div><div class="line"></div><div class="line">#include &lt;QItemDelegate&gt;</div><div class="line"></div><div class="line">class ButtonDelegate : public QItemDelegate</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line">public:</div><div class="line">    explicit ButtonDelegate(QString t, QObject *parent = 0);</div><div class="line"></div><div class="line">    void paint(QPainter *painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const;</div><div class="line">    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index);</div><div class="line"></div><div class="line">signals:</div><div class="line">    void Pressed(QString ID);</div><div class="line"></div><div class="line">private:</div><div class="line">    QMap&lt;QModelIndex, QStyleOptionButton*&gt; m_btns;</div><div class="line">    QString text;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // BUTTONDELEGATE_H</div><div class="line">```  </div><div class="line"></div><div class="line">`buttondelegate.cpp`</div></pre></td></tr></table></figure></p>
-<p>#include “buttondelegate.h”</p>
-<p>#include <qapplication></qapplication></p>
-<p>#include <qmouseevent></qmouseevent></p>
-<p>#include <qdialog></qdialog></p>
-<p>#include <qpainter></qpainter></p>
-<p>#include <qstyleoption></qstyleoption></p>
-<p>#include <qdesktopwidget></qdesktopwidget></p>
-<p>ButtonDelegate::ButtonDelegate(QString t, QObject *parent) :<br>    QItemDelegate(parent)<br>{<br>    text = t;<br>}</p>
-<p>void ButtonDelegate::paint(QPainter <em>painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const<br>{<br>    QStyleOptionButton</em> button = m_btns.value(index);<br>    //if (!button) {//如果有这个if判断的话，当窗口缩小到出现滑块的时候会有异常，因为判断已经有这个按钮了，就不再重画了<br>        button = new QStyleOptionButton();<br>        button-&gt;rect = option.rect.adjusted(3, 3, -3, -3);<br>        button-&gt;text = text;<br>        button-&gt;state |= QStyle::State_Enabled;</p>
-<pre><code>    (const_cast&lt;ButtonDelegate *&gt;(this))-&gt;m_btns.insert(index, button);
-//}
-painter-&gt;save();
-
-if (option.state &amp; QStyle::State_Selected) {
-    painter-&gt;fillRect(option.rect, option.palette.highlight());
-
-}
-painter-&gt;restore();
-QApplication::style()-&gt;drawControl(QStyle::CE_PushButton, button, painter);
-</code></pre><p>}</p>
-<p>bool ButtonDelegate::editorEvent(QEvent <em>event, QAbstractItemModel </em>model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index)<br>{<br>    if (event-&gt;type() == QEvent::MouseButtonPress) {</p>
-<pre><code>    QMouseEvent* e = (QMouseEvent*)event;
-
-    if (option.rect.adjusted(4, 4, -4, -4).contains(e-&gt;x(), e-&gt;y()) &amp;&amp; m_btns.contains(index)) {
-        m_btns.value(index)-&gt;state |= QStyle::State_Sunken;
-    }
-}
-if (event-&gt;type() == QEvent::MouseButtonRelease) {
-    QMouseEvent* e = (QMouseEvent*)event;
-    emit Pressed(index.data().toString());
-}
-return true;
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">(⊙o⊙)…恩，没错，就是直接复制的上面那个博客的源码。不过我发现不需要去定义三个类，并把QTableView提升为“TableView”，只需要在QTableView初始化的时候（我说的是InitTableView()这个我写的函数）定义一个ButtonDelegate类型的指针，然后把你想要实现的功能给绑定到按钮被按到时候发出的消息上即可。以下为部分关键代码。</div></pre></td></tr></table></figure></p>
-<pre><code>ButtonDelegate *m_button = new ButtonDelegate();
-connect(m_button, SIGNAL(DeleteRTU_Signal(QString)), this, SLOT(DeleteRTU(QString)));
-ui.tableView-&gt;setItemDelegateForColumn(3, m_button);
-emit model-&gt;layoutChanged();
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">经过我的初步研究，我发现，这个问题的关键就是ButtonDelegate里面那两个函数，`paint`来负责在制定的位置画上按钮，`editorEvent`负责发出按钮响应信号（和把按钮换成被按的状态）。这个`editorEvent`实际上都不是按钮响应事件，而是编辑事件，因为这个ButtonDelegate实际上继承的是QItemDelegate。  </div><div class="line"></div><div class="line">---</div><div class="line">QMessageBox可以用来做一个简单的再次确认的对话框，上代码为敬：</div></pre></td></tr></table></figure>
-<p>int confirm = QMessageBox::information(this, “Delete”, “Please confirm!”, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);<br>    if (confirm == QMessageBox::No) return;<br>```  </p>
-<p>(⊙o⊙)…我觉得我不需要再记录什么内容了，这些代码就足够了。</p>
+        <p>今天中午尝试了使用Git作为自动发布博客的工具，思想就是本地一个Git，OSC仓库，博客服务器一个Git，每次本地写完之后push到OSC仓库，然后刷新博客页面的时候自动pull一下。结果是失败的。  </p>
+<hr>
+<p>然后就开始尝试同步盘的方式，国内最好的坚果云可惜没有LinuxCLI版本，小VPS又安不上图形界面，再给坚果云官方提了建议之后就不了了之了。然后视线自然的挪向了Dropbox，因为Dropbox有CLI版本。</p>
+<hr>
+<p>一番折腾之后在我的小VPS上安装上了Dropbox，然后我把原来Dropbox里面的文件全部删除了只用来做GitBlog的中转站。可是突然发现Dropbox并没有指定文件夹同步功能（<del>被坚果云宠坏了。。。</del>）一时之间陷入了困境。<br>好在Linux还有种神奇的东西叫做<strong>连接</strong>（link），连接分为软连接和硬连接，硬连接不能连接目录所以只能用软连接。我做了如下两次尝试：  </p>
+<hr>
+<ul>
+<li><p>将网站根目录下的posts文件夹删除之后建立一个从Dropbox同步目录到博文目录posts的软连接（<del><code>ln -s ~/Dropbox/ posts</code></del>）这样一来网站根目录下的博文目录就会连接到Dropbox的同步目录中去。不过这种方法行不通，可能是因为GitBlog暂时还不支持这种做法吧。  </p>
+</li>
+<li><p>第二种方法是倒过来的，这种方法事实证明是可行的。如果把posts连接到Dropbox不行的话，那就试试把Dropbox连接到posts，让Dropbox直接网博文目录下进行同步。这么做的话先关闭Dropbox服务<strong><code>killall Dropbox</code></strong>然后趁机把同步目录删除，然后建立一个从posts到Dropbox的软连接<strong>‘ln -s …/posts/ ~/Dropbox’</strong>，最后打开Dropbox<strong><code>~/.dropbox-dist/dropboxd &amp;</code></strong>即可。这样就大功告成了！  </p>
+</li>
+</ul>
+<hr>
+<p>折腾了一下午加一晚上终于可以自动发布博文了！<br>现在可以放心的写博客了！剩下的交给Dropbox！<strong>：）</strong>  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2016/10/09/QtNote_QTableView_Button/" data-id="ciu2osn37000c8cygjci0cbbm" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2016/10/09/使用Dropbox自动发布博文/" data-id="ciu2osn45000s8cygzychb0d8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -637,15 +609,15 @@ db.setPassword(&quot;*******&quot;);
       <ul>
         
           <li>
-            <a href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
+            <a href="/2016/10/09/Hexo建站/">Hexo建站</a>
           </li>
         
           <li>
             <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
           </li>
         
           <li>
