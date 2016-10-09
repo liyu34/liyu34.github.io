@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
@@ -65,10 +65,10 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Shark重操旧业" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-研究生开学了" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/Shark重操旧业/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/研究生开学了/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Shark重操旧业/">重操旧业——Shark</a>
+      <a class="article-title" href="/2016/10/09/研究生开学了/">研究生开学了</a>
     </h1>
   
 
@@ -87,32 +87,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>好了，闲话不多说，我的本科毕设是用的Shark库，最近要重新做实验，所以需要把原来的程序跑起来，想跑起原来的程序就必须有原来的环境，所以首先要把shark给编译好。那么下面就是编译shark的全过程：  </p>
-<hr>
-<p>shark版本 <a href="http://image.diku.dk/shark/" target="_blank" rel="external">Shark3.0</a><br>boost版本 <a href="http://www.boost.org/" target="_blank" rel="external">boost1.59</a>（注：boost1.60把ice_not给取消了，会导致shark编译错误，所以使用boost1.59，也不知道现在这个错误修复了没有）  </p>
-<hr>
-<p>##编译boost  </p>
-<p>boost下载完成之后进入目录运行bootstrap.bat，运行完成之后会发现目录下面生成了bjam.exe和b2.exe两个可执行文件，运行这两个中的任意一个就会开始编译boost了，编译完成之后需要给环境变量添加<code>BOOST_ROOT</code>，值为boost的根目录。  </p>
-<p>如果有特殊要求需要编译64位boost的话可以按照下面的方式：<br>用VS的64位命令行工具（可以在开始菜单栏里面找到），打开这个工具之后进入boost的目录，执行bootstrap.bat然后执行以下命令：  </p>
-<pre><code>bjam --build-type=complete toolset=msvc-12.0 threading=multi link=static address-model=64
-</code></pre><p>上面的命令编译出来是静态库，如果是想要动态库的话就把static变成shared即可。  </p>
-<hr>
-<p>##编译shark3.0<br>运行CMake，进入shark目录，生成目录我也选择在其目录，点击configure之后出错，告诉我找不到boost的lib，然后有一个选项是<code>USE_STATIC_BOOST_LIB</code>，把这个勾选上（因为之前我生成的是boost的静态库），点击configure，成功（即没有错误），然后generate。  </p>
-<p>这时候在shark目录下面已经有VS工程文件了，打开工程，点击编译，等待许久之后可能会遇到错误，显示不认识什么什么东西来着，具体是什么忘记了，笔记本上也没记载，需要手动改三个工程的属性，把一个什么东西当作变量来着……忘记了……记着应该是这里的问题。反正问题也不难，百度了一下立刻就出来了。  </p>
-<hr>
-<p>##使用shark<br>使用shark的工程需要添加附加引用目录、附加库引用目录以及附加库依赖（一个重要的库文件）。附加引用目录添加boost的根目录和shark的include目录，附加库引用目录添加shark/lib/Debug( or Release)和boost/stage/lib，shark的Debug库和Release库并不兼容。  </p>
-<p>附加引用目录（Linker-&gt;Input-&gt;Addtional Dependencies）要添加shark_debug.lib或shark.lib，根据工程当前是发布还是调试来调整。  </p>
-<p>另外，在VC++ Directories里面设定附加引用目录和附加库引用目录和在C++与Linker里面分别设定是一样的，但是附加库依赖必须在Linker里面设置。  </p>
-<hr>
-<p>##位数相关  </p>
-<p>boost 32位可以支持编译32位shark。<br>boost 64位可以支持编译64位shark。<br>编译多少位的shark要从CMake那里选择，如果是要编译64位的shark的话需要选择带Win64的编译器。  </p>
-<hr>
-<p>##另外，现在shark3.1.0已经修复了不支持boost1.60的错误。</p>
+        <p>研究生的生活终于要开始了，不过每次来到新的环境都要耗费很久来拾掇我的小窝来让我生活的舒服一点。经过了两天时间，现在总算是像模像样了。</p>
+<p>最近好像很多讲座的样子，不过我后天下午要去接我女朋友，所以如果冲突的话只能请假了……</p>
+<p>现在媳妇儿大人也已经开学了，接下来就是用三年的努力来换取以后幸福的生活了。我的方向应该是人工智能，研究生阶段的课程我已经选择好了。下面是我的课程列表。  </p>
+<p><img src="http://ablee.cc/blog/img/my_courses.png" alt="my_course">  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Shark重操旧业/" data-id="ciu2osn3o000k8cygqpfjy73m" class="article-share-link">Partager</a>
+      <a data-url="http://ablee.cc/2016/10/09/研究生开学了/" data-id="ciu2osn4c000w8cyg82ybjbs1" class="article-share-link">Share</a>
       
       
     </footer>
@@ -122,10 +105,10 @@
 
 
   
-    <article id="post-SqlServer触发器" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-站点迁移" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/SqlServer触发器/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/站点迁移/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -136,7 +119,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/SqlServer触发器/">SqlServer数据库触发器</a>
+      <a class="article-title" href="/2016/10/09/站点迁移/">站点迁移&amp;远程传送文件命令（scp）</a>
     </h1>
   
 
@@ -144,26 +127,48 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>触发器这个东西这是第一次真正接触，是因为用视图实现了分片透明性之后还想要实现操作透明性。闲话不多说，先上一段代码：  </p>
-<pre><code>create trigger rtuwell_trigger_insteadof_insert
-on RTU_WELL
-    instead of insert
-as
-    declare @RTUID int, @WELLID int;
-    select @RTUID=RTU_ID,@WELLID=WELL_ID from inserted;
-    if(@RTUID&gt;6)
-        insert into rtuwell_2 values(@RTUID,@WELLID);
-    else
-        insert into rtuwell_1 values(@RTUID,@WELLID);
-go
-</code></pre><p>最重要的部分是<code>as</code>和<code>go</code>中间的部分，首先需要定义变量，这个定义的变量就是你想要触发器操作的所有变量，我的这个表里面只有两列，一列是RTUID，一列是WELLID，这两个都是int型的。  </p>
-<p>然后因为这个是<code>instead of insert</code>所以需要把要操作的内容从<code>inserted</code>黑洞中拉出来，然后再进行处理。当然如果是<code>instead of delete</code>那么就是<code>deleted</code>黑洞了。  </p>
-<p>最后附上原文链接(这里面有详细的内容)：<br><a href="http://www.cnblogs.com/hoojo/archive/2011/07/20/2111316.html" target="_blank" rel="external">SQL Server 触发器</a></p>
+        <p>由于之前的VPS是月付的，算下来的话比年付要贵接近一倍，所以趁这次VPS要到期，重新开了一个一样配置的年付VPS，新东西当然要玩一下，这一玩可不得了，成功找到了用Git发布博文的办法。<br>之前把系统装成了centos7，安装nginx有点问题，所以把系统又重装了，然后现在一切从零开始搭建GitBlog、使用Git发布博文。</p>
+<hr>
+<p>##搭建GitBlog<br>首先让我们来安装Nginx！在centos6上面安装！<br>好吧，第一步就出现了问题<code>yum install nginx</code>之后显示没有安装包？！于是百度之，解决办法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//1.下载rpm包</div><div class="line">wget http:\/\/nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm</div><div class="line">//2.安装rpm包</div><div class="line">rpm -ivh nginx-release-centos-6-0.el6.ngx.noarch.rpm</div><div class="line">```  </div><div class="line">这样之后就可以用yum安装nginx了。  </div><div class="line">安装好nginx之后就要配置它，然后我发现我不知道该死的系统把nginx安到哪里去了，于是百度，于是发现好多无用信息，于是`whereis nginx`。发现Nginx在安装目录`/etc/nginx`。进入安装目录之后会看到`conf.d`文件夹，里面就是配置文件啦。  </div><div class="line">新建一个文件，把Gitbolg官网配置范例粘贴上去保存为default.conf就好了，当然要先修改网站目录。（因为我对nginx也一知半解，所以就直接粘贴了）  </div><div class="line">GitBlog还需要php和mbstring扩展库，所以安装php和mbstring扩展库！</div></pre></td></tr></table></figure></p>
+<p>yum install php<br>yum install php-fpm<br>yum install php-mbstring<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">这样前期环境就算是搭建好了，让我们下载下来GitBlog的源码，并把它放到我的网站目录`/data/vhost/liyu34.xyz`下。</div><div class="line">下载下来tar.gz压缩包之后需要解压，我在网上搜罗了一个tar命令介绍粘到下面：</div></pre></td></tr></table></figure></p>
+<p>tar</p>
+<p>-c: 建立压缩档案<br>-x：解压<br>-t：查看内容<br>-r：向压缩归档文件末尾追加文件<br>-u：更新原压缩包中的文件</p>
+<p>这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。<br>下面的参数是根据需要在压缩或解压档案时可选的。</p>
+<p>-z：有gzip属性的<br>-j：有bz2属性的<br>-Z：有compress属性的<br>-v：显示所有过程<br>-O：将文件解开到标准输出</p>
+<p>解压常用命令：</p>
+<p>tar –xvf file.tar  解压 tar包<br>tar -xzvf file.tar.gz 解压tar.gz<br>tar -xjvf file.tar.bz2   解压 tar.bz2<br>tar –xZvf file.tar.Z   解压tar.Z<br>unrar e file.rar 解压rar<br>unzip file.zip 解压zip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">完成这些之后还要启动nginx和php-fpm，这样`service nginx start`和`service php-fpm start`。</div><div class="line">这样GitBlog就搭建完成了。下面进入Git的环节。</div><div class="line"></div><div class="line">---</div><div class="line">如果想要自启动某个服务的话，可以用`chkconfig service_name on`如果想要关闭的话可以`chkconfig service_name off`。  </div><div class="line">之前一直没有自启动php-fpm服务，所以每次重启服务器还得去手动重启php-fpm麻烦的很。</div><div class="line"></div><div class="line">---</div><div class="line">下面是从网上摘录的scp远程传送文件命令。  </div><div class="line"></div><div class="line">复制文件：  </div><div class="line">（1）将本地文件拷贝到远程  </div><div class="line">scp 文件名用户名@计算机IP或者计算机名称:远程路径  </div><div class="line"></div><div class="line"></div><div class="line">（2）从远程将文件拷回本地  </div><div class="line">scp 用户名@计算机IP或者计算机名称:文件名本地路径  </div><div class="line"></div><div class="line">复制目录：  </div><div class="line">（1）将本地目录拷贝到远程  </div><div class="line">scp -r 目录名用户名@计算机IP或者计算机名称:远程路径  </div><div class="line"></div><div class="line">（2）从远程将目录拷回本地  </div><div class="line">scp -r 用户名@计算机IP或者计算机名称:目录名本地路径  </div><div class="line"></div><div class="line">---</div><div class="line">2016年3月3日补充</div><div class="line"></div><div class="line">nginx配置可以参照下面：</div></pre></td></tr></table></figure></p>
+<p>server {<br>        listen       80;<br>        server_name  liyu34.xyz;<br>        root         /data/vhost/liyu34.xyz;<br>        index        index.html index.htm index.php;</p>
+<pre><code>location ~ \.(jpg|png|gif|js|css|swf|flv|ico)$ {
+         expires 12h;
+}
+
+location / {
+        if (!-e $request_filename) {
+            rewrite ^(.*)$ /index.php?$1 last ;
+            break;
+        }
+}
+
+location ~* ^/(doc|logs|app|sys)/ {
+        return 403;
+}
+
+location ~ .*\.(php|php5)?$
+{
+        fastcgi_connect_timeout 300;
+        fastcgi_send_timeout 300;
+        fastcgi_read_timeout 300;
+        fastcgi_pass   127.0.0.1:9000;
+        fastcgi_index  index.php;
+        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        include        fastcgi_params;
+}
+</code></pre><p>}<br>```</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/SqlServer触发器/" data-id="ciu2osn3r000l8cygwru28fq9" class="article-share-link">Partager</a>
+      <a data-url="http://ablee.cc/2016/10/09/站点迁移/" data-id="ciu2osn4m000x8cyg5311hgec" class="article-share-link">Share</a>
       
       
     </footer>
@@ -173,10 +178,10 @@ go
 
 
   
-    <article id="post-Win10无声音" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-使用Dropbox自动发布博文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/Win10无声音/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/使用Dropbox自动发布博文/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -187,7 +192,7 @@ go
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
+      <a class="article-title" href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
     </h1>
   
 
@@ -195,317 +200,25 @@ go
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>昨天帮刘硕修理了她的笔记本电脑，她的电脑突然就没有声音了，没有摔过也没有下载什么奇怪的东西，就是突然没有声音了。</p>
-<p>像这种离奇的事件也就只有离奇的软件能够作为其原因了，所以我理所当然的想到是不是声卡驱动出了问题，然后我就让她重装了声卡驱动，然而没有什么效果。</p>
-<p>昨天我拿到了她的电脑，然后开始了检查，使用搜狗音乐播放音乐，进度条始终无法前进，然后换网易云音乐，也是一样的情况，用网易云音乐下载了一首歌曲然后播放提示我“无法播放请更换输出介质”之类的提示语。看视频只有动画没有声音。</p>
+        <p>今天中午尝试了使用Git作为自动发布博客的工具，思想就是本地一个Git，OSC仓库，博客服务器一个Git，每次本地写完之后push到OSC仓库，然后刷新博客页面的时候自动pull一下。结果是失败的。  </p>
 <hr>
-<p>了解了这个问题的所有表征之后我向百度提了一个问题：<br><strong>Win10无法播放所有音频文件</strong><br>然后我找到了这个连接：<a href="http://zhidao.baidu.com/question/426103597708091812.html" target="_blank" rel="external">win10无法播放音乐文件</a></p>
+<p>然后就开始尝试同步盘的方式，国内最好的坚果云可惜没有LinuxCLI版本，小VPS又安不上图形界面，再给坚果云官方提了建议之后就不了了之了。然后视线自然的挪向了Dropbox，因为Dropbox有CLI版本。</p>
 <hr>
-<p>右键点击那个小喇叭，选择“播放设备”，选中“扬声器”，点击“属性”，进入“高级”之后选择不同的Hz。<br><img src="http://ablee.cc/blog/img/sound.JPG" alt="sound"><br>就是上图的界面，我发现16位的高于48000Hz的选项是没有声音的，24位的高于44100Hz的选项是没有声音的。所以我想应该是存储位不足的原因吧。声卡内存？</p>
+<p>一番折腾之后在我的小VPS上安装上了Dropbox，然后我把原来Dropbox里面的文件全部删除了只用来做GitBlog的中转站。可是突然发现Dropbox并没有指定文件夹同步功能（<del>被坚果云宠坏了。。。</del>）一时之间陷入了困境。<br>好在Linux还有种神奇的东西叫做<strong>连接</strong>（link），连接分为软连接和硬连接，硬连接不能连接目录所以只能用软连接。我做了如下两次尝试：  </p>
 <hr>
-<p>这次能够免于重装系统，我还是很开心的~</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Win10无声音/" data-id="ciu2osn3t000m8cyg54yeo18f" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-WinMerge" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/WinMerge/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/WinMerge/">如何配置WinMerge作为Git-for-windows的mergetool</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前几天和同学协同开发的时候遇到了合并冲突问题，git的默认gui又只能<code>Use remote edtion</code>or<code>Use local edtion</code> 无法进行更加细致的合并。所以我就想配置一个合并工具。</p>
-<p>搜索了一番决定使用WinMerge，然后就展开了为期两天的探索。</p>
-<p>搜索Git和WinMerge就会出来很多配置教程，我尝试了很多都不行，后来我发现了问题的所在。先说一下我是怎么做的。</p>
-<hr>
-<p><strong>我的环境是32位win7+Git-for-windows2.4.5+WinMerge</strong></p>
-<hr>
-<ol>
-<li><p>首先安装好<a href="http://winmerge.org/" target="_blank" rel="external">WinMerge</a>，这一步没什么好说的，就是点击下一步就好。记得要点那个把WinMerge添加到环境变量里的选项，如果没选的话下一步需要修改profile文件。</p>
-</li>
-<li><p>然后配置Git Bash的<code>PATH</code>变量，之前很多教程都在说这个<code>PATH</code>但是都不甚详细。我摸索了一下（怪我自己Linux知识不熟），直接上代码大家应该能看明白。<br><code>export PATH=&quot;$PATH:/c/Program Files/WinMerge/&quot;</code>。<br>不过还有一个问题就是上面那句命令只能在不关闭bash前生效，可以去<code>../Git/etc/</code>里面修改profile文件，在最后一行加上上面那行命令就行。</p>
-</li>
-<li><p>第三步需要下载其他文件，由于我的Git版本是2.4.5，mergetool里面并没有添加对winmerge的支持，但是自从2.5.0之后Git添加了对winmerge的支持，所以我就从Git在github的主页上下载了最新的源码，从源码的<code>/mergetool/</code>目录下面copy了一份winmerge文件到<code>../Git/mingw32/libexec/git-core/mergetool/</code>下面。如果是Git2.x一下的版本目录应该是<code>../Git/libexec/git-core/mergetool/</code>。</p>
-</li>
-<li><p>完成这三步之后就可以尝试一下了，在bash里面输入<br><code>git mergetool --tool-help</code>。<br>这时候bash就会列出能够使用的工具，如果winmerge在可用的那一栏里，就标志着可以用了。这时候还得让git知道你要用winmerge了。还需要在bash里面输入以下命令：<br><code>git config --global merge.tool winmerge</code>。</p>
-</li>
-</ol>
-<hr>
-<p><strong>但是！但是！</strong>这时候<code>git difftool</code>还是不能打开winmerge，但是<code>git mergetool</code>已经可以用winmerge了。更详细的原因还没有研究。<br>不要吐槽是因为没有设置diff.tool，设置了也不行，所以上面就没说。</p>
-<hr>
-<p>##2015.10.21补充<br>经过我的实际验证，新版本的git-for-windows 2.6.1已经可以无视上面那些繁杂的配置了，安装完WinMerge之后直接在Git Bash里面一句话<code>git config --global merge.tool winmerge</code>就行了。  </p>
-<p>对了我现在的环境是64位win10+Git-for-windows2.6.1+WinMerge。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/WinMerge/" data-id="ciu2osn3u000n8cygx2vkd9zd" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-friends" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/friends/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/friends/">友情链接</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>#友链见下方：  </p>
-<hr>
-<p>##<a href="http://www.gitblog.cn/index.html" target="_blank" rel="external">GitBlog官网</a></p>
-<p>##<a href="http://www.lihuanyu.com" target="_blank" rel="external">环宇博客</a></p>
-<p>虽然我很想再写上几个，但是现在就只能写这些了，希望以后能够多起来。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/friends/" data-id="ciu2osn3v000o8cyghtbp94je" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Gitblog升级记录" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/Gitblog升级记录/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Gitblog升级记录/">Gitblog升级记录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>今天晚上Gitblog又发布新版本了，于是又是一次更新换代的时间，我第一时间在我的VPS上更新了Gitblog2.2，期间还做了些小改动。Gitblog版本的更新细则请参见<a href="https://github.com/jockchou/gitblog/releases" target="_blank" rel="external">这里</a>。</p>
-<p>那么每次更新Gitblog版本的时候都要注意不要把博文和自己的配置给弄丢，我之前是把所有的博文放到了Dropbox中，所以这次我直接把更新包里面的东西全部丢进了我的站点目录，然后暂时停掉Dropbox服务，把Dropbox自动更新目录重新指向正确的目录就OK啦！这时候博客已经可以打开了。</p>
-<p>但是由于这时候我忘记了把配置文件放进去，所以网站有点奇奇怪怪的，我不得不打开WinSCP把配置文件拷贝进去，这样倒是可以，不过每当我想要更改什么配置的时候还得打开WinSCP什么的，好麻烦。所以我就把配置文件放到了Dropbox里面同时备份，这样配置文件就会出现在blog/文件夹下，那么我在网站根目录下做一个配置文件的软连接即可。</p>
-<p>我也尝试过硬链接，但是我在本地改了配置文件之后只有blog文件夹里面的配置文件发生了变化，但是根目录下的硬连接文件并没有改变，可能是因为Dropbox在同步的时候把旧文件内容和新内容加在一起生成了一个新文件，然后旧文件依旧在原处作为备份，硬链接依旧指向原来的地址，所以并没有发生变化。</p>
-<p>所以现在我的所有配置和博文都在Dropbox里面了，下次更新Gitblog只需要更新一下配置文件的软连接就行了。</p>
-<ol>
-<li>停止Dropbox服务<code>killall dropbox</code></li>
-<li>把网站根目录下的blog文件夹拷贝到别处<code>cp -Rf blog/* ../blog/</code></li>
-<li>解压Gitblog<code>tar -xvzf v2.2</code></li>
-<li>把解压目录下的blog文件夹删除</li>
-<li>把解压目录下所有的东西拷贝到网站根目录</li>
-<li>将blog文件夹拷贝回来</li>
-<li>重新建立配置文件的软连接<code>ln -s blog/conf.yaml conf.yaml</code></li>
-<li>启动Dropbox服务<code>~/.dropbox-dist/dropboxd &amp;</code>  </li>
-</ol>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Gitblog升级记录/" data-id="ciu2osn2g00038cygv38br5j6" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Gitblog邮戳（GitblogPostmark）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/Gitblog邮戳（GitblogPostmark）/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Gitblog邮戳（GitblogPostmark）/">Gitblog邮戳（GitblogPostmark）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Gitblog邮戳使用Qt进行开发，现在只有windows版本，可以在<a href="https://github.com/liyu34/GitblogPostmark/releases" target="_blank" rel="external">GitblogPostmark</a>的Github的发行版本页面进行下载。提供zip格式和exe格式两种。  </p>
-<p>##一、简介<br>Gitblog邮戳（GitblogPostmark）（以下简称邮戳）是为更加方便的发布Gitblog博文而开发的为Gitblog博文加盖特定格式的文件前缀的程序，使用它可以方便的为Gitblog提供“作者”、“日期”、“主题”等等信息。<a href="https://github.com/jockchou/gitblog" target="_blank" rel="external">Gitblog</a>的详细信息请参见其Github主页。  </p>
-<p>##二、功能特点</p>
-<ol>
-<li>根据填写的信息可便捷的为Gitblog博文添加文件前缀。</li>
-<li>可以选择已有md文件或者自动生成md文件。</li>
-<li>可以设置默认生成博文的文件夹路径。</li>
-<li>可以本地保存已有文集名称。</li>
-<li>支持中文输入。  </li>
-</ol>
-<p>##三、环境要求<br>Windows7+  </p>
-<p>##四、安装步骤</p>
-<ol>
-<li>下载Zip包或者EXE安装包。</li>
-<li>解压缩或者安装到本地。  </li>
-</ol>
-<p>##五、软件界面<br><img src="http://ablee.cc/blog/img/GPostmark_main.png" alt="MainWindow">  </p>
-<p>##六、问题及Bug反馈<br>请直接在<a href="https://github.com/liyu34/GitblogPostmark" target="_blank" rel="external">GitblogPostmark</a>的Github主页发起issue或直接提交。  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Gitblog邮戳（GitblogPostmark）/" data-id="ciu2osn2h00048cygqijlv9vh" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Git发布博文" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/Git发布博文/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Git发布博文/">使用Git来发布博文</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>##使用Git发布博文<br>其实之前也尝试过使用Git发布博文，但是totally失败了，上次方法很可笑，这次用git的hook工具。<br>首先在服务器上安装git，这个就不说了。安装好git之后需要在服务器上面给git分配一个用户<code>adduser git</code>并给它一个密码。<br>切换到git用户之后创建一个git远程代码仓库（myblog.git），然后再去博文目录创建git仓库。（在这一步我遇到了问题……权限问题，最后无奈的我把blog目录所有者改为了git）在博文目录添加myblog.git作为远程仓库。<br>然后去myblog.git的目录，进入hooks目录之后新建post-receive脚本文件，这个文件会在每次接收到客户端push之后执行，其余hook用法可以看<a href="http://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">这里</a><br>下面是脚本文件的内容，保存好之后还得给它+x<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="built_in">unset</span> GIT_DIR</div><div class="line">B<span class="built_in">log</span>Path=/data/vhost/liyu34.xyz/blog</div><div class="line"></div><div class="line"><span class="built_in">cd</span> <span class="variable">$BlogPath</span></div><div class="line">git add . -A &amp;&amp; git stash</div><div class="line">git pull orig master</div><div class="line">cp -r conf.yaml ../conf.yaml</div><div class="line">rm -rf ../app/cache/*</div><div class="line">```  </div><div class="line">这样钩子就设定好了，接下来得把网站服务器上的git搭建为服务器git，</div><div class="line">参照[这里](https://ruby-china.org/topics/5040)（我就是偷懒了……）  </div><div class="line"></div><div class="line">**然后vps的ssh端口变了怎么办，也请参照[这里](http://zengrong.net/post/1544.htm)。**  </div><div class="line"></div><div class="line">权限问题？刚刚我遇到了一个问题就是我按照之前的办法来写了post-receive脚本，就是无法执行，后来发现是权限问题，我把blog目录的权限设为765之后git就不能pull了，暂时还不清楚是什么原因。  </div><div class="line">权限问题真混乱，缓存目录下面的东西是apache用户的,我把cache目录设为777之后apache用户产生的目录还是755的，git无法去操作那些目录。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2015.10.21补充</span></div><div class="line">经过今天的事情我充分认识到我的Linux水平就跟海平面一样。。。稍稍高一点的东西就不懂了……  </div><div class="line">之前我每次在本地提交的时候还需要输入登陆密码，作为一个合格程序员（就是懒），我觉得我得做点什么，比如ssh什么的。</div><div class="line">然后我就把ssh的key传到了服务器上，然后……就不用输密码了。。。由于我的Linux水平低下，所以我并不准备说太多。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2016年3月3日补充</span></div><div class="line">如果是SCP命令想要使用除了22以外的端口的话，需要加上端口参数如下：</div></pre></td></tr></table></figure></p>
-<p>SCP -P port_number user@serviceip:floder<br>```  </p>
-<p>也必须在blog目录下面初始化git目录。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Git发布博文/" data-id="ciu2osn2l00058cygyw1dsxwo" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-HowToUpdateBlogWithGit" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/HowToUpdateBlogWithGit/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/HowToUpdateBlogWithGit/">如何使用Git更新博客（一次失败的尝试）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>开门见山，先来说一下我用git发布博文的整体结构。  </p>
 <ul>
-<li>博客服务器一枚  </li>
-<li>Git@OSC帐号一枚  </li>
-<li>本地电脑一台</li>
+<li><p>将网站根目录下的posts文件夹删除之后建立一个从Dropbox同步目录到博文目录posts的软连接（<del><code>ln -s ~/Dropbox/ posts</code></del>）这样一来网站根目录下的博文目录就会连接到Dropbox的同步目录中去。不过这种方法行不通，可能是因为GitBlog暂时还不支持这种做法吧。  </p>
+</li>
+<li><p>第二种方法是倒过来的，这种方法事实证明是可行的。如果把posts连接到Dropbox不行的话，那就试试把Dropbox连接到posts，让Dropbox直接网博文目录下进行同步。这么做的话先关闭Dropbox服务<strong><code>killall Dropbox</code></strong>然后趁机把同步目录删除，然后建立一个从posts到Dropbox的软连接<strong>‘ln -s …/posts/ ~/Dropbox’</strong>，最后打开Dropbox<strong><code>~/.dropbox-dist/dropboxd &amp;</code></strong>即可。这样就大功告成了！  </p>
+</li>
 </ul>
-<p>发布工作的流程是这样的：  </p>
-<ol>
-<li>本地编写完成之后在博文目录提交并push到OSC的仓库  </li>
-<li>博客服务器从OSC的仓库中pull得最新博文。</li>
-</ol>
-<p>这样博客服务器和本地电脑上面的git都是充当客户端的git，本来想看一看有没有直接上传的办法，找了一会没找到就采取这种办法了，不过这样也好，我的博文有<strong>四处</strong>存放点（本地+博客服务器+OSC仓库+坚果云）。  </p>
-<p>为了保证每次打开博客看到的都是最新的情况，我在GitBlog的index.php里面加了一句运行本地shell文件的命令，如下：<br><code>exec(&quot;.../gitpull.sh&quot;);</code><br>这样每次打开博客都会自动去远程仓库pull一下，总感觉pull频繁了会有安全隐患呢。。。先不管了，以后再说吧。其实刚才也尝试了crontab的方法（linux的定时器），设定的是每五分钟pull一次，但是好像没什么效果，加上这么做可能不能实时更新，就放弃了。以后的话看看改善一下gitpull这个脚本吧。  </p>
 <hr>
-<p>对了，我现在用的MarkDown是一个开源的Qt的本地编辑器CuteMarkEd，每次打开都要手动复制博文的前缀也是很麻烦的，所以最近想要在这个CuteMarkEd的基础上添加一些适合GitBlog的功能，这样用起来应该会方便一些吧。  </p>
-<hr>
-<p>但是Git的方案失败了，因为在网页里面的php代码不能执行git pull，有说是权限问题的，我尝试了几次不行就放弃了，因为对php不熟悉。  </p>
-<hr>
-<p><strong>但是！我现在也实现了自动发布博文功能！是用Dropbox实现的，稍等我就来记载一下</strong>  </p>
+<p>折腾了一下午加一晚上终于可以自动发布博文了！<br>现在可以放心的写博客了！剩下的交给Dropbox！<strong>：）</strong>  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/HowToUpdateBlogWithGit/" data-id="ciu2osn2p00068cygj42tgd8x" class="article-share-link">Partager</a>
+      <a data-url="http://ablee.cc/2016/10/09/使用Dropbox自动发布博文/" data-id="ciu2osn45000s8cygzychb0d8" class="article-share-link">Share</a>
       
       
     </footer>
@@ -515,9 +228,9 @@ go
 
 
   
-    <article id="post-Linux-MySql" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-QtNote_QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/Linux-MySql/" class="article-date">
+    <a href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" class="article-date">
   <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -529,7 +242,7 @@ go
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Linux-MySql/">在Linux服务器上安装MySql并用Qt连接它</a>
+      <a class="article-title" href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/">QtNote:QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题</a>
     </h1>
   
 
@@ -537,18 +250,82 @@ go
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>因为项目需要，我需要在一个服务器上面安装MySql然后用客户端程序去访问它，之前以为SAE可以用，后来发现，SAE提供的数据库服务只能用于它本地的程序，根本就不能用外网访问。于是我就在我的VPS上安上了MySql。  </p>
-<p>在CentOs上面安装MySql挺简单的，可以用一个命令完成安装。<code>yum groupinstall &quot;mysql&quot;</code>安装上之后  <code>service mysqld start</code><br>然后就可以进入<code>mysql</code>的命令行模式了。  </p>
+        <p>因为学生会活动需要一个抢答器，之前师兄他们做的硬件抢答器坏掉了，于是我就萌生了做一个C/S结构抢答器的想法，Client比较容易，因为之前做过Qt里面Socket的程序，但是这个Server就有点没有头绪了。  </p>
+<p>还好有百度（百度出来的结果真的不好……）看了几篇博客然后决定动手做了。虽然看到论坛里面有人说Qt的Server不好，不如用C++的其他库，但是我这只是个小程序，顶多同时10个Client，就用Qt吧，反正现在Qt用的顺手（但是也会遇到一堆问题）。  </p>
 <hr>
-<p>然后用Qt连接数据库需要知道mysql的端口号和一个账户，所以需要新建一个账户，新建账户的命令如下：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">GRANT USAGE ON *数据库* TO &apos;用户名&apos;@&apos;主机&apos; IDENTIFIED BY &apos;密码&apos;;</div><div class="line">```  </div><div class="line"></div><div class="line">USAGE指的就是权限范围，范围就是增删查改（insert,delete,select,update），可以都写上，也可以写`all privileges`那么下面是一个例子：</div></pre></td></tr></table></figure>
-<p>grant select,insert,update,delete on <em>.</em> to ‘sa’ identified by “sa”;<br>```<br>这个就是说新建一个用户名和密码都是sa的账户，在所有数据库上赋予所有权限。  </p>
-<p>新建好了账户之后我们需要知道数据库的服务端口，可以用<code>show variables;</code>来查看mysql的所有属性，端口号是report_port。</p>
+<p>做完了之后想来，这个程序还是蛮简单的，最起码Server的监听挺简单的。</p>
+<p>要想用Qt做一个Server程序，只需要在一个类（exp. class MyServer）里面定义一个<code>QTcpServer</code>的对象（或指针），初始化之后可以通过<strong><code>listen()</code></strong>函数告诉它监听哪个端口。然后每当有新的连接接入的时候QTcpServer对象会emit一个<strong><code>newConnection()</code></strong>的信号，然后你可以在你的服务器类里面定义槽函数来处理这个新连接的接入。<br>那么监听哪个端口的函数模版是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">bool MyServer::StartListen()</div><div class="line">&#123;</div><div class="line">	if (!m_server-&gt;isListening())</div><div class="line">	&#123;</div><div class="line">		if (m_server-&gt;listen(QHostAddress::Any, 2333))//开始监听2333窗口</div><div class="line">		&#123;</div><div class="line">			return true;</div><div class="line">		&#125;</div><div class="line">		else</div><div class="line">		&#123;</div><div class="line">			return false;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	else</div><div class="line">	&#123;</div><div class="line">		return true;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我看的博客里面都是定义一个<code>class MySocket : public QThread</code>线程来接收接入的连接。  </p>
+<hr>
+<p>我定义的<code>MySocket</code>是这样的:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class MySocket :public QThread</div><div class="line">&#123;</div><div class="line">	Q_OBJECT</div><div class="line">public:</div><div class="line">	MySocket(QTcpSocket *connection,QObject *parent = 0);</div><div class="line">	~MySocket();</div><div class="line">	void SendMessage(QString text);</div><div class="line"></div><div class="line">private:</div><div class="line">	QTcpSocket *m_socket;</div><div class="line">private:</div><div class="line">	void run();</div><div class="line">private slots:</div><div class="line">	void DataReceived();</div><div class="line">&#125;;</div><div class="line">```  </div><div class="line"></div><div class="line">以上代码中只包括了最主要的部分， 我把软件逻辑功能相关的变量、函数定义删掉了。其中需要说明的是在构造函数里面会把QTcpSocket类型的指针赋值给类里面的`m_socket`。  </div><div class="line"></div><div class="line">那么回到刚刚提到的`MyServer`的处理新连接的槽函数：</div></pre></td></tr></table></figure>
+<p>void MyServer::NewConnectionSlot()<br>{<br>        MySocket <em>temp_socket;<br>        temp_socket = new MySocket(m_server-&gt;nextPendingConnection());<br>        temp_socket-&gt;start();<br>        socketList &lt;&lt; temp_socket;//socketList的类型是QList&lt;MySocket</em>&gt;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">这样这个服务器端的监听程序部分就基本上完成了。</div><div class="line"></div><div class="line">---</div><div class="line">另外我还遇到了TcpSocket传输中文乱码的问题，经查找，我使用的有效方法如下：  </div><div class="line"></div><div class="line">1.发送时：</div></pre></td></tr></table></figure></p>
+<pre><code>QString text = &quot;你要传输的文字&quot;;
+QByteArray datasend = text.toLocal8Bit();
+m_socket-&gt;write(datasend);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2.接收时：</div></pre></td></tr></table></figure>
+<pre><code>QByteArray vTemp;
+vTemp = m_socket-&gt;readLine();
+QString vTempStr = QString::fromLocal8Bit(vTemp);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">完成这个东西之后就直接拿去用了，没有经过完整测试，结果到了现场根本没法用，客户端没有每隔一段时间去汇报情况，过一会连接就自动断掉了，所以完全没法用，解决办法也很简单，既然长时间不汇报情况连接会断，那么就每隔一段时间发送个报文给服务器就好了（其实这个方法早就有，也不能叫方法，因为一般人都会默认加上这个东西来确保两者连接，只是我经验不够老到，吃了大亏）。可以在MyClient类的构造函数里面定义一个Timer（`startTimer(3000);`），到时间之后触发timerEvent函数（在MyClient类里面重载`protected void timerEvent(QTimerEvent *event);`），在这个函数里面给服务器发一个空报文就好了。</div></pre></td></tr></table></figure>
+<p>void MyClient::timerEvent(QTimerEvent *event)<br>{<br>    QString c = “”;<br>    socket-&gt;write(c.toLatin1(), c.length());<br>}<br>```</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Linux-MySql/" data-id="ciu2osn2s00078cyg9vddarq2" class="article-share-link">Partager</a>
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" data-id="ciu2osn39000d8cygfxg074se" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_QTcpSocket_QObject" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_QTcpSocket_QObject/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>昨晚在做ModBus的时候遇到了两个问题，第一个是tcpsocket突然无法发送数据了，显示tcpsocket无法跨进程调用；第二个是编译时一直显示无法访问QObject的私有变量。</p>
+<hr>
+<p>##一、QTcpSocket无法跨进程调用的问题<br>当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  </p>
+<p>最后发现问题是出在启动线程的<code>start()</code>函数上，之前我的所有线程都是在主线程初始化的时候就start。主进程里面有线程的对象（不是指针），线程的对象会随着主进程初始化而初始化，tcpsocket对象（不是指针）在线程初始化的时候初始化，同时通过tcp/ip连接模拟程序。这样线程初始化完成之后就立刻开始运行。  </p>
+<p>后来我写了一个按钮响应，把线程的<code>start()</code>给挪到按钮响应里去了，这样之后每次tcpsocket发送数据的时候就是出错，输出“tcpsocket无法跨线程调用”，于是我又把start给挪回构造函数里了，下一步准备试一下在按钮响应里面new一个线程的对象。  </p>
+<p>这个问题我觉得可能是因为主进程和线程的关系的原因？</p>
+<hr>
+<p>##二、无法访问QObject私有变量<br>这个问题其实是发生在上一个问题之前的，这个问题在之前的我看来其实是蛮无厘头的。光说可能没啥感觉，上个图先。<br><img src="http://ablee.cc/blog/img/qobjectclass.png" alt="qobjectclass.png">  </p>
+<p>上图就是这次问题的三个主角，<code>DataBlock</code>、<code>CollectionThread</code>、<code>DBManager</code>。  <del>需要交代的是DataBlock这个主角中的主角是一个关系户，他爸爸是QObject（传说中Qt大家庭里面大部分人的爷爷or太爷爷…）</del>  也就是说DataBlock直接继承自QObject。然后编译的时候就一直提示我“无法访问QObject的私有成员”，我还真信了，跑去看了几个DataBlock里面的变量，后来想不可能啊，以我这奇葩的命名方式，怎么可能会那么巧合的重名！于是我百度了。  </p>
+<p>然后我发现是因为QObject不允许copy或者opeartor=，然后我看了看我的代码，果真有地方用了等于号。</p>
+<p>本来是想借用Qt的QObject的管理机制来管理这个DataBlock的，原来这么多限制，  <del>于是就取消了DataBlock和QObject的父子关系</del>，  于是就不让DataBlock继承QObject了，也不用Q_OBJECT宏了。这样就解决了。  </p>
+<p><strong>需要注意的是之前我以为必须纳入Qt的体系中才可以用QList管理数据，现在发现不需要纳入Qt的体系也可以用QList管理数据。</strong></p>
+<hr>
+<p>##三、在非QObject子类中使用connect函数<br>（2015.10.20补充）<br>今天我又遇到Qobject的子类不能copy和operator=的问题了，但是我需要在那个类里面使用connect函数连接槽函数和消息，这该怎么办呢？  </p>
+<p>我想了一个麻烦的办法和一个简单的办法。麻烦的办法就是传给它一个是Qobject子类的对象的指针，用这个指针来调用connect函数。  </p>
+<p>简单的办法有效，所以我就没有尝试麻烦的办法究竟可行不可行，<strong><code>QObject::connect(...)</code></strong>，这样就行了。<br>我理解的qt程序是都运行在一个core上，所以只需要通知它绑定了什么信号和槽就行了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTcpSocket_QObject/" data-id="ciu2osn3b000e8cygxzv3nn39" class="article-share-link">Share</a>
       
       
     </footer>
@@ -561,7 +338,7 @@ go
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">__('next') &raquo;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/4/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -587,7 +364,7 @@ go
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -623,8 +400,8 @@ go
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2016 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      &copy; 2016 AbLee<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

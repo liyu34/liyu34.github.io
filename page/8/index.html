@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AbLee&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="AbLee's Blog">
+<meta property="og:url" content="http://ablee.cc/page/8/index.html">
+<meta property="og:site_name" content="AbLee's Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AbLee's Blog">
+  
+    <link rel="alternate" href="/atom.xml" title="AbLee&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">AbLee&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">An Intern Programmer</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-GitNote_PATH" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/GitNote_PATH/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.478Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/GitNote_PATH/">GitNote:PATH问题和安装路径问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前几天为了免于每次登陆VPS都要输密码做了一些尝试，其中尝试过使用”_netrc”文件的方法，这个方法要新建一个HOME环境变量，值为”%USERPROFILE%”，刚新建好之后还没什么问题，重启了之后再次使用就有问题了。  </p>
+<p>如果我从开始菜单里面打开git bash，那么没有问题，如果我在项目的文件夹上面右键然后选择git bash的话，就会出一系列的问题，比如用VI编辑完文件（或者只是查看文件）要退出的时候，第一次输入完退出命令之后，bash会提示无法往viminfo写入,具体错误信息如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">E138: Can&apos;t write viminfo file /d/MyProject/test/%USERPROFILE%/.viminfo! </div><div class="line">Press ENTER or type command to continue </div><div class="line">```  </div><div class="line">如果允许git缓存配置的话，它还会自己在那里建一个%USERPROFILE%的文件夹。  </div><div class="line"></div><div class="line">还有，这时候的PATH环境变量长这样:</div></pre></td></tr></table></figure></p>
+<p>$ $PATH<br>bash:/d/MyProject/ModBus/%USERPROFILE%/bin:/mingw64/bin:/usr/local/bin:/usr/bin:/bin:/mingw64/bin:/usr/bin:%USERPROFILE%/bin:/c/WINDOWS/system32:/c/WINDOWS:/c/WINDOWS/System32/Wbem:/c/WINDOWS/System32/WindowsPowerShell/v1.0:/c/Program: No such file or directory<br>```</p>
+<hr>
+<p>我删除HOME环境变量后卸载git，然后重装，然后卸载，然后安装低版本，然后循环了三遍还是不行。关机重启之后再重新安装git就好了，所以我想Windows的环境变量重启之后才会有实质变化？</p>
+<hr>
+<p>然后还有一个问题就是如果把git按照默认路径安装到<code>C:/Program Files/Git</code>之后如果使用<code>git config --system</code>指令的话可能会提示<code>Permission denied</code>，需要把Git安装目录的权限改一下才行，要给当前用户写入权限。  </p>
+<p>当然如果一开始就安装在了非系统盘的话就没有这个问题。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/GitNote_PATH/" data-id="ciu2osn2700018cygwth2e6sp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GitNote_lola&amp;rm-cache" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/GitNote_lola&rm-cache/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.478Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/GitNote_lola&rm-cache/">GitNote:用图形化的方式显示log&amp;删除误提交的大文件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>好久没写代码，也就好久没用Git了，今天写了些代码之后发现Git的一些常用命令竟然已经忘得差不多了，所以来这里记录一下。</p>
+<p>好用的命令别名，让log用树状图形的方式显示出来：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">git config --system alias.lola &quot;log --graph --decorate --pretty=oneline --abbrev-commit --all&quot;</div><div class="line">```  </div><div class="line"></div><div class="line">然后是`git commit --amend`这个命令会重新commit，可以重新编辑提交内容，但是会生成一个新提交（CommitID会和以前的不一样）</div><div class="line"></div><div class="line">还有常用的`git reset`命令，这个命令一般跟着`--hard`这样会“硬恢复”到上个版本。</div><div class="line"></div><div class="line">其余我常用的是最最基本的了，基本不会忘记了。</div><div class="line">```git</div><div class="line">git init --bare</div><div class="line">git remote add orig URL</div><div class="line">...</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<hr>
+<p>要想删除误提交的大文件，需要先从cache里面把那个文件删除，然后更新.gitignore，然后提交。<br>从缓存中删除文件可以用下面的语句:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git rm --cached XXX.xxx</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/GitNote_lola&rm-cache/" data-id="ciu2osn2b00028cyghih841bp" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GBCMInstruction" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/GBCMInstruction/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.478Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/GBCMInstruction/">Gitblog&amp;CuteMarkED快速添加博文前缀</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>自从搭建起Gitblog之后就一直在找寻更加便捷的写博文和发博文的方法，昨天实现了自动发布博文之后，今天也实现了一种更加便捷的添加博文前缀的方法。</p>
+<hr>
+<p>感谢github中的CuteMarkED工程，我在这个工程的基础之上添加了一个往文件中添加gitblog前缀的功能，以下是使用帮助：  </p>
+<hr>
+<p>CuteMarkEd的其他用法请参照CuteMarkEd的<a href="https://github.com/cloose/CuteMarkEd" target="_blank" rel="external">Github主页</a>。</p>
+<hr>
+<ul>
+<li><p>在菜单栏的最后面有一个gitblog菜单，点击Profix，将会弹出如图界面<img src="http://ablee.cc/blog/img/GBCM_gitblogdialog.png" alt="gitblogdialog">  </p>
+</li>
+<li><p>在界面中可以填写作者、标题、标签、总结等，可以选择状态和已有文集，时间默认为当前日期，如果希望调整可以自行调整。  </p>
+</li>
+<li><p>如果想要添加文集的话可以点击添加文集按钮，会出现如图的对话框：<br><img src="http://ablee.cc/blog/img/GBCM_addcategorydialog.png" alt="addcategorydialog"><br>这个时候只需要输入想要的文集名称然后点击PushButton即可（<del>竟然忘了改按钮名字！</del>），然后文集列表中就会出现你刚刚添加的文集名称。如果想要删除文集的话，可以到本软件的安装目录或者解压目录下找到<code>categories.txt</code>打开并删除想要删除的文集即可。  </p>
+</li>
+<li><p>填写完内容之后点击OK按钮，博文前缀就会添加到当前编辑框的最前面。<br><img src="http://ablee.cc/blog/img/GBCM_profix.png" alt="profix">  </p>
+</li>
+<li><p>另外，如果直接双击打开.markdown或者.md文件的话，在打开Profix对话框时程序会检查md文件目录下有无<code>categories.txt</code>文件，如果没有就会显示文件无法打开的错误。可以手动添加一遍或者把程序根目录下的文件拷贝过去均可。<br>建议把所有的md文件都集中在同一个文件夹下。如果是通过快捷方式或者直接打开CuteMark程序的话就没有这个问题。</p>
+</li>
+</ul>
+<hr>
+<p>我打包好了这个软件的安装包和解压包，有兴趣的朋友可以从<a href="http://dwz.cn/gitblogcutemarked" target="_blank" rel="external">这里</a>下载。</p>
+<hr>
+<p><strong>感谢CuteMarkEd Project</strong></p>
+<hr>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/GBCMInstruction/" data-id="ciu2osn1z00008cygxit1n2u0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/7/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="page-number" href="/page/7/">7</a><span class="page-number current">8</span>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/Hexo建站/">Hexo建站</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 AbLee<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

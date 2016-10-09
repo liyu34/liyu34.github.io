@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>AbLee&#39;s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="AbLee's Blog">
+<meta property="og:url" content="http://ablee.cc/page/7/index.html">
+<meta property="og:site_name" content="AbLee's Blog">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AbLee's Blog">
+  
+    <link rel="alternate" href="/atom.xml" title="AbLee&#39;s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+  
+
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">AbLee&#39;s Blog</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">An Intern Programmer</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-Multiple Qt Dll Project in one Solution" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Multiple Qt Dll Project in one Solution/">用VS组建一个Qt多工程的解决方案来进行软件开发</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>一直在各种场合看到真正的Visual Studio软件工程项目，无一不是多工程协同工作的，或者说多模块合作编程，不同的模块分为不同的子工程生成DLL，这样更新子工程的时候只需要更新DLL即可，无需重新交付用户新的版本，这样听起来就很有吸引力，这才是真正的软件工程师该干的事情，我终于得到机会亲自尝试一把了，这让我在软件工程师的道路上走了一大步。  </p>
+<p>当我把架构设计初稿用Atash UML完成之后，就准备着手实际新建一个这样的VS工程了，这期间遇到了不少问题，有一些也是很有意义的问题，是启发思维的问题，于是记录一下。那么首先说一下重构的软件架构，典型的MVC式的结构。下面就是简单的结构图。  </p>
+<p><img src="http://ablee.cc/blog/img/mps1.png" alt="Multiple Project in One Solution">  </p>
+<p>这个系统结构简图忽略了项目特有的一些特征。可以看到主要有三层，底层是<code>Database</code>,<code>SystemIO</code>,<code>SystemTCP</code>三个，其中SystemTCP是SystemIO的一部分，再往上是Controller，在上面就是负责显示的子工程SystemView，除了SystemView是生成可执行文件以外，其他子工程都是生成DLL，他们按照箭头逆方向依赖，SystemView依赖于Controller，也就是说说SystemView要调用Controller的DLL，其余部分相类似。  </p>
+<p>那么我们就可以到Visual Studio里面新建工程了，新建五个工程（当然要先新建一个工程，然后再工程的解决方案中添加新的工程），然后VS也提供了文件夹功能，你可以使用解决方案中的文件夹让整个解决方案看起来符合逻辑结构。  </p>
+<p>新建完工程之后就需要让VS知道他们之间的关系，首先是项目依赖关系，也就是编译顺序，这个是在解决方案的属性中设置的（右键解决方案，选择属性，然后在<strong>通用属性</strong>中找到第二个<strong>项目依赖</strong>，按照实际的依赖关系选择即可，比如Controller依赖Database和SystemIO，SystemIO依赖SystemTCP这样）。这样设置完之后可以编译下试试，可以发现编译顺序就是按照设定的顺序来的。  </p>
+<p>当然，这还没完，这样只是设置了编译顺序，实际上各个项目之间半毛钱关系都没有，需要在每个工程里面添加它依赖的工程的<strong>引用目录</strong>、<strong>库目录</strong>、<strong>附加依赖项</strong>，这个可以参照我之前的那篇博文<a href="http://ablee.cc/blog/%25E8%25B0%2583%25E8%25AF%2595%25E9%2593%25BE%25E6%258E%25A5%25E5%25BA%2593%25E5%25B7%25A5%25E7%25A8%258B.html" target="_blank" rel="external">《如何调试一个链接库工程工程》</a>。但是那篇博客里面只是说了要添加这些， 但是怎么添加路径这个事情其实是有大学问的。  </p>
+<hr>
+<p>假设你把绝对路径作为参数添加进去之后，实际使用起来没有任何问题，但是问题就是，你从<code>Debug</code>换到<code>Release</code>的时候，就会发现<strong>库目录</strong>这个东西不对了，因为之前添加的是调试DLL的目录，所以肯定就不行了。这种问题其实其他程序员前辈们早就考虑好了，要知道程序员可能是世界上最懒的工种了，解决办法就是路径<code>Macro</code>，当你添加的时候你会在界面上发现有一个Macro按钮，点开你就会发现所有的路径宏。如下图：  </p>
+<p><img src="http://ablee.cc/blog/img/mps2.png" alt="Direction Macros">  </p>
+<p>另外附上几个常用的路径宏：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$(SolutionDir)是指解决方案目录，</div><div class="line">$(ProjectDir)是指工程目录，</div><div class="line">$(IntDir)指的是当前配置环境下的库目录地址。</div><div class="line">```  </div><div class="line"></div><div class="line">---</div><div class="line">Qt动态链接库工程要在所有（想要编译到dll）的类中加上一个宏指令`$PROJECTNAME_EXPORT`，这个宏可以在工程中的`$projectname_global.h`文件中发现，`$`符号表示这是个变量，加在如下的位置：</div></pre></td></tr></table></figure>
+<p>class $PROJECTNAME_EXPORT ClassName<br>{<br>public:<br>    ClassName();<br>    ~ClassName();<br>};<br>```  </p>
+<p>否则会出现连接错误。  </p>
+<p>如果不加这个可以把动态链接库改成静态链接库也可以，但是加上这个之后就不能改静态链接库了。  </p>
+<p><strong>还有非常重要的一点就是父工程需要包括所有的子工程的引用目录和Qt Project Settings，比如一个子工程用到了SQL，那么所有的父工程都要包含SQL，否则可能出现打不开头文件的连接错误。</strong></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/Multiple Qt Dll Project in one Solution/" data-id="ciu2osn2x00088cygjx94g8zf" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Oracle连接" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Oracle连接/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Oracle连接/">Oracle数据库&amp;远程连接&amp;ODBC驱动</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>因为高级数据库课程需要，开始学习Oracle数据库，学习Oracle首先要安装，我尝试在linux上安装，结果失败了，然后把笔记本重新安装成Windows之后在上面安装上了Oracle。（在Windows上面安装Oracle也会提示很多错误，全部忽略就行了）</p>
+<hr>
+<p>Oracle安装完成之后，可以通过SQLplus进行连接，但是sqlplus不是图形化界面不利于保存SQL语句，还是想要通过图形界面访问，一开始使用PLSQL，但是一直连接不上，后来直接用Oracle提供的sqldeveloper进行连接。</p>
+<hr>
+<p>本地连接没什么特殊的，很容易就连接成功了，让我头疼的是如何远程连接，我按照网络上的教程，使用Net Managment配置本地服务和监听器，但是在远端使用Sqldeveloper就是通过不了测试，后来发现网上有教程说我缺少Instant Client（即时客户端），下载之后配置好了发现也不行。  </p>
+<p>我突然想起了之前sqlserver远程连接的时候需要重启服务，于是我去重启了一遍Oracle的TNSListener服务，果真，重启之后配置重新载入就好了。</p>
+<hr>
+<p>Oracle小记：  </p>
+<ol>
+<li>每个Oracle用户一个表方案，访问不同用户的表需要在表名字前面加用户名。  </li>
+<li>Oracle新建数据库是新建一个服务。  </li>
+<li><code>create user *name* identified by *passwd*</code>创建用户  </li>
+<li><code>grant connect,dba,resource to *name*</code>分配权限  </li>
+</ol>
+<hr>
+<p>在Windows上安装Oracle驱动  </p>
+<p>为了做分布式实验，需要在一个没有安装Oracle数据库的Windows上面用ODBC来访问oracle，百度了很多，那些回答、博客都跟傻逼似的，一点用也没有，唯一有用的是<a href="http://www.cnblogs.com/shelvenn/p/3799849.html" target="_blank" rel="external">这个</a>，这篇博客说的是对的。  </p>
+<p>所以我们需要下载两个东西一个是base包(instantclient-basic)，另一个是ODBC包(instantclient-odbc)，下载下来之后是两个压缩包，解压然后合并（其实都把它们解压到一个位置即可，因为里面的文件夹名字都是一样的，会自动合并），然后把这个文件夹放置到随便一个你喜欢的地方，然后进去用管理员权限运行”odbc_install.exe”就行了，这时候ODBC管理程序里面就会出现Oracle in instantclient了。  </p>
+<p>要连接服务器还必须得配置TNS，在instantclient根目录下面新建一个目录叫做”NETWORK”，进去再新建一个目录叫做”ADMIN”，在ADMIN里面新建一个文件叫做”tnsnames.ora”（当然你也可以从Oracle服务器里面直接复制出来），这时候还需要配置两个环境变量，分别是<code>ORACLE_HOME</code>和<code>NLS_LANG</code>。第一个变量值就是instantclient目录（比如<code>D:\instantclient_11_2</code>），第二个变量值等于<code>SIMPLIFIED CHINESE_CHINA.ZHS16GBK</code>，这个变量是解决sql通过odbc查询中文乱码问题的。</p>
+<p>这时候你去ODBC管理程序里面就可以配置Oracle服务器了。TNS Service Name里面可以下拉出你在tnsnames.ora配置的内容（如果下拉不到东西说明你ORACLE_HOME变量没有配置）。  </p>
+<hr>
+<p>后来我发现……想要在SqlServer Management Studio里面连接Oracle数据库最简单的方法还是在电脑上安一个Oracle客户端……  </p>
+<p>最后还是没能逃过安装Oracle……</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/Oracle连接/" data-id="ciu2osn3000098cyghv5e2h1h" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote2015.09.19" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote2015.09.19/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote2015.09.19/">QtNote:QTcpSocket、Qt位运算、QTableView、QLineEdit焦点问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>开门见山，这里是QtNote。<br>注意，本文中的所有代码均取自我写的ModBus程序，阅读时请适当忽略上下文。</p>
+<hr>
+<p>##QTcpSocket<br>由于项目需要，我需要使用ModBus TCP协议与RTU通信，所以需要使用套接字。<br>套接字的使用现在只是实现了特定的功能，容错性什么的暂时没有考虑。</p>
+<p>Socket编程的步骤就是<strong>连接</strong>-》<strong>发送消息</strong>-》<strong>接收消息</strong>（出错处理）。<br>QT对Socket进行了封装，封装为了QTcpSocket类，调用这个类的<code>connectToHost</code>函数即可对目标进行一次连接尝试。（如果连接不上会返回连接错误）<br>我写了一个自己的MyTcp，在这个类里面有一个QTcpSocket变量。<br>通过Qt的信号与槽的机制，将消息发送成功与接收消息绑定在一起。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">connect(&amp;tcpSocket, SIGNAL(readyRead()), this, SLOT(ReadData()));</div><div class="line">```  </div><div class="line">通过学习我知道了TCP协议氛围**块**和**行**，ModBus是面向行的，一行内的信息是使用QByteArray编辑的（参照发送消息的函数）。</div><div class="line">发送消息使用如下函数</div></pre></td></tr></table></figure></p>
+<p>void MyTCP::SendRequest(qint8 slaveaddress, qint8 functioncode, qint16 startaddress, qint16 datanumber)<br>{<br>    QByteArray line;<br>    QDataStream out(&amp;line, QIODevice::WriteOnly);<br>    out.setVersion(QDataStream::Qt_DefaultCompiledVersion);<br>    out &lt;&lt; qint8(00) &lt;&lt; qint8(00) &lt;&lt; qint8(00) &lt;&lt; qint8(00);//protocal identifier 4byte<br>    qint16 messagelen = sizeof(slaveaddress) + sizeof(functioncode) + sizeof(startaddress) + sizeof(datanumber);<br>    out &lt;&lt; messagelen;//High 8-bit ModBus &amp; Low 8-bit message length<br>    out &lt;&lt; slaveaddress;//slave address<br>    out &lt;&lt; functioncode;//function code<br>    out &lt;&lt; startaddress;//High 8-bit &amp; Low 8-bit of start address<br>    out &lt;&lt; datanumber;//High 8-bit &amp; Low 8-bit of data number<br>    tcpSocket.write(line);</p>
+<p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">注，这里都是针对ModBus发送的信息。可以参照我翻译的RTU文档（还未翻译完）。</div><div class="line">接收消息如下。</div></pre></td></tr></table></figure></p>
+<p>void MyTCP::ReadData()<br>{<br>    QDataStream in(&amp;tcpSocket);<br>    in.setVersion(QDataStream::Qt_DefaultCompiledVersion);<br>    qint64 availabelnum = tcpSocket.bytesAvailable();<br>    QByteArray res = tcpSocket.readAll();<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">##Qt位运算</div><div class="line">由于Modbus返回的信息都是特定格式的字节数据，有的数据会分为高低两块，所以需要位运算来将数据合并。其实这里叫C++位运算更合适一点。下面是位运算操作符。</div></pre></td></tr></table></figure></p>
+<p>“&amp;”与<br>“|”或<br>“&gt;&gt;”右移<br>“&lt;&lt;”左移</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">下面是一个高位与低位合并的函数：</div></pre></td></tr></table></figure>
+<p>qint16 MyTCP::Combine(qint8 high, qint8 low)<br>{<br>    return (high &lt;&lt; 8 | low);<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">##QTableView</div><div class="line">注：本部分摘自网络，因为ModBus只用到了其中一部分，不全。</div><div class="line">添加表头：</div></pre></td></tr></table></figure></p>
+<p>QStandardItemModel  *model = new QStandardItemModel();<br>model-&gt;setColumnCount(2);<br>model-&gt;setHeaderData(0,Qt::Horizontal,QString::fromLocal8Bit(“卡号”));<br>model-&gt;setHeaderData(1,Qt::Horizontal,QString::fromLocal8Bit(“姓名”));<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">设置表格属性：</div></pre></td></tr></table></figure></p>
+<p>ui-&gt;tableView-&gt;setModel(model);<br>//表头信息显示居左<br>ui-&gt;tableView-&gt;horizontalHeader()-&gt;setDefaultAlignment(Qt::AlignLeft);<br>//设置列宽不可变<br>ui-&gt;tableView-&gt;horizontalHeader()-&gt;setResizeMode(0,QHeaderView::Fixed);<br>ui-&gt;tableView-&gt;horizontalHeader()-&gt;setResizeMode(1,QHeaderView::Fixed);<br>ui-&gt;tableView-&gt;setColumnWidth(0,101);<br>ui-&gt;tableView-&gt;setColumnWidth(1,102);<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">注：在进行表格设置时必须是“ui-&gt;tableView-&gt;setModel(model);”在前，属性具体设置在后，</div><div class="line"></div><div class="line">反之则设置不会生效。如上述代码所示。</div><div class="line"></div><div class="line">添加行（添加三行一样的信息）：</div></pre></td></tr></table></figure></p>
+<p> for(int i = 0; i &lt; 3; i++)<br> {<br>     model-&gt;setItem(i,0,new QStandardItem(“2009441676”));<br>        //设置字符颜色<br>     model-&gt;item(i,0)-&gt;setForeground(QBrush(QColor(255, 0, 0)));<br>        //设置字符位置<br>     model-&gt;item(i,0)-&gt;setTextAlignment(Qt::AlignCenter);<br>     model-&gt;setItem(i,1,new QStandardItem(QString::fromLocal8Bit(“哈哈”)));<br> }<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">删除行：</div></pre></td></tr></table></figure></p>
+<p>//x是指定删除哪一行<br>model-&gt;removeRow(x);<br>//删除所有行<br>model-&gt;removeRows(0,model-&gt;rowCount());<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">##QLineEdit焦点问题</div><div class="line">一般如果能够使用Tab键来更换焦点的话会很方便，我发现QLineEdit自带了Tab键的响应，或者说是MainWindow，具体机制没有研究。</div><div class="line">我进行了布局之后Tab键顺序混乱了，然后我发现了问题在ui_modbus.h文件里面，先上代码。</div></pre></td></tr></table></figure></p>
+<pre><code>SlaveAddress = new QLineEdit(centralWidget);
+SlaveAddress-&gt;setObjectName(QStringLiteral(&quot;SlaveAddress&quot;));
+SlaveAddress-&gt;setFocusPolicy(Qt::StrongFocus);
+
+gridLayout-&gt;addWidget(SlaveAddress, 0, 1, 1, 1);
+
+FuntionCode = new QLineEdit(centralWidget);
+FuntionCode-&gt;setObjectName(QStringLiteral(&quot;FunctionCode&quot;));
+
+gridLayout-&gt;addWidget(FuntionCode, 1, 1, 1, 1);
+
+StartAddress = new QLineEdit(centralWidget);
+StartAddress-&gt;setObjectName(QStringLiteral(&quot;StartAddress&quot;));
+
+gridLayout-&gt;addWidget(StartAddress, 2, 1, 1, 1);
+
+DataNumber = new QLineEdit(centralWidget);
+DataNumber-&gt;setObjectName(QStringLiteral(&quot;DataNumber&quot;));
+
+gridLayout-&gt;addWidget(DataNumber, 3, 1, 1, 1);
+
+OKButton = new QPushButton(centralWidget);
+OKButton-&gt;setObjectName(QStringLiteral(&quot;OKButton&quot;));
+
+gridLayout-&gt;addWidget(OKButton, 4, 1, 1, 1);
+</code></pre><p>```<br>添加的顺序就是光标移动的顺序。即SlaveAddress-&gt;FunctionCode-&gt;StartAddress-&gt;DataNumber-&gt;OKButton。其实这并不是QLineEdit独有的，QPushButton也可以。然后我还发现了选中OKButton按钮之后按Enter键没有反应，按Space倒是响应了。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/QtNote2015.09.19/" data-id="ciu2osn33000a8cygubm3pu4d" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_QDate、QTextCodec、QFileDialog以及Q_OBJECT" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_QDate、QTextCodec、QFileDialog以及Q_OBJECT/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_QDate、QTextCodec、QFileDialog以及Q_OBJECT/">QtNote:QDate、QTextCodec、QFileDialog以及Q_OBJECT</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>闲话不多说，直接记录。  </p>
+<hr>
+<p>首先说一点关于信号槽的误解，上次那个明明发射信号却无法进入槽函数的原因已经查明，因为自定义的类体里面没有<code>Q_OBJECT</code>所以无法纳入Qt大家庭中。我发现这个宏还有解决换行符跨平台等问题，加了这个宏的文件在使用git的时候不会提示CRLF的问题，没加的就会出现CRLF的问题。</p>
+<hr>
+<p>##QDate：<br>QDate是Qt提供的日期控件可以获取当前日期，如果是QDateTime的话可以精确到秒。获取了日期之后可以设置日期显示格式。由<code>toString(QString format)</code>函数实现设置格式。  </p>
+<p>这个toString函数类似printf函数，都是把format参数里面的特定字符替换为时间，比如<code>y</code>代表year，<code>M</code>代表month，由于日期时间格式里面有两个“m”，所以大写M表示month，小写<code>m</code>表示minute，<code>d</code>代表day，<code>h</code>代表hour，<code>s</code>代表second,<code>z</code>代表毫秒。举个例子：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">QDateTime::currentDateTime().toString(<span class="string">"yyyy-MM-dd-h-m"</span>);</div></pre></td></tr></table></figure>
+<p>那么返回就是<code>2015-08-22-16-33</code>；<br>2015.10.07补充（摘自互联网）：<br>这些是可能用到的日期表达式：  </p>
+<p>d - 没有前置0的数字的天（1－31）<br>dd - 前置0的数字的天（01－31）<br>ddd - 缩写的日名称（Mon－Sun）。使用<code>QDate::shortDayName()</code>。<br>dddd - 长的日名称（Monday－Sunday）。使用<code>QDate::longDayName()</code>。<br>M - 没有前置0的数字的月（1－12）<br>MM - 前置0的数字的月（01－12）<br>MMM - 缩写的月名称（Jan－Dec）。使用<code>QDate::shortMonthName()</code>。<br>MMMM - 长的月名称（January－December）。使用<code>QDate::longMonthName()</code>。<br>yy - 两位数字的年（00－99）<br>yyyy - 四位数字的年（0000-9999）  </p>
+<p>这些是可能用到的时间表达式：  </p>
+<p>h - 没有前置0的数字的小时（0－23或者如果显示AM/PM时，1－12）<br>hh - 前置0的数字的小时（00－23或者如果显示AM/PM时，01－12）<br>m - 没有前置0的数字的分钟（0－59）<br>mm - 前置0的数字的分钟（00－59）<br>s - 没有前置0的数字的秒（0－59）<br>ss - 前置0的数字的秒（00－59）<br>z - 没有前置0的数字的毫秒（0－999）<br>zzz - 前置0的数字的毫秒（000－999）<br>AP - 切换为AM/PM显示。AP将被“AM”或“PM”替换。<br>ap - 切换为am/pm显示。ap将被“am”或“pm”替换。<br>所有其他输入字符都将被忽略。  </p>
+<hr>
+<p>##QTextCodec<br>为了解决中文乱码的问题，可以通过设置本地编码来解决，当然也可以通过<code>QString::formLocal8bit()</code>解决（如果变量不多的话）。代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">QTextCodec *codec = QTextCodec::codecForName(<span class="string">"UTF-8"</span>);</div><div class="line">QTextCodec::setCodecForLocale(codec);</div></pre></td></tr></table></figure></p>
+<p>不过需要注意的一点就是改变本地编码之后换行符可能跟随变化。还是用<code>&#39;\n&#39;</code>吧，暂时没考虑跨平台的问题。</p>
+<hr>
+<p>##QFileDialog<br>QFileDialog是一个可以获取文件路径的类，使用它会自动弹出一个文件选择对话框。这个类同时也可以获取文件夹路径。  </p>
+<ul>
+<li>获取文件夹路径  <pre><code class="cpp">QString QFileDialog::getOpenFileName();
+</code></pre>
+</li>
+<li>当然获取同目录下多个文件的话就是  <pre><code class="cpp">QStringList QFileDialog::getOpenFileNames();
+</code></pre>
+</li>
+<li>获取已存在文件夹路径  <pre><code class="cpp">QString QFileDialog::getExistingDirectory();
+</code></pre>
+</li>
+</ul>
+<hr>
+<p>头一次在github发布自己的东西，蛮激动的，继续加油！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_QDate、QTextCodec、QFileDialog以及Q_OBJECT/" data-id="ciu2osn35000b8cygb7gslg7q" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_QTableView_Button" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_QTableView_Button/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_QTableView_Button/">QtNote:在QTableView里面添加按钮&amp;QMessageBox按钮</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>首先，我要说明的是，经过我的研究发现，这个事情根本没有我之前看到的博客那么麻烦，原地址如下:<a href="http://www.cnblogs.com/li-peng/p/3961843.html" target="_blank" rel="external">QTableView 添加按钮</a>。这个博文里面有三个类，ButtonDelegate/TableModel/TableView。我发现其实只需要ButtonDelegate一个类即可。   </p>
+<p>废话不多说，先上代码为敬。<br><code>buttondelegate.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#ifndef BUTTONDELEGATE_H</div><div class="line">#define BUTTONDELEGATE_H</div><div class="line"></div><div class="line">#include &lt;QItemDelegate&gt;</div><div class="line"></div><div class="line">class ButtonDelegate : public QItemDelegate</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line">public:</div><div class="line">    explicit ButtonDelegate(QString t, QObject *parent = 0);</div><div class="line"></div><div class="line">    void paint(QPainter *painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const;</div><div class="line">    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index);</div><div class="line"></div><div class="line">signals:</div><div class="line">    void Pressed(QString ID);</div><div class="line"></div><div class="line">private:</div><div class="line">    QMap&lt;QModelIndex, QStyleOptionButton*&gt; m_btns;</div><div class="line">    QString text;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // BUTTONDELEGATE_H</div><div class="line">```  </div><div class="line"></div><div class="line">`buttondelegate.cpp`</div></pre></td></tr></table></figure></p>
+<p>#include “buttondelegate.h”</p>
+<p>#include <qapplication></qapplication></p>
+<p>#include <qmouseevent></qmouseevent></p>
+<p>#include <qdialog></qdialog></p>
+<p>#include <qpainter></qpainter></p>
+<p>#include <qstyleoption></qstyleoption></p>
+<p>#include <qdesktopwidget></qdesktopwidget></p>
+<p>ButtonDelegate::ButtonDelegate(QString t, QObject *parent) :<br>    QItemDelegate(parent)<br>{<br>    text = t;<br>}</p>
+<p>void ButtonDelegate::paint(QPainter <em>painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const<br>{<br>    QStyleOptionButton</em> button = m_btns.value(index);<br>    //if (!button) {//如果有这个if判断的话，当窗口缩小到出现滑块的时候会有异常，因为判断已经有这个按钮了，就不再重画了<br>        button = new QStyleOptionButton();<br>        button-&gt;rect = option.rect.adjusted(3, 3, -3, -3);<br>        button-&gt;text = text;<br>        button-&gt;state |= QStyle::State_Enabled;</p>
+<pre><code>    (const_cast&lt;ButtonDelegate *&gt;(this))-&gt;m_btns.insert(index, button);
+//}
+painter-&gt;save();
+
+if (option.state &amp; QStyle::State_Selected) {
+    painter-&gt;fillRect(option.rect, option.palette.highlight());
+
+}
+painter-&gt;restore();
+QApplication::style()-&gt;drawControl(QStyle::CE_PushButton, button, painter);
+</code></pre><p>}</p>
+<p>bool ButtonDelegate::editorEvent(QEvent <em>event, QAbstractItemModel </em>model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index)<br>{<br>    if (event-&gt;type() == QEvent::MouseButtonPress) {</p>
+<pre><code>    QMouseEvent* e = (QMouseEvent*)event;
+
+    if (option.rect.adjusted(4, 4, -4, -4).contains(e-&gt;x(), e-&gt;y()) &amp;&amp; m_btns.contains(index)) {
+        m_btns.value(index)-&gt;state |= QStyle::State_Sunken;
+    }
+}
+if (event-&gt;type() == QEvent::MouseButtonRelease) {
+    QMouseEvent* e = (QMouseEvent*)event;
+    emit Pressed(index.data().toString());
+}
+return true;
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">(⊙o⊙)…恩，没错，就是直接复制的上面那个博客的源码。不过我发现不需要去定义三个类，并把QTableView提升为“TableView”，只需要在QTableView初始化的时候（我说的是InitTableView()这个我写的函数）定义一个ButtonDelegate类型的指针，然后把你想要实现的功能给绑定到按钮被按到时候发出的消息上即可。以下为部分关键代码。</div></pre></td></tr></table></figure></p>
+<pre><code>ButtonDelegate *m_button = new ButtonDelegate();
+connect(m_button, SIGNAL(DeleteRTU_Signal(QString)), this, SLOT(DeleteRTU(QString)));
+ui.tableView-&gt;setItemDelegateForColumn(3, m_button);
+emit model-&gt;layoutChanged();
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">经过我的初步研究，我发现，这个问题的关键就是ButtonDelegate里面那两个函数，`paint`来负责在制定的位置画上按钮，`editorEvent`负责发出按钮响应信号（和把按钮换成被按的状态）。这个`editorEvent`实际上都不是按钮响应事件，而是编辑事件，因为这个ButtonDelegate实际上继承的是QItemDelegate。  </div><div class="line"></div><div class="line">---</div><div class="line">QMessageBox可以用来做一个简单的再次确认的对话框，上代码为敬：</div></pre></td></tr></table></figure>
+<p>int confirm = QMessageBox::information(this, “Delete”, “Please confirm!”, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);<br>    if (confirm == QMessageBox::No) return;<br>```  </p>
+<p>(⊙o⊙)…我觉得我不需要再记录什么内容了，这些代码就足够了。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTableView_Button/" data-id="ciu2osn37000c8cygjci0cbbm" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+  <nav id="page-nav">
+    <a class="extend prev" rel="prev" href="/page/6/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><span class="page-number current">7</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/8/">__('next') &raquo;</a>
+  </nav>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/10/09/Hexo建站/">Hexo建站</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/自动检测是否有新博文/">自动检测文件夹改动情况</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 AbLee<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

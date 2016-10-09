@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
@@ -65,9 +65,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-研究生开学了" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-sublime" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/研究生开学了/" class="article-date">
+    <a href="/2016/10/09/sublime/" class="article-date">
   <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/研究生开学了/">研究生开学了</a>
+      <a class="article-title" href="/2016/10/09/sublime/">配置sublime</a>
     </h1>
   
 
@@ -87,15 +87,47 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>研究生的生活终于要开始了，不过每次来到新的环境都要耗费很久来拾掇我的小窝来让我生活的舒服一点。经过了两天时间，现在总算是像模像样了。</p>
-<p>最近好像很多讲座的样子，不过我后天下午要去接我女朋友，所以如果冲突的话只能请假了……</p>
-<p>现在媳妇儿大人也已经开学了，接下来就是用三年的努力来换取以后幸福的生活了。我的方向应该是人工智能，研究生阶段的课程我已经选择好了。下面是我的课程列表。  </p>
-<p><img src="http://ablee.cc/blog/img/my_courses.png" alt="my_course">  </p>
+        <p>#1. Package Control<br>使用sublime3最方便的安装package的方法就是使用<strong>Package Control</strong>，Package Control安装起来还是很容易的，在sublime的控制台中输入一句话（这句话看起来有点长）就好了，控制台的快捷键是<code>Ctrl + ~</code>，也可以从菜单View - Show Console打开，打开之后复制如下一句话（注意这真的是一句话）：  </p>
+<p><code>import urllib.request,os; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), &#39;wb&#39;).write(urllib.request.urlopen( &#39;http://sublime.wbond.net/&#39; + pf.replace(&#39; &#39;,&#39;%20&#39;)).read())</code>  </p>
+<p>如果发现这种简单的方法不能用的话可以试试手动安装的方法，方法连接在<a href="http://www.imjeff.cn/blog/62/" target="_blank" rel="external">这里</a>。  </p>
+<p>安装好之后可以打开sublime的命令模式（<code>Ctrl + Shift + P</code>），输入<code>Package Control</code>就可以看到Package Control的菜单了，可以在里面安装package，也可以删除，如果只是想安装package的话可以输入<code>install</code>作为关键字，回车之后就可以看到网络上的sublime3的各种package了。  </p>
+<hr>
+<p>#2. Python<br>当时买sublime的第一原因就是想要找个写python的IDE，然后配置一通下来之后发现sublime无愧于神器之称，充分的满足了程序员们想要敲命令的癖好……  </p>
+<p>##2.1 Anaconda<br>这里说的<strong>Anaconda</strong>不是那个python的集成科学计算库，而是sublime的一个package，使用Anaconda可以方便的进行命令补全，而且可以自动的给你的python代码进行pep8格式化，那么安装Anaconda非常简单，只需要在选择package control的安装功能后输入Anaconda进行搜索，然后点击全字匹配的那个就好了，package control会帮你把Anaconda安装好的。  </p>
+<p>然后的问题就是把Anaconda配置的让自己喜欢就好了。  </p>
+<p>###2.1.1 让Anaconda以dot为命令补全触发器<br>作为一个被Visual Studio惯坏的程序员，不能<strong>点</strong>出点什么东西来是很难受的一件事，虽然按<strong>tab</strong>补全也很正常，但是我还是喜欢能够点出点东西来。<br>那么需要在用户自定义设置中添加一句话：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;auto_complete_triggers&quot;: [&#123;&quot;selector&quot;: &quot;source.python - string - comment</div><div class="line">    - constant.numeric&quot;, &quot;characters&quot;: &quot;.&quot;&#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个用户自定义设置有两个选择，你可以直接在Preferences - Settings-User里面添加这么一句，也可以在Preferences - Browse Packages…打开的文件夹里面新建一个叫做<code>Python.sublime-settings</code>的文件，并把上面的语句添加在里面。  </p>
+<p><em>注意：我之前先是安装了SublimeCodeIntel然后卸载之后再安装的Anaconda的，然后再配置这个就没用了，当时对这个理解还不够深（现在也不够），就卸载了整个sublime然后删掉缓存中的sublime文件夹之后重新安装了sublime再这么配置才好的。</em>    </p>
+<p>###2.1.2 让回车不再输错代码<br>sublime在代码补全的时候默认会用tab和enter作为确认的按键，所以我很经常误输入一些东西（特别是添加了以dot作为命令补全的触发器之后），那么就得让enter不再作为代码补全的确认按键。  </p>
+<p>方法也很简单，首先在用户自定义设置（Preferences - Settings-User）里面添加一个配置：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;auto_complete_commit_on_tab&quot;: true,</div></pre></td></tr></table></figure>
+<p>然后在Preferences - KeyBindings-User中添加如下配置：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;keys&quot;: [&quot;enter&quot;], &quot;context&quot;:</div><div class="line">    [</div><div class="line">        &#123; &quot;key&quot;: &quot;setting.auto_complete_commit_on_tab&quot;, &quot;operand&quot;: true &#125;</div><div class="line">    ]</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>其实大家可以看到Preferences - KeyBindings-Default里面有这么一段，但是这个Default文件是无法更改的，所以就要放到User里面去。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;keys&quot;: [&quot;enter&quot;], &quot;command&quot;: &quot;commit_completion&quot;, &quot;context&quot;:</div><div class="line">        [</div><div class="line">            &#123; &quot;key&quot;: &quot;auto_complete_visible&quot; &#125;,</div><div class="line">            &#123; &quot;key&quot;: &quot;setting.auto_complete_commit_on_tab&quot;, &quot;operand&quot;: false &#125;</div><div class="line">        ]</div><div class="line">&#125;,</div><div class="line">```  </div><div class="line"></div><div class="line">###2.1.3 PEP8自动格式化宏  </div><div class="line">打开录制宏（Tools - Record Macro）之后，做两部操作，第一步全选（快捷键`Ctrl + A`），第二步PEP8格式化（默认快捷键`Ctrl + Alt + R`），然后结束录制宏（Tools - Stop Record Macro），并且把宏存储为一个文件`PEE8Format.sublime-macro`，然后绑定一个快捷键到这个宏文件上。在KeyBindings-User里面添加：</div></pre></td></tr></table></figure>
+<p>{<br>    “keys”: [“f1”],<br>    “command”: “run_macro_file”,<br>    “args”:{“file”: “Packages/User/PEE8Format.sublime-macro”}<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">###2.1.4 把tab键当作4个空格</div><div class="line">由于PEP8规定缩进是以4个空格为单位的，虽然tab运行起来没错，但是Anaconda会提醒你不符合PEP8标准，所以还是把tab直接替换为4个空格吧。我们需要在`Setting-User`里面添加两句话，含义显而易见的两句话。</div></pre></td></tr></table></figure></p>
+<pre><code>&quot;tab_size&quot;: 4,
+&quot;translate_tabs_to_spaces&quot;: true
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">##2.2 运行Python  </div><div class="line">###2.2.1 Tool - Build</div><div class="line">我希望写完代码直接就可以运行看看，sublime支持build，但是build有点问题，默认的build-system中的python在遇到中文字符时就傻了，而且没法输入字符到python解释器中，也就是说按`Ctrl + B`（默认Build的快捷键）出来的窗口中是无法用`input()`这个函数的，虽然有这个不能输入的致命缺点，但是我还是决定解决中文字符的问题先。  </div><div class="line"></div><div class="line">解决这个问题也很简单，可以Tool - Build System - New Build System...然后把下面的文本粘贴进去，并且保存为`Python3.sublime-build`文件名（后缀前面的那部分）可以随意起，但是要注意的是到时候在sublime菜单栏里面显示的就是这个文件名，要能够方便与原来的区别。</div></pre></td></tr></table></figure>
+<p>{<br>    “cmd”: [“python”, “-u”, “$file”],<br>    “file_regex”: “^[ ]<em>File \”(…</em>?)\”, line ([0-9]*)”,<br>    “selector”: “source.python”,<br>    “encoding”: “cp936”<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">这个编译设定指定了编码格式为&apos;cp936&apos;。  </div><div class="line"></div><div class="line">###2.2.2 SublimeREPL  </div><div class="line">这是一个神奇的东西，可以新建一个新的交互窗口，并且不存在上面所有的问题，中文没问题，也可以输入，简直神奇，就是有一点，每次要运行都太麻烦了。。。`Tools - SublimeREPL - Python - Python-RUN current file`其实要是能够忍受的话也倒是没什么问题啦，但是我忍不了，所以我绑定了F5作为运行的快捷键，恩，方便多了。  </div><div class="line"></div><div class="line">同样，在KeyBindings-User里面添加如下配置：</div></pre></td></tr></table></figure></p>
+<p>{<br>    “keys”:[“f5”],<br>    “caption”: “SublimeREPL: Python - RUN current file”,<br>    “command”: “run_existing_window_command”, “args”:<br>    {“id”: “repl_python_run”,”file”: “config/Python/Main.sublime-menu”}<br>},<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">#3. Markdown  </div><div class="line">其实Sublime也可以编写Markdown文件，并且预览也挺方便的，这一部分需要配置的就不多了，比较简单，只需要通过package control安装&apos;Markdown Preview&apos;就好了，安装好之后就可以用啦。  </div><div class="line"></div><div class="line">当然做一点点小配置也会大大提升使用幸福感。比如把下面的配置放到Preferences - Package Settings - Markdown Preview - Settings-User里面就会让你按下`Ctrl + B`之后自动打开浏览器预览：</div></pre></td></tr></table></figure></p>
+<p>{</p>
+<pre><code>&quot;enable_mathjax&quot;: true,
+
+&quot;enable_highlight&quot;: true,
+
+&quot;parser&quot;: &quot;markdown&quot;,
+
+&quot;build_action&quot;: &quot;browser&quot;,
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">其中把parser（解释器）设定为`markdown`是因为`github`解释器会去访问网络资源，所以比较慢。其他的设定是什么意思可以去Markdown Preview的默认设置里面看是什么意思。  </div><div class="line"></div><div class="line">##3.1 编码问题  </div><div class="line">不可避免的遇到了编码问题，这得益于我之前写的GitblogPostmark，它生成的文档是GB2312编码的，弄到gitblog里面全是乱码（看来之前的Markdown Pad做了编码转化自动处理啊，当然也有可能是Sublime对中文处理太蛋疼了），然后幸亏之前安装了`ConvertToUTF-8`这个神奇的东西，可以把编码变成utf-8的，具体操作是`Ctrl + Shift + P`然后打上`Convert`作为关键字找到`ConvertToUTF-8: Reload and Encoding`回车选择之后选择编码方式为`UTF-8`就好了。  </div><div class="line"></div><div class="line">其实也可以选择使用菜单栏中的`File - Reload and Encoding: UTF-8`  </div><div class="line"></div><div class="line">---</div><div class="line">#4. 给菜单项自定义快捷键的办法  </div><div class="line">如果可以的话，我想给每个菜单项都设上快捷键——不设快捷键不舒服斯基。  </div><div class="line"></div><div class="line">我学到了给菜单项设置快捷键的办法，首先，打开控制台（`Ctrl + ~`），然后让sublime把所有的命令都显示（log）出来，即输入`sublime.log_commands(True)`回车后你就会发现世界不一样了，然后直奔主题，去点击一下你的目标菜单项，观察控制台的输出。控制台的输出一般类似于`command: reload_with_encoding&#123;&quot;encoding&quot;: &quot;UTF-8&quot;&#125;`，从这里面我们可以知道那个菜单项的命令名字，以及传递的参数（大括号内的是参数名以及内容）。那么我们就可以定义一个快捷键了。</div></pre></td></tr></table></figure></p>
+<p>{<br>    “keys”: [“f10”],<br>    “command”: “reload_with_encoding”, “args”:<br>    {“encoding”: “UTF-8”}<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">另外我总结了一下可以放心拿去用的F系列快捷键，即没有被KeyBindings-Default绑定的F系列快捷键：</div></pre></td></tr></table></figure></p>
+<p>F1：没被占用，可放心使用<br>F2：默认书签快捷键，建议不要再绑定<br>F3：寻找下一个快捷键，建议不要再绑定<br>F4：下一个结果快捷键（不太清楚什么意思），建议不要再绑定<br>F5：没被占用，可放心使用<br>F6：开启拼写检查快捷键，讨厌拼写检查，可以再绑定<br>F7：编译快捷键，Ctrl+B感觉已经够方便了，可以再绑定<br>F8：没被占用，可放心使用<br>F9：sort_lines快捷键，建议不要再绑定<br>F10：没被占用，可放心使用<br>F11：全屏快捷键，建议不要再绑定<br>F12：Goto_Definition快捷键，建议不要再绑定<br>```</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/研究生开学了/" data-id="ciu2osn4c000w8cyg82ybjbs1" class="article-share-link">Partager</a>
+      <a data-url="http://ablee.cc/2016/10/09/sublime/" data-id="ciu2osn43000r8cygq9aw8hp9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -105,9 +137,9 @@
 
 
   
-    <article id="post-站点迁移" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-适用于Modbus协议的CRC16校验（查表法）" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/站点迁移/" class="article-date">
+    <a href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" class="article-date">
   <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -119,7 +151,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/站点迁移/">站点迁移&amp;远程传送文件命令（scp）</a>
+      <a class="article-title" href="/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/">适用于Modbus协议的CRC16校验（查表法）</a>
     </h1>
   
 
@@ -127,48 +159,72 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>由于之前的VPS是月付的，算下来的话比年付要贵接近一倍，所以趁这次VPS要到期，重新开了一个一样配置的年付VPS，新东西当然要玩一下，这一玩可不得了，成功找到了用Git发布博文的办法。<br>之前把系统装成了centos7，安装nginx有点问题，所以把系统又重装了，然后现在一切从零开始搭建GitBlog、使用Git发布博文。</p>
-<hr>
-<p>##搭建GitBlog<br>首先让我们来安装Nginx！在centos6上面安装！<br>好吧，第一步就出现了问题<code>yum install nginx</code>之后显示没有安装包？！于是百度之，解决办法如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">//1.下载rpm包</div><div class="line">wget http:\/\/nginx.org/packages/centos/6/noarch/RPMS/nginx-release-centos-6-0.el6.ngx.noarch.rpm</div><div class="line">//2.安装rpm包</div><div class="line">rpm -ivh nginx-release-centos-6-0.el6.ngx.noarch.rpm</div><div class="line">```  </div><div class="line">这样之后就可以用yum安装nginx了。  </div><div class="line">安装好nginx之后就要配置它，然后我发现我不知道该死的系统把nginx安到哪里去了，于是百度，于是发现好多无用信息，于是`whereis nginx`。发现Nginx在安装目录`/etc/nginx`。进入安装目录之后会看到`conf.d`文件夹，里面就是配置文件啦。  </div><div class="line">新建一个文件，把Gitbolg官网配置范例粘贴上去保存为default.conf就好了，当然要先修改网站目录。（因为我对nginx也一知半解，所以就直接粘贴了）  </div><div class="line">GitBlog还需要php和mbstring扩展库，所以安装php和mbstring扩展库！</div></pre></td></tr></table></figure></p>
-<p>yum install php<br>yum install php-fpm<br>yum install php-mbstring<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">这样前期环境就算是搭建好了，让我们下载下来GitBlog的源码，并把它放到我的网站目录`/data/vhost/liyu34.xyz`下。</div><div class="line">下载下来tar.gz压缩包之后需要解压，我在网上搜罗了一个tar命令介绍粘到下面：</div></pre></td></tr></table></figure></p>
-<p>tar</p>
-<p>-c: 建立压缩档案<br>-x：解压<br>-t：查看内容<br>-r：向压缩归档文件末尾追加文件<br>-u：更新原压缩包中的文件</p>
-<p>这五个是独立的命令，压缩解压都要用到其中一个，可以和别的命令连用但只能用其中一个。<br>下面的参数是根据需要在压缩或解压档案时可选的。</p>
-<p>-z：有gzip属性的<br>-j：有bz2属性的<br>-Z：有compress属性的<br>-v：显示所有过程<br>-O：将文件解开到标准输出</p>
-<p>解压常用命令：</p>
-<p>tar –xvf file.tar  解压 tar包<br>tar -xzvf file.tar.gz 解压tar.gz<br>tar -xjvf file.tar.bz2   解压 tar.bz2<br>tar –xZvf file.tar.Z   解压tar.Z<br>unrar e file.rar 解压rar<br>unzip file.zip 解压zip<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line">完成这些之后还要启动nginx和php-fpm，这样`service nginx start`和`service php-fpm start`。</div><div class="line">这样GitBlog就搭建完成了。下面进入Git的环节。</div><div class="line"></div><div class="line">---</div><div class="line">如果想要自启动某个服务的话，可以用`chkconfig service_name on`如果想要关闭的话可以`chkconfig service_name off`。  </div><div class="line">之前一直没有自启动php-fpm服务，所以每次重启服务器还得去手动重启php-fpm麻烦的很。</div><div class="line"></div><div class="line">---</div><div class="line">下面是从网上摘录的scp远程传送文件命令。  </div><div class="line"></div><div class="line">复制文件：  </div><div class="line">（1）将本地文件拷贝到远程  </div><div class="line">scp 文件名用户名@计算机IP或者计算机名称:远程路径  </div><div class="line"></div><div class="line"></div><div class="line">（2）从远程将文件拷回本地  </div><div class="line">scp 用户名@计算机IP或者计算机名称:文件名本地路径  </div><div class="line"></div><div class="line">复制目录：  </div><div class="line">（1）将本地目录拷贝到远程  </div><div class="line">scp -r 目录名用户名@计算机IP或者计算机名称:远程路径  </div><div class="line"></div><div class="line">（2）从远程将目录拷回本地  </div><div class="line">scp -r 用户名@计算机IP或者计算机名称:目录名本地路径  </div><div class="line"></div><div class="line">---</div><div class="line">2016年3月3日补充</div><div class="line"></div><div class="line">nginx配置可以参照下面：</div></pre></td></tr></table></figure></p>
-<p>server {<br>        listen       80;<br>        server_name  liyu34.xyz;<br>        root         /data/vhost/liyu34.xyz;<br>        index        index.html index.htm index.php;</p>
-<pre><code>location ~ \.(jpg|png|gif|js|css|swf|flv|ico)$ {
-         expires 12h;
-}
-
-location / {
-        if (!-e $request_filename) {
-            rewrite ^(.*)$ /index.php?$1 last ;
-            break;
-        }
-}
-
-location ~* ^/(doc|logs|app|sys)/ {
-        return 403;
-}
-
-location ~ .*\.(php|php5)?$
+        <p>下面的代码是适用于Modbus协议中的CRC16校验的，我验证过了，至于为什么其他的CRC16校验在Modbus中不行，并没有深究，没有去看过原理，下面的算法出自<a href="http://blog.csdn.net/zgrjkflmkyc/article/details/41073435" target="_blank" rel="external">zgrjkflmkyc的专栏</a>  </p>
+<pre><code class="cpp">
+uchar auchCRCHi[] =
 {
-        fastcgi_connect_timeout 300;
-        fastcgi_send_timeout 300;
-        fastcgi_read_timeout 300;
-        fastcgi_pass   127.0.0.1:9000;
-        fastcgi_index  index.php;
-        fastcgi_param  SCRIPT_FILENAME $document_root$fastcgi_script_name;
-        include        fastcgi_params;
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>,
+    <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>,
+    <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>,
+    <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>, <span class="number">0x40</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x01</span>, <span class="number">0xC0</span>, <span class="number">0x80</span>, <span class="number">0x41</span>, <span class="number">0x00</span>, <span class="number">0xC1</span>, <span class="number">0x81</span>,
+    <span class="number">0x40</span>
+};
+
+uchar auchCRCLo[] =
+{
+    <span class="number">0x00</span>, <span class="number">0xC0</span>, <span class="number">0xC1</span>, <span class="number">0x01</span>, <span class="number">0xC3</span>, <span class="number">0x03</span>, <span class="number">0x02</span>, <span class="number">0xC2</span>, <span class="number">0xC6</span>, <span class="number">0x06</span>, <span class="number">0x07</span>, <span class="number">0xC7</span>, <span class="number">0x05</span>, <span class="number">0xC5</span>, <span class="number">0xC4</span>,
+    <span class="number">0x04</span>, <span class="number">0xCC</span>, <span class="number">0x0C</span>, <span class="number">0x0D</span>, <span class="number">0xCD</span>, <span class="number">0x0F</span>, <span class="number">0xCF</span>, <span class="number">0xCE</span>, <span class="number">0x0E</span>, <span class="number">0x0A</span>, <span class="number">0xCA</span>, <span class="number">0xCB</span>, <span class="number">0x0B</span>, <span class="number">0xC9</span>, <span class="number">0x09</span>,
+    <span class="number">0x08</span>, <span class="number">0xC8</span>, <span class="number">0xD8</span>, <span class="number">0x18</span>, <span class="number">0x19</span>, <span class="number">0xD9</span>, <span class="number">0x1B</span>, <span class="number">0xDB</span>, <span class="number">0xDA</span>, <span class="number">0x1A</span>, <span class="number">0x1E</span>, <span class="number">0xDE</span>, <span class="number">0xDF</span>, <span class="number">0x1F</span>, <span class="number">0xDD</span>,
+    <span class="number">0x1D</span>, <span class="number">0x1C</span>, <span class="number">0xDC</span>, <span class="number">0x14</span>, <span class="number">0xD4</span>, <span class="number">0xD5</span>, <span class="number">0x15</span>, <span class="number">0xD7</span>, <span class="number">0x17</span>, <span class="number">0x16</span>, <span class="number">0xD6</span>, <span class="number">0xD2</span>, <span class="number">0x12</span>, <span class="number">0x13</span>, <span class="number">0xD3</span>,
+    <span class="number">0x11</span>, <span class="number">0xD1</span>, <span class="number">0xD0</span>, <span class="number">0x10</span>, <span class="number">0xF0</span>, <span class="number">0x30</span>, <span class="number">0x31</span>, <span class="number">0xF1</span>, <span class="number">0x33</span>, <span class="number">0xF3</span>, <span class="number">0xF2</span>, <span class="number">0x32</span>, <span class="number">0x36</span>, <span class="number">0xF6</span>, <span class="number">0xF7</span>,
+    <span class="number">0x37</span>, <span class="number">0xF5</span>, <span class="number">0x35</span>, <span class="number">0x34</span>, <span class="number">0xF4</span>, <span class="number">0x3C</span>, <span class="number">0xFC</span>, <span class="number">0xFD</span>, <span class="number">0x3D</span>, <span class="number">0xFF</span>, <span class="number">0x3F</span>, <span class="number">0x3E</span>, <span class="number">0xFE</span>, <span class="number">0xFA</span>, <span class="number">0x3A</span>,
+    <span class="number">0x3B</span>, <span class="number">0xFB</span>, <span class="number">0x39</span>, <span class="number">0xF9</span>, <span class="number">0xF8</span>, <span class="number">0x38</span>, <span class="number">0x28</span>, <span class="number">0xE8</span>, <span class="number">0xE9</span>, <span class="number">0x29</span>, <span class="number">0xEB</span>, <span class="number">0x2B</span>, <span class="number">0x2A</span>, <span class="number">0xEA</span>, <span class="number">0xEE</span>,
+    <span class="number">0x2E</span>, <span class="number">0x2F</span>, <span class="number">0xEF</span>, <span class="number">0x2D</span>, <span class="number">0xED</span>, <span class="number">0xEC</span>, <span class="number">0x2C</span>, <span class="number">0xE4</span>, <span class="number">0x24</span>, <span class="number">0x25</span>, <span class="number">0xE5</span>, <span class="number">0x27</span>, <span class="number">0xE7</span>, <span class="number">0xE6</span>, <span class="number">0x26</span>,
+    <span class="number">0x22</span>, <span class="number">0xE2</span>, <span class="number">0xE3</span>, <span class="number">0x23</span>, <span class="number">0xE1</span>, <span class="number">0x21</span>, <span class="number">0x20</span>, <span class="number">0xE0</span>, <span class="number">0xA0</span>, <span class="number">0x60</span>, <span class="number">0x61</span>, <span class="number">0xA1</span>, <span class="number">0x63</span>, <span class="number">0xA3</span>, <span class="number">0xA2</span>,
+    <span class="number">0x62</span>, <span class="number">0x66</span>, <span class="number">0xA6</span>, <span class="number">0xA7</span>, <span class="number">0x67</span>, <span class="number">0xA5</span>, <span class="number">0x65</span>, <span class="number">0x64</span>, <span class="number">0xA4</span>, <span class="number">0x6C</span>, <span class="number">0xAC</span>, <span class="number">0xAD</span>, <span class="number">0x6D</span>, <span class="number">0xAF</span>, <span class="number">0x6F</span>,
+    <span class="number">0x6E</span>, <span class="number">0xAE</span>, <span class="number">0xAA</span>, <span class="number">0x6A</span>, <span class="number">0x6B</span>, <span class="number">0xAB</span>, <span class="number">0x69</span>, <span class="number">0xA9</span>, <span class="number">0xA8</span>, <span class="number">0x68</span>, <span class="number">0x78</span>, <span class="number">0xB8</span>, <span class="number">0xB9</span>, <span class="number">0x79</span>, <span class="number">0xBB</span>,
+    <span class="number">0x7B</span>, <span class="number">0x7A</span>, <span class="number">0xBA</span>, <span class="number">0xBE</span>, <span class="number">0x7E</span>, <span class="number">0x7F</span>, <span class="number">0xBF</span>, <span class="number">0x7D</span>, <span class="number">0xBD</span>, <span class="number">0xBC</span>, <span class="number">0x7C</span>, <span class="number">0xB4</span>, <span class="number">0x74</span>, <span class="number">0x75</span>, <span class="number">0xB5</span>,
+    <span class="number">0x77</span>, <span class="number">0xB7</span>, <span class="number">0xB6</span>, <span class="number">0x76</span>, <span class="number">0x72</span>, <span class="number">0xB2</span>, <span class="number">0xB3</span>, <span class="number">0x73</span>, <span class="number">0xB1</span>, <span class="number">0x71</span>, <span class="number">0x70</span>, <span class="number">0xB0</span>, <span class="number">0x50</span>, <span class="number">0x90</span>, <span class="number">0x91</span>,
+    <span class="number">0x51</span>, <span class="number">0x93</span>, <span class="number">0x53</span>, <span class="number">0x52</span>, <span class="number">0x92</span>, <span class="number">0x96</span>, <span class="number">0x56</span>, <span class="number">0x57</span>, <span class="number">0x97</span>, <span class="number">0x55</span>, <span class="number">0x95</span>, <span class="number">0x94</span>, <span class="number">0x54</span>, <span class="number">0x9C</span>, <span class="number">0x5C</span>,
+    <span class="number">0x5D</span>, <span class="number">0x9D</span>, <span class="number">0x5F</span>, <span class="number">0x9F</span>, <span class="number">0x9E</span>, <span class="number">0x5E</span>, <span class="number">0x5A</span>, <span class="number">0x9A</span>, <span class="number">0x9B</span>, <span class="number">0x5B</span>, <span class="number">0x99</span>, <span class="number">0x59</span>, <span class="number">0x58</span>, <span class="number">0x98</span>, <span class="number">0x88</span>,
+    <span class="number">0x48</span>, <span class="number">0x49</span>, <span class="number">0x89</span>, <span class="number">0x4B</span>, <span class="number">0x8B</span>, <span class="number">0x8A</span>, <span class="number">0x4A</span>, <span class="number">0x4E</span>, <span class="number">0x8E</span>, <span class="number">0x8F</span>, <span class="number">0x4F</span>, <span class="number">0x8D</span>, <span class="number">0x4D</span>, <span class="number">0x4C</span>, <span class="number">0x8C</span>,
+    <span class="number">0x44</span>, <span class="number">0x84</span>, <span class="number">0x85</span>, <span class="number">0x45</span>, <span class="number">0x87</span>, <span class="number">0x47</span>, <span class="number">0x46</span>, <span class="number">0x86</span>, <span class="number">0x82</span>, <span class="number">0x42</span>, <span class="number">0x43</span>, <span class="number">0x83</span>, <span class="number">0x41</span>, <span class="number">0x81</span>, <span class="number">0x80</span>,
+    <span class="number">0x40</span>
+};
+
+<span class="function">uint   <span class="title">N_CRC16</span><span class="params">(uchar *updata, uint len)</span>
+</span>{
+    uchar uchCRCHi = <span class="number">0xff</span>;
+    uchar uchCRCLo = <span class="number">0xff</span>;
+    uint  uindex;
+    <span class="keyword">while</span> (len--)
+    {
+        uindex = uchCRCHi^*updata++;
+        uchCRCHi = uchCRCLo^auchCRCHi[uindex];
+        uchCRCLo = auchCRCLo[uindex];
+    }
+    <span class="keyword">return</span> (uchCRCHi &lt;&lt; <span class="number">8</span> | uchCRCLo);
 }
-</code></pre><p>}<br>```</p>
+</code></pre>
+<p>很久都没用过数组指针了，在第一眼看到<code>uchar *updata</code>的时候都懵逼了……过了一会才反应过来，就是传个数组进去嘛……</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/站点迁移/" data-id="ciu2osn4m000x8cyg5311hgec" class="article-share-link">Partager</a>
+      <a data-url="http://ablee.cc/2016/10/09/适用于Modbus协议的CRC16校验（查表法）/" data-id="ciu2osn4q00108cyg9xvu68au" class="article-share-link">Share</a>
       
       
     </footer>
@@ -178,9 +234,9 @@ location ~ .*\.(php|php5)?$
 
 
   
-    <article id="post-使用Dropbox自动发布博文" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-大数据机器学习并行算法综述" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/使用Dropbox自动发布博文/" class="article-date">
+    <a href="/2016/10/09/大数据机器学习并行算法综述/" class="article-date">
   <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -192,7 +248,7 @@ location ~ .*\.(php|php5)?$
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/使用Dropbox自动发布博文/">用Dropbox自动发布GitBlog博文</a>
+      <a class="article-title" href="/2016/10/09/大数据机器学习并行算法综述/">大数据机器学习并行算法综述</a>
     </h1>
   
 
@@ -200,25 +256,26 @@ location ~ .*\.(php|php5)?$
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天中午尝试了使用Git作为自动发布博客的工具，思想就是本地一个Git，OSC仓库，博客服务器一个Git，每次本地写完之后push到OSC仓库，然后刷新博客页面的时候自动pull一下。结果是失败的。  </p>
+        <p>把现有的传统机器学习算法并行化是将其运用于大数据环境中的一种典型策略。把现有的传统机器学习算法并行化主要问题有两个，第一个是如何重新设计传统算法使之能够并行化，二是选择何种手段实现并行化。目前的常用手段有三种，第一种是借助于众核设备对常规机器学习算法进行并行化；第二种是基于Hadoop MapReduce模式的并行化，这种方法扩展性好但是由于Hadoop MapReduce本身对于IO开销较大所以效率比较差；第三种是基于Spark的并行化算法，Spark基于内存计算也有较好的可扩展性。  </p>
 <hr>
-<p>然后就开始尝试同步盘的方式，国内最好的坚果云可惜没有LinuxCLI版本，小VPS又安不上图形界面，再给坚果云官方提了建议之后就不了了之了。然后视线自然的挪向了Dropbox，因为Dropbox有CLI版本。</p>
+<p>Wang等[1]提出一种将蚁群算法并行化的策略，其思路是通过将蚂蚁构造为弹性分布式数据集，由此给出相应的一系列转换算子，实现了蚂蚁构造解过程的并行化。实验表明并行的蚁群优化算法大幅提升了优化速度。  </p>
+<p>Guo等[2]首先针对CLOPE算法受输入数据顺序影响较大的不足提出了MRCLOPE算法，MRCLOPE算法通过等分划分再排列的方式将输入数据等分划分形成不同顺序的输入数据集，然后对各种输入数据集进行分别聚类；然后使用MapReduce并行编程模型对MRCLOPE算法进行并行化处理，实验结果表明并行化的MRCLOPE算法对比于CLOPE算法在没有显著扩大聚类时间的情况下，提高了收益值。  </p>
+<p>文献[3] 基于SparkR设计并实现了并行化的Multinomial NaiveBayes多分类算法、SVM以及Logistic Regression二分类算法并评估了基于Hadoop MapReduce实现的并行化算法的性能差别。实验结果表明，基于SparkR设计并实现的并行化Multinomial NaiveBayes多分类算法比较于基于Hadoop MapReduce实现的并行化算法效率要高。  </p>
+<p>Gu等[4]提出了一种基于Tesla K10 GPU的误差反向传播算法，该算法采取MiniBatch结构作为BP算法的并行结构，并充分利用了PCI-E3. 0 传输特性，并结合了 peer-to-peer 以及异步传输的特性来降低计算任务在划分和合并过程中带来的额外开销。实验证明，该算法拥有双卡超过 1. 87 的并行加速比，且算法执行过程中不会引入计算误差，可有效保证训练过程中的收敛效率，拥有理想的并行加速效果。  </p>
+<p>Yu[5]提出了一种K-means算法的一种优化方式和并行化手段，通过结合K-means++算法和密度提出了一种初始点选择的优化算法，以及结合K-means++算法和Mean Shift算法给出了另外一种初始点选择的优化算法，并提出了K-means算法的一种并行化手段，将计算点距离和更新簇中心点位置并行，实验结果表明，并行化的K-means算法在不损害精确度的情况下较大的提升了效率。  </p>
 <hr>
-<p>一番折腾之后在我的小VPS上安装上了Dropbox，然后我把原来Dropbox里面的文件全部删除了只用来做GitBlog的中转站。可是突然发现Dropbox并没有指定文件夹同步功能（<del>被坚果云宠坏了。。。</del>）一时之间陷入了困境。<br>好在Linux还有种神奇的东西叫做<strong>连接</strong>（link），连接分为软连接和硬连接，硬连接不能连接目录所以只能用软连接。我做了如下两次尝试：  </p>
+<p>综上所述，并行策略是传统机器学习运用于大数据的典型策略之一，并且在一定范围内取得了一些进展，能够处理一定量级的大数据。如何为传统机器学习算法设计高效的并行策略也是当今的研究热点之一。</p>
 <hr>
-<ul>
-<li><p>将网站根目录下的posts文件夹删除之后建立一个从Dropbox同步目录到博文目录posts的软连接（<del><code>ln -s ~/Dropbox/ posts</code></del>）这样一来网站根目录下的博文目录就会连接到Dropbox的同步目录中去。不过这种方法行不通，可能是因为GitBlog暂时还不支持这种做法吧。  </p>
-</li>
-<li><p>第二种方法是倒过来的，这种方法事实证明是可行的。如果把posts连接到Dropbox不行的话，那就试试把Dropbox连接到posts，让Dropbox直接网博文目录下进行同步。这么做的话先关闭Dropbox服务<strong><code>killall Dropbox</code></strong>然后趁机把同步目录删除，然后建立一个从posts到Dropbox的软连接<strong>‘ln -s …/posts/ ~/Dropbox’</strong>，最后打开Dropbox<strong><code>~/.dropbox-dist/dropboxd &amp;</code></strong>即可。这样就大功告成了！  </p>
-</li>
-</ul>
-<hr>
-<p>折腾了一下午加一晚上终于可以自动发布博文了！<br>现在可以放心的写博客了！剩下的交给Dropbox！<strong>：）</strong>  </p>
+<p>参考文献：<br>[1]王诏远,王宏杰,邢焕来,李天瑞.基于Spark的蚁群优化算法[J].计算机应用,2015,10:2777-2780+2797.  </p>
+<p>[2]刘志强,顾荣,袁春风,黄宜华.基于SparkR的分类算法并行化研究[J].计算机科学与探索,2015,11:1281-1294.  </p>
+<p>[3]郭涛.分类数据的并行聚类算法研究[D].东华大学,2015.  </p>
+<p>[4]宇斌彬.基于数据划分的迭代算法的并行与优化[D].中国科学技术大学,2015.  </p>
+<p>[5]顾乃杰,赵增,吕亚飞,张致江.基于多GPU的深度神经网络训练算法[J].小型微型计算机系统,2015,05:1042-1046.  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/使用Dropbox自动发布博文/" data-id="ciu2osn45000s8cygzychb0d8" class="article-share-link">Partager</a>
+      <a data-url="http://ablee.cc/2016/10/09/大数据机器学习并行算法综述/" data-id="ciu2osn46000t8cyg52bkoh4i" class="article-share-link">Share</a>
       
       
     </footer>
@@ -228,10 +285,10 @@ location ~ .*\.(php|php5)?$
 
 
   
-    <article id="post-QtNote_QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-如何清除U盘的分区" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/如何清除U盘的分区/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -242,7 +299,7 @@ location ~ .*\.(php|php5)?$
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/">QtNote:QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题</a>
+      <a class="article-title" href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
     </h1>
   
 
@@ -250,30 +307,18 @@ location ~ .*\.(php|php5)?$
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>因为学生会活动需要一个抢答器，之前师兄他们做的硬件抢答器坏掉了，于是我就萌生了做一个C/S结构抢答器的想法，Client比较容易，因为之前做过Qt里面Socket的程序，但是这个Server就有点没有头绪了。  </p>
-<p>还好有百度（百度出来的结果真的不好……）看了几篇博客然后决定动手做了。虽然看到论坛里面有人说Qt的Server不好，不如用C++的其他库，但是我这只是个小程序，顶多同时10个Client，就用Qt吧，反正现在Qt用的顺手（但是也会遇到一堆问题）。  </p>
-<hr>
-<p>做完了之后想来，这个程序还是蛮简单的，最起码Server的监听挺简单的。</p>
-<p>要想用Qt做一个Server程序，只需要在一个类（exp. class MyServer）里面定义一个<code>QTcpServer</code>的对象（或指针），初始化之后可以通过<strong><code>listen()</code></strong>函数告诉它监听哪个端口。然后每当有新的连接接入的时候QTcpServer对象会emit一个<strong><code>newConnection()</code></strong>的信号，然后你可以在你的服务器类里面定义槽函数来处理这个新连接的接入。<br>那么监听哪个端口的函数模版是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">bool MyServer::StartListen()</div><div class="line">&#123;</div><div class="line">	if (!m_server-&gt;isListening())</div><div class="line">	&#123;</div><div class="line">		if (m_server-&gt;listen(QHostAddress::Any, 2333))//开始监听2333窗口</div><div class="line">		&#123;</div><div class="line">			return true;</div><div class="line">		&#125;</div><div class="line">		else</div><div class="line">		&#123;</div><div class="line">			return false;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	else</div><div class="line">	&#123;</div><div class="line">		return true;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>我看的博客里面都是定义一个<code>class MySocket : public QThread</code>线程来接收接入的连接。  </p>
-<hr>
-<p>我定义的<code>MySocket</code>是这样的:  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class MySocket :public QThread</div><div class="line">&#123;</div><div class="line">	Q_OBJECT</div><div class="line">public:</div><div class="line">	MySocket(QTcpSocket *connection,QObject *parent = 0);</div><div class="line">	~MySocket();</div><div class="line">	void SendMessage(QString text);</div><div class="line"></div><div class="line">private:</div><div class="line">	QTcpSocket *m_socket;</div><div class="line">private:</div><div class="line">	void run();</div><div class="line">private slots:</div><div class="line">	void DataReceived();</div><div class="line">&#125;;</div><div class="line">```  </div><div class="line"></div><div class="line">以上代码中只包括了最主要的部分， 我把软件逻辑功能相关的变量、函数定义删掉了。其中需要说明的是在构造函数里面会把QTcpSocket类型的指针赋值给类里面的`m_socket`。  </div><div class="line"></div><div class="line">那么回到刚刚提到的`MyServer`的处理新连接的槽函数：</div></pre></td></tr></table></figure>
-<p>void MyServer::NewConnectionSlot()<br>{<br>        MySocket <em>temp_socket;<br>        temp_socket = new MySocket(m_server-&gt;nextPendingConnection());<br>        temp_socket-&gt;start();<br>        socketList &lt;&lt; temp_socket;//socketList的类型是QList&lt;MySocket</em>&gt;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">这样这个服务器端的监听程序部分就基本上完成了。</div><div class="line"></div><div class="line">---</div><div class="line">另外我还遇到了TcpSocket传输中文乱码的问题，经查找，我使用的有效方法如下：  </div><div class="line"></div><div class="line">1.发送时：</div></pre></td></tr></table></figure></p>
-<pre><code>QString text = &quot;你要传输的文字&quot;;
-QByteArray datasend = text.toLocal8Bit();
-m_socket-&gt;write(datasend);
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2.接收时：</div></pre></td></tr></table></figure>
-<pre><code>QByteArray vTemp;
-vTemp = m_socket-&gt;readLine();
-QString vTempStr = QString::fromLocal8Bit(vTemp);
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">完成这个东西之后就直接拿去用了，没有经过完整测试，结果到了现场根本没法用，客户端没有每隔一段时间去汇报情况，过一会连接就自动断掉了，所以完全没法用，解决办法也很简单，既然长时间不汇报情况连接会断，那么就每隔一段时间发送个报文给服务器就好了（其实这个方法早就有，也不能叫方法，因为一般人都会默认加上这个东西来确保两者连接，只是我经验不够老到，吃了大亏）。可以在MyClient类的构造函数里面定义一个Timer（`startTimer(3000);`），到时间之后触发timerEvent函数（在MyClient类里面重载`protected void timerEvent(QTimerEvent *event);`），在这个函数里面给服务器发一个空报文就好了。</div></pre></td></tr></table></figure>
-<p>void MyClient::timerEvent(QTimerEvent *event)<br>{<br>    QString c = “”;<br>    socket-&gt;write(c.toLatin1(), c.length());<br>}<br>```</p>
+        <p>之前我把我的新U盘装成了win7的安装U盘，但是我用UltraISO写入硬盘映像的时候选择了高端隐藏，把我的U盘分成了两部分，我发现了在磁盘管理里面无法进行扩展U盘分区等操作，所以我百度了。  </p>
+<p>然后我发现了这个网址<a href="http://jingyan.baidu.com/article/86112f1346ec5227379787df.html" target="_blank" rel="external">怎样为u盘分区</a>。  </p>
+<p>我按照教程做的，成功的清楚了U盘的分区，但是这个教程中有个让我非常疑惑的地方（幸好我成功了），所以来记录下来。  </p>
+<p>教程是这样的，先打开<code>cmd</code>，然后输入<code>diskpart</code>进入分区程序，然后选择你要进行操作的disk，即输入<code>select disk *N*</code>，这个N在教程中是1，然后教程注释说：“写1就是一个u盘，两个就写2，以此类推”，这完全把我弄混了，然后看了看他的后续操作，输入clean，删除U盘所有信息，假如我选中的是我的系统硬盘，那后果很严重（虽然我感觉系统不会让clean在系统盘上执行，但我不想冒险）。  </p>
+<p>所以这个教程的问题就在这了，这个N到底应该是多少，后来我发现这个N就是硬盘管理里面的那个N，你可以打开磁盘管理，然后看看你的U盘是磁盘几。如下图所示：  </p>
+<p><img src="http://ablee.cc/blog/img/diskn.png" alt="diskn">  </p>
+<p>知道是磁盘几了之后继续那个教程的操作就行了，<code>clean</code>之后就可以去磁盘管理里面进行新建分区操作了。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" data-id="ciu2osn39000d8cygfxg074se" class="article-share-link">Partager</a>
+      <a data-url="http://ablee.cc/2016/10/09/如何清除U盘的分区/" data-id="ciu2osn47000u8cygpasfl4pm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -283,10 +328,10 @@ QString vTempStr = QString::fromLocal8Bit(vTemp);
 
 
   
-    <article id="post-QtNote_QTcpSocket_QObject" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-如何用VS作为Git的合并工具" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/QtNote_QTcpSocket_QObject/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/09/如何用VS作为Git的合并工具/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
   </div>
@@ -297,7 +342,7 @@ QString vTempStr = QString::fromLocal8Bit(vTemp);
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+      <a class="article-title" href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
     </h1>
   
 
@@ -305,271 +350,31 @@ QString vTempStr = QString::fromLocal8Bit(vTemp);
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>昨晚在做ModBus的时候遇到了两个问题，第一个是tcpsocket突然无法发送数据了，显示tcpsocket无法跨进程调用；第二个是编译时一直显示无法访问QObject的私有变量。</p>
+        <p>今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。<br>补充：非VS工程不能用……</p>
 <hr>
-<p>##一、QTcpSocket无法跨进程调用的问题<br>当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  </p>
-<p>最后发现问题是出在启动线程的<code>start()</code>函数上，之前我的所有线程都是在主线程初始化的时候就start。主进程里面有线程的对象（不是指针），线程的对象会随着主进程初始化而初始化，tcpsocket对象（不是指针）在线程初始化的时候初始化，同时通过tcp/ip连接模拟程序。这样线程初始化完成之后就立刻开始运行。  </p>
-<p>后来我写了一个按钮响应，把线程的<code>start()</code>给挪到按钮响应里去了，这样之后每次tcpsocket发送数据的时候就是出错，输出“tcpsocket无法跨线程调用”，于是我又把start给挪回构造函数里了，下一步准备试一下在按钮响应里面new一个线程的对象。  </p>
-<p>这个问题我觉得可能是因为主进程和线程的关系的原因？</p>
+<p>要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  </p>
+<p><img src="http://ablee.cc/blog/img/git/conflict.png" alt="conflict">  </p>
+<p>怎么制造冲突我就不说了，结果如上图。冲突就位之后我们打开VS的团队界面，如下图。</p>
+<p><img src="http://ablee.cc/blog/img/git/teamexplorer.png" alt="team">  </p>
+<p>打开之后，点击一下’Changes’按钮（其实点除了Settings另外那三个都可以），然后就会发现VS提示我们了。  </p>
+<p><img src="http://ablee.cc/blog/img/git/teamexplorer2.png" alt="team2">  </p>
+<p>那我们肯定要点’Resolve the conflicts’了，点击之后是这样的：  </p>
+<p><img src="http://ablee.cc/blog/img/git/resolveconflicts.png" alt="resolveconflicts">  </p>
+<p>当然点击之后不是直接跟上图一模一样的，因为VS会给你标记出现在有冲突的文件有几个，当然我现在只是人为制造了一个冲突，所以只有一个，点击那个冲突就会展开上图那样的。然后我们点击’Merge’，就会开始合并了。  </p>
+<p><img src="http://ablee.cc/blog/img/git/merge.png" alt="merge">  </p>
+<p>这个时候你就可以”为所欲为”了，干完一票之后别忘了’Accept Merge’  </p>
+<p><img src="http://ablee.cc/blog/img/git/acceptmerge.png" alt="acceptmerge">  </p>
+<p>那么让我们看看合并之后的样子：  </p>
+<p><img src="http://ablee.cc/blog/img/git/mergend.png" alt="mergend">  </p>
 <hr>
-<p>##二、无法访问QObject私有变量<br>这个问题其实是发生在上一个问题之前的，这个问题在之前的我看来其实是蛮无厘头的。光说可能没啥感觉，上个图先。<br><img src="http://ablee.cc/blog/img/qobjectclass.png" alt="qobjectclass.png">  </p>
-<p>上图就是这次问题的三个主角，<code>DataBlock</code>、<code>CollectionThread</code>、<code>DBManager</code>。  <del>需要交代的是DataBlock这个主角中的主角是一个关系户，他爸爸是QObject（传说中Qt大家庭里面大部分人的爷爷or太爷爷…）</del>  也就是说DataBlock直接继承自QObject。然后编译的时候就一直提示我“无法访问QObject的私有成员”，我还真信了，跑去看了几个DataBlock里面的变量，后来想不可能啊，以我这奇葩的命名方式，怎么可能会那么巧合的重名！于是我百度了。  </p>
-<p>然后我发现是因为QObject不允许copy或者opeartor=，然后我看了看我的代码，果真有地方用了等于号。</p>
-<p>本来是想借用Qt的QObject的管理机制来管理这个DataBlock的，原来这么多限制，  <del>于是就取消了DataBlock和QObject的父子关系</del>，  于是就不让DataBlock继承QObject了，也不用Q_OBJECT宏了。这样就解决了。  </p>
-<p><strong>需要注意的是之前我以为必须纳入Qt的体系中才可以用QList管理数据，现在发现不需要纳入Qt的体系也可以用QList管理数据。</strong></p>
+<p>就是这样啦，看起来像是个比较合格的教程了，除了那些大小不一的图片之外……<br>P.S.比较可惜的是Visual Studio提供的原生Git不支持除了微软自己的remote repository之外的其他remote repository。</p>
 <hr>
-<p>##三、在非QObject子类中使用connect函数<br>（2015.10.20补充）<br>今天我又遇到Qobject的子类不能copy和operator=的问题了，但是我需要在那个类里面使用connect函数连接槽函数和消息，这该怎么办呢？  </p>
-<p>我想了一个麻烦的办法和一个简单的办法。麻烦的办法就是传给它一个是Qobject子类的对象的指针，用这个指针来调用connect函数。  </p>
-<p>简单的办法有效，所以我就没有尝试麻烦的办法究竟可行不可行，<strong><code>QObject::connect(...)</code></strong>，这样就行了。<br>我理解的qt程序是都运行在一个core上，所以只需要通知它绑定了什么信号和槽就行了。</p>
+<p><strong>非VS工程不能用以上的方法</strong><br><strong>在VS里面提交竟然遇到了换行符被自动改变</strong></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTcpSocket_QObject/" data-id="ciu2osn3b000e8cygxzv3nn39" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-QtNote_Qt5_6缺少ODBC的问题" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/">QtNote:Qt5.6缺少QODBC驱动</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>前阵子发现Qt5.6终于发布了之后，满心欢喜的安装了Visual Studio 2015和Qt5.6，最近发现Qt5.6默认不带QODBC驱动了，以前的程序连接不上SqlServer了，很是苦恼，于是尝试了以下两种解决办法，<strong>其中第一种是不可行的，大家不要尝再去试。</strong></p>
-<p>##从Qt5.5中拷贝QODBC（不可行）<br>秉承着少什么给什么的朴素主义程序员原则，我重新安装了Qt5.5，并且从Qt5.5.0\5.5\msvc2015\plugins\sqldrivers\下面拷贝出了以<code>qsqlodbc</code>开头的三个文件到Qt5.6对应的文件夹中，运行程序，还是显示无法加载QODBC，但是系统已经检测到sqldriver文件夹下面有QODBC了，但是由于版本不同无法使用，所以此路不通。  </p>
-<p>##从Qt5.6源码中编译QODBC<br>虽然不知道为什么Qt5.6默认不自带QODBC了，但是还是可以从源码中编译出QODBC的，方法步骤也挺简单的，取自<a href="http://blog.csdn.net/sniper_bing/article/details/51018783" target="_blank" rel="external">Qt5.6 windows下vs2015编译QODBC</a>作者：蜗牛的信仰。  </p>
-<p>主要有五步：  </p>
-<ol>
-<li>打开Visual Studio提供的CMD（我这里是<code>VS2015 x64 Native Tools Command Prompt</code>）</li>
-<li>进入<code>Qt5.6.0\5.6\msvc2015\bin</code>，执行<code>qtenv2.bat</code></li>
-<li>进入<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc</code>，执行<code>qmake odbc.pro</code></li>
-<li>执行<code>nmake</code>（开始编译）</li>
-<li>编译完成之后进入<code>Qt5.6.0\5.6\Src\qtbase\plugins\sqldrivers</code>中将所有<code>qsqlodbc</code>开头的文件（<strong>注意是所有的文件，不只是三个</strong>）拷贝到<code>Qt5.6.0\5.6\msvc2015\plugins\sqldrivers</code>  </li>
-</ol>
-<hr>
-<p>但是当我想要编译32位QODBC的时候（我同时也安装了32位Qt），上面的方法却行不通了，就算我用的是<code>VS2015 x86 Native Tools Command Prompt</code>也不行，说模型是x86的，但是目标机器是x64的，编译失败。  </p>
-<p>这时候可以打开Visual Studio，使用Qt的菜单栏<code>Open Qt Project File(.pro)</code>打开<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc</code>中的odbc.pro文件，然后将用Configuration Manager新建一个solution platform为x86的，然后分别Debug build一下和Release build一下。然后去<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc\Debug|Release</code>里面拷贝东西就好了。  </p>
-<p>另外，其实Debug build的时候会在<code>Qt5.6.0\5.6\Src\qtbase\plugins\sqldrivers</code>里面生成Debug的库文件，但是Release的时候不会在那个目录下生成，因为新建solution platfrom的时候没有设置生成地点，所以就默认在odbc工程根目录下生成了。 </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" data-id="ciu2osn3d000f8cygvmhdo9ok" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/">QtNote:Qt连接SqlServer | Qt中的相互引用问题 | Qt发布数据库程序</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>最近要大改项目的一个工程，遇到了两个问题，一个问题是历史遗留的老大难问题，另一个是今天下午遇到的奇怪问题。  </p>
-<hr>
-<p>##Qt连接SqlServer<br>看到这个题目可能有人会说这里之前不是记录过吗？但是今天我又遇到了这个问题，不同的是这次我必须连接远程数据库服务器了。  </p>
-<p>我按照之前的做法，在ODBC里面添加了数据源，然后我就直接把原来的代码改了数据源名字，结果发现不行了。后来发现这个原因很傻，远程服务器上面没有我这个Windows账户的许可，所以我不添加用户名密码程序自动用Windows登陆验证去访问自然就被拒绝了。添加上用户名密码选项就好了。就像下面这样：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">	db.setDatabaseName(&quot;RTUData_DYX&quot;);</div><div class="line">	db.setUserName(&quot;sa&quot;);</div><div class="line">	db.setPassword(&quot;*******&quot;);</div><div class="line">```  </div><div class="line"></div><div class="line">然后，另一种让我神往的直接用连接字符串的方式也让我给摸索出来了，这个方法用语言描述是非常空洞的，所以直接上代码：</div></pre></td></tr></table></figure>
-<pre><code>QString dsn = &quot;DRIVER={SQL SERVER};SERVER=***.***.***.***\\sqlexpress;DATABASE=RTUData&quot;;
-db.setDatabaseName(dsn);
-db.setUserName(&quot;sa&quot;);
-db.setPassword(&quot;*******&quot;);
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">需要说明的两点是DRIVER后面的大括号里面必须是`SQL SERVER`必须都是大写中间空格也不能少；第二点是如果你的数据库服务器是express版本的话，在计算机名或ip后面必须跟着`\\sqlexpress`注意是双反斜杠，因为有个字符串转义存在。  </div><div class="line"></div><div class="line">这个dsn其实是我用VS连接了数据库之后从属性的&apos;连接字符串&apos;里面拷贝出来然后加了一个反斜杠的。  </div><div class="line"></div><div class="line">##Qt中的相互引用问题  </div><div class="line">其实C++里面也会遇到相互引用的问题，相互引用问题就是假设有两个类A类和B类，在这两个类里面相互作为成员变量，这在编译的时候会引起链接错误，因为编译A类的时候编译器还不知道B类是什么，所以B类的函数就会引起链接错误。  </div><div class="line"></div><div class="line">那么一般的解决方法是在一个类A的头文件里不引用另一个类B，但是声明一下类B，然后类体里面用这个类B的指针，在A的cpp文件里面引用B的头文件，这样在B类里面就照常使用就好了。  </div><div class="line"></div><div class="line">本来想仔细描述一下这个问题，现在发现解决方案和C++里面的解决方案一样，但是我之前遇到的奇怪问题再也找不回来了。  </div><div class="line"></div><div class="line">---</div><div class="line">##Qt发布数据库程序</div><div class="line">Qt发布数据库程序的时候必须在程序的根目录下面放置sqldriver文件夹，里面是对应的驱动，比如SqlServer就是qsqlodbc.dll。</div></pre></td></tr></table></figure>
-<p>/<br>|…sqldrivers/qsqlodbc.dll<br>```</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/" data-id="ciu2osn3e000g8cygpyfsl6yo" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-QtNote_of_file_event" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/QtNote_of_file_event/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_of_file_event/">QtNote:QTextEdit、QEvent和QFile</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <hr>
-<p>今天在给CuteMarkEd添加gitblog博文前缀功能的时候遇到了不少问题，有的是老问题，有的是新问题，所以既温故又知新了，为了不再忘记，所以得记录。</p>
-<hr>
-<p>最常用又最常忘的文件操作：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function">QFile <span class="title">file</span><span class="params">(<span class="string">"categories.txt"</span>)</span></span>;</div><div class="line"><span class="keyword">if</span> (!file.open(QIODevice::ReadWrite | QIODevice::Text))  </div><div class="line">&#123;</div><div class="line">    QMessageBox::information(<span class="literal">NULL</span>,<span class="string">"Error!"</span>,<span class="string">"Can't open the file!"</span>);</div><div class="line">&#125;</div><div class="line"><span class="function">QTextStream <span class="title">write</span><span class="params">(&amp;file)</span></span>;</div><div class="line">file.close();</div></pre></td></tr></table></figure></p>
-<p>有一点需要记住，可以通过<code>QIODevice::Append</code>来使的文件指针指向文件末尾，这样直接可以往文件末尾添加内容。另外如果是有在指定位置写入东西的话必须要开放Read的权限，不能<code>WriteOnly</code>。</p>
-<hr>
-<p>继承QTextEdit来实现按下Tab转移焦点功能。因为默认的TextEdit默认是按下Tab输入一个制表符，非常不适合使用习惯，所以我重写了<code>MyTextEdit</code>类来支持Tab键转移焦点。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">class</span> MyTextEdit : <span class="keyword">public</span> QTextEdit</div><div class="line">&#123;</div><div class="line"><span class="keyword">public</span>:</div><div class="line">    MyTextEdit(QWidget *parent=<span class="number">0</span>);</div><div class="line">    <span class="function"><span class="keyword">void</span> <span class="title">SetNext</span><span class="params">(MyTextEdit *n)</span></span>&#123;next = n;&#125;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">event</span><span class="params">(QEvent *e)</span></span>;</div><div class="line"><span class="keyword">private</span>:</div><div class="line">    MyTextEdit *next;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<p>这里还有一个很重要的点，是一个我早就想知道的点，那就是Event事件。为了转移焦点，我试过在编辑框的父窗口类里<code>setFoucus</code>但是调用这个函数的slot无法响应在<code>MyTextEdit</code>里面发出的信号，由于时间有限我也没有去深究哪里的原因。(<del>~可能只是因为函数名写错了？</del>~)既然这种方法不可行那我就直接在他们之间相互转换，可以看到上面的类体里面有一个<code>MyTextEdit *next</code>这个就是指向按下tab键之后跳转的那个编辑框。这里的重点在重写的<code>bool event(QEvent *e)</code>下面是函数实现。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">bool</span> MyTextEdit::event(QEvent *e)</div><div class="line">&#123;</div><div class="line">    <span class="keyword">if</span> (e-&gt;type() == QEvent::KeyPress)</div><div class="line">    &#123;</div><div class="line">        QKeyEvent *keyEvent = <span class="keyword">static_cast</span>&lt;QKeyEvent *&gt;(e);</div><div class="line">        <span class="keyword">if</span> (keyEvent-&gt;key() == Qt::Key_Tab)</div><div class="line">        &#123;</div><div class="line">            <span class="comment">// 处理Tab鍵</span></div><div class="line">            <span class="keyword">if</span>(next!=<span class="literal">NULL</span>)</div><div class="line">                next-&gt;setFocus();</div><div class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> QWidget::event(e);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
-<p>这个事件体系很强大，假如之前我做StandardSeach的时候知道这个体系的话可能就会做的更好了。<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">closeEvent(QCloseEvent * event)</div></pre></td></tr></table></figure></p>
-<p>很多时候我只是忘记流程了，只要有一个小提醒就能想起来，比如上面那个就是窗口关闭的时候会出现的<code>closeEvent</code>，有了这个提醒就可以Google了，所以这个写的并不详细。</p>
-<hr>
-<p><strong>不过还是得练习写作啊。</strong></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_of_file_event/" data-id="ciu2osn3j000h8cyg1n8enl7m" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-RTU通信协议（翻译）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/RTU通信协议（翻译）/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/RTU通信协议（翻译）/">NARTU通信协议（翻译）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>NARTU通常装备有串行端口或者以太网端口，串行端口支持MODBUS协议，以太网端口支持MODBUS TCP/IP协议（注释：MODBUS协议和MODBUS TCP/IP协议是生产PLC的施耐德电气公司制定的，NARTU完全遵循以上两种标准协议）。  </p>
-<p>#1、概要介绍</p>
-<p>##（1）信息交换属性<br>MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接读写单个byte。<br>除去广播信息之外，所有的信息交换都是由主方发起的，所有完整的信息交换流程都包含下行（downlink）和上行（uplink）两个消息。  </p>
-<ul>
-<li>下行消息：一个由主方发出的请求消息  </li>
-<li>上行消息：一个由从方发出的回应消息<br><img src="http://ablee.cc/blog/img/RTU_fg1.png" alt="fg1"><br><img src="http://ablee.cc/blog/img/RTU_fg2.png" alt="fg2"></li>
-</ul>
-<p>如图Fig.12.1，主方的请求信号一般是向特定的从属设备发出的（通过请求信息的第一个字节我们可以知道目标从属设备的地址）。如图Fig.12.2，如果从属设备地址为0的话，那么这条消息就是一条广播消息，广播消息会被发送到所有的从属设备，但是ModBus通信协议规定这种信息只能是写入指令，从属设备也不会对广播消息作出回应（发出回应消息）。  </p>
-<p>##（2）信息格式<br>所有的RTU交换信息（包括上行消息和下行消息）都遵循相同的信息格式。信息格式如下：<br><img src="http://ablee.cc/blog/img/RTU_t1.png" alt="t1"><br>每条信息具有四种信息：</p>
-<p>###从属设备地址<br>从属设备的地址长度为一个字节（取值范围为0-FFH），但是如果从属设备地址为0的话，这条消息实际上是一个广播消息，所以从属设备的真正的取值范围为01H-FFH（即1-255）。</p>
-<p>###操作码<br>操作码的长度也为一个字节，操作码用来告诉设备这条消息选择了哪一个指令（读、写、回答正确还是不正确等等）。操作码的有效范围为1-255，各种操作码的指令含义会在本手册的后续部分进行详细讲解。</p>
-<p>###数据区<br>数据区均为16进制的数据，数据区的长度并不固定，实际长度与操作码有关。</p>
-<p>###CRC16检测<br>CRC16检测占每条信息的最后两个字节。这是一个遵循CRC16算法的检测，检测范围是从第一个字节（从属设备地址）到数据区的最后一个字节。<br>【例子】CRC16算法的C语言实现：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="title">CRC16</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* buf, <span class="keyword">unsigned</span> <span class="keyword">short</span> len)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> crc=<span class="number">0xffff</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> i,j,k;</div><div class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;len;i++)</div><div class="line">	&#123;</div><div class="line">		crc =crc ^ buf[i];</div><div class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">8</span>;j++)</div><div class="line">		&#123;</div><div class="line">			k=crc &amp; <span class="number">01</span>;</div><div class="line">			crc=crc &gt;&gt; <span class="number">1</span>;</div><div class="line">			<span class="keyword">if</span> (k==<span class="number">0</span>) <span class="keyword">continue</span>;</div><div class="line">			crc =crc ^ <span class="number">0xA001</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> crc;</div></pre></td></tr></table></figure></p>
-<p>#2、寻址方式<br>如上图Fig.12.1和Fig12.2所示，主方设备可以与n（1≤n≤255）个从属设备进行通话。当然，n=0（即从属设备地址为0）的时候是广播消息。  </p>
-<p>从Fig.12.1和Fig.12.2可以得出，主方设备访问从属设备这一行为实际上是主方设备访问特定从属设备中的特定装置中的一系列寄存器。所以主方设备访问的地址应该由三个方面共同决定：从属设备地址，从属设备中的装置号，装置中寄存器的地址。</p>
-<p>在信息中，装置号和装置中寄存器的地址被合称为”word address”。</p>
-<hr>
-<p>未完待续  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/RTU通信协议（翻译）/" data-id="ciu2osn3l000i8cygnssowtfg" class="article-share-link">Partager</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-SetupStationNote" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/SetupStationNote/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/SetupStationNote/">建站记录</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>这次的建站还是比较成功的，页面我也很喜欢。</p>
-<hr>
-<p>首先说一下这次冲动的原因。其实之前一直就想要有个博客的，因为这一阵子做了很多东西本以为学了很多，没想到再次遇到同样的问题的时候还是得回去看原来的代码，所以体会到了整理总结并且记录下来的重要性。而且你看那些网站一个个的跟我要个人网站地址，但是我又没有，VPS是有的，域名也是有的，干脆一不做二不休建一个博客吧。  </p>
-<p>其实在准备建站之前也去看了看CSDN的博客，还在上面写了篇文章，但是每次都要审核好麻烦的，而且CSDN有些界面还是那么的丑，然后去SegmentFault上面也看了看那个专栏，并且把之前在CSDN上写的那篇文章复制过去了，我还好心的在后面写了一句“复制自我刚写的CSDN博客”，然后审核就不通过了，原因是“文章质量不高”，我本来以为是我写的太零碎了，没想到还真是因为我的最后一句注释，因为我把它删掉之后再次提交审核竟然通过了，由此我就很不开心。。。  </p>
-<p>所以我昨天晚上开始建站，因为喜欢上了MarkDown，所以在找能用md的博客，不经意间发现了GitBlog，发现这个很适合小巧的VPS，所以我就决定尝试一下。  </p>
-<p>一开始都很顺利，安装nginx，安装php的一些组件，之后配置nginx，然后把GitBlog放到nginx配置的网站根目录下，结果发现主页什么都不显示，然后我就加了GitBlog的交流群，群主很热心的为我解答一些问题，然后还是不行，我就把我的vps帐号给了群主，他帮我检查（那时候已经凌晨一点了），最后检查出来是因为缺少了mbstring扩展库，他帮我安装好了，真的是很感谢群主。  </p>
-<p>到此为止我的博客算是建立成功了，之后就是最为重要的记录了。</p>
-<p>现在是研零的暑假，马上就要开学成为真正的研究生了，我要养成一个记录已经学到的知识的好习惯。与GitBlog共勉。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/SetupStationNote/" data-id="ciu2osn3m000j8cygeri4ygq5" class="article-share-link">Partager</a>
+      <a data-url="http://ablee.cc/2016/10/09/如何用VS作为Git的合并工具/" data-id="ciu2osn49000v8cygzdcww3j9" class="article-share-link">Share</a>
       
       
     </footer>
@@ -582,7 +387,7 @@ db.setPassword(&quot;*******&quot;);
 
 
   <nav id="page-nav">
-    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">__('next') &raquo;</a>
+    <a class="extend prev" rel="prev" href="/">&laquo; __('prev')</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/8/">8</a><a class="extend next" rel="next" href="/page/3/">__('next') &raquo;</a>
   </nav>
 </section>
         
@@ -608,7 +413,7 @@ db.setPassword(&quot;*******&quot;);
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Articles récents</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
         
@@ -644,8 +449,8 @@ db.setPassword(&quot;*******&quot;);
   
   <div class="outer">
     <div id="footer-info" class="inner">
-      &copy; 2016 John Doe<br>
-      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      &copy; 2016 AbLee<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
