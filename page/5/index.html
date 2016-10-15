@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
@@ -112,7 +112,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Shark重操旧业/" data-id="ciu2osn3o000k8cygqpfjy73m" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/Shark重操旧业/" data-id="ciu2osn3o000k8cygqpfjy73m" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -163,7 +163,7 @@ go
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/SqlServer触发器/" data-id="ciu2osn3r000l8cygwru28fq9" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/SqlServer触发器/" data-id="ciu2osn3r000l8cygwru28fq9" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -206,7 +206,7 @@ go
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Linux-MySql/" data-id="ciu2osn2s00078cyg9vddarq2" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/Linux-MySql/" data-id="ciu2osn2s00078cyg9vddarq2" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -263,7 +263,7 @@ go
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/WinMerge/" data-id="ciu2osn3u000n8cygx2vkd9zd" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/WinMerge/" data-id="ciu2osn3u000n8cygx2vkd9zd" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -273,9 +273,9 @@ go
 
 
   
-    <article id="post-QtNote_QTableView_Button" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-friends" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/QtNote_QTableView_Button/" class="article-date">
+    <a href="/2016/10/09/friends/" class="article-date">
   <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -287,7 +287,7 @@ go
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_QTableView_Button/">QtNote:在QTableView里面添加按钮&amp;QMessageBox按钮</a>
+      <a class="article-title" href="/2016/10/09/friends/">友情链接</a>
     </h1>
   
 
@@ -295,53 +295,16 @@ go
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>首先，我要说明的是，经过我的研究发现，这个事情根本没有我之前看到的博客那么麻烦，原地址如下:<a href="http://www.cnblogs.com/li-peng/p/3961843.html" target="_blank" rel="external">QTableView 添加按钮</a>。这个博文里面有三个类，ButtonDelegate/TableModel/TableView。我发现其实只需要ButtonDelegate一个类即可。   </p>
-<p>废话不多说，先上代码为敬。<br><code>buttondelegate.h</code><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line">#ifndef BUTTONDELEGATE_H</div><div class="line">#define BUTTONDELEGATE_H</div><div class="line"></div><div class="line">#include &lt;QItemDelegate&gt;</div><div class="line"></div><div class="line">class ButtonDelegate : public QItemDelegate</div><div class="line">&#123;</div><div class="line">    Q_OBJECT</div><div class="line">public:</div><div class="line">    explicit ButtonDelegate(QString t, QObject *parent = 0);</div><div class="line"></div><div class="line">    void paint(QPainter *painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const;</div><div class="line">    bool editorEvent(QEvent *event, QAbstractItemModel *model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index);</div><div class="line"></div><div class="line">signals:</div><div class="line">    void Pressed(QString ID);</div><div class="line"></div><div class="line">private:</div><div class="line">    QMap&lt;QModelIndex, QStyleOptionButton*&gt; m_btns;</div><div class="line">    QString text;</div><div class="line"></div><div class="line">&#125;;</div><div class="line"></div><div class="line">#endif // BUTTONDELEGATE_H</div><div class="line">```  </div><div class="line"></div><div class="line">`buttondelegate.cpp`</div></pre></td></tr></table></figure></p>
-<p>#include “buttondelegate.h”</p>
-<p>#include <qapplication></qapplication></p>
-<p>#include <qmouseevent></qmouseevent></p>
-<p>#include <qdialog></qdialog></p>
-<p>#include <qpainter></qpainter></p>
-<p>#include <qstyleoption></qstyleoption></p>
-<p>#include <qdesktopwidget></qdesktopwidget></p>
-<p>ButtonDelegate::ButtonDelegate(QString t, QObject *parent) :<br>    QItemDelegate(parent)<br>{<br>    text = t;<br>}</p>
-<p>void ButtonDelegate::paint(QPainter <em>painter, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index) const<br>{<br>    QStyleOptionButton</em> button = m_btns.value(index);<br>    //if (!button) {//如果有这个if判断的话，当窗口缩小到出现滑块的时候会有异常，因为判断已经有这个按钮了，就不再重画了<br>        button = new QStyleOptionButton();<br>        button-&gt;rect = option.rect.adjusted(3, 3, -3, -3);<br>        button-&gt;text = text;<br>        button-&gt;state |= QStyle::State_Enabled;</p>
-<pre><code>    (const_cast&lt;ButtonDelegate *&gt;(this))-&gt;m_btns.insert(index, button);
-//}
-painter-&gt;save();
-
-if (option.state &amp; QStyle::State_Selected) {
-    painter-&gt;fillRect(option.rect, option.palette.highlight());
-
-}
-painter-&gt;restore();
-QApplication::style()-&gt;drawControl(QStyle::CE_PushButton, button, painter);
-</code></pre><p>}</p>
-<p>bool ButtonDelegate::editorEvent(QEvent <em>event, QAbstractItemModel </em>model, const QStyleOptionViewItem &amp;option, const QModelIndex &amp;index)<br>{<br>    if (event-&gt;type() == QEvent::MouseButtonPress) {</p>
-<pre><code>    QMouseEvent* e = (QMouseEvent*)event;
-
-    if (option.rect.adjusted(4, 4, -4, -4).contains(e-&gt;x(), e-&gt;y()) &amp;&amp; m_btns.contains(index)) {
-        m_btns.value(index)-&gt;state |= QStyle::State_Sunken;
-    }
-}
-if (event-&gt;type() == QEvent::MouseButtonRelease) {
-    QMouseEvent* e = (QMouseEvent*)event;
-    emit Pressed(index.data().toString());
-}
-return true;
-</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">(⊙o⊙)…恩，没错，就是直接复制的上面那个博客的源码。不过我发现不需要去定义三个类，并把QTableView提升为“TableView”，只需要在QTableView初始化的时候（我说的是InitTableView()这个我写的函数）定义一个ButtonDelegate类型的指针，然后把你想要实现的功能给绑定到按钮被按到时候发出的消息上即可。以下为部分关键代码。</div></pre></td></tr></table></figure></p>
-<pre><code>ButtonDelegate *m_button = new ButtonDelegate();
-connect(m_button, SIGNAL(DeleteRTU_Signal(QString)), this, SLOT(DeleteRTU(QString)));
-ui.tableView-&gt;setItemDelegateForColumn(3, m_button);
-emit model-&gt;layoutChanged();
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">经过我的初步研究，我发现，这个问题的关键就是ButtonDelegate里面那两个函数，`paint`来负责在制定的位置画上按钮，`editorEvent`负责发出按钮响应信号（和把按钮换成被按的状态）。这个`editorEvent`实际上都不是按钮响应事件，而是编辑事件，因为这个ButtonDelegate实际上继承的是QItemDelegate。  </div><div class="line"></div><div class="line">---</div><div class="line">QMessageBox可以用来做一个简单的再次确认的对话框，上代码为敬：</div></pre></td></tr></table></figure>
-<p>int confirm = QMessageBox::information(this, “Delete”, “Please confirm!”, QMessageBox::Yes | QMessageBox::No, QMessageBox::Yes);<br>    if (confirm == QMessageBox::No) return;<br>```  </p>
-<p>(⊙o⊙)…我觉得我不需要再记录什么内容了，这些代码就足够了。</p>
+        <p>#友链见下方：  </p>
+<hr>
+<p>##<a href="http://www.gitblog.cn/index.html" target="_blank" rel="external">GitBlog官网</a></p>
+<p>##<a href="http://www.lihuanyu.com" target="_blank" rel="external">环宇博客</a></p>
+<p>虽然我很想再写上几个，但是现在就只能写这些了，希望以后能够多起来。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTableView_Button/" data-id="ciu2osn37000c8cygjci0cbbm" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/friends/" data-id="ciu2osn3v000o8cyghtbp94je" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -361,18 +324,10 @@ emit model-&gt;layoutChanged();
           <aside id="sidebar">
   
     
-
-  
-    
-
-  
-    
-  
-    
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a></li></ul>
     </div>
   </div>
 
@@ -380,28 +335,57 @@ emit model-&gt;layoutChanged();
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+            <a href="/2016/10/15/如何用VS作为Git的合并工具/">(no title)</a>
           </li>
         
           <li>
             <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/">用VS组建一个Qt多工程的解决方案来进行软件开发</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/RTU通信协议（翻译）/">NARTU通信协议（翻译）</a>
           </li>
         
       </ul>
@@ -417,7 +401,7 @@ emit model-&gt;layoutChanged();
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 AbLee<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

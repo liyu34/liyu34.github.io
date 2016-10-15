@@ -3,22 +3,24 @@
 <head>
   <meta charset="utf-8">
   
-  <title>如何用Visual Studio作为Git的合并工具 | AbLee&#39;s Blog</title>
+  <title>AbLee&#39;s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。补充：非VS工程不能用……
+  <meta name="description" content="&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD
 
-要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  
-  
-怎么制造冲突我就不说了，结">
+title: 如何用Visual Studio作为Git的合并工具
+layout: post
+title: 如何用Visual Studio作为Git的合并工具layout: postdate: 2015-11-11tags: Git Merge VScategory: Git
+&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="如何用Visual Studio作为Git的合并工具">
-<meta property="og:url" content="http://ablee.cc/2016/10/09/如何用VS作为Git的合并工具/index.html">
+<meta property="og:title" content="AbLee's Blog">
+<meta property="og:url" content="http://ablee.cc/2016/10/15/如何用VS作为Git的合并工具/index.html">
 <meta property="og:site_name" content="AbLee's Blog">
-<meta property="og:description" content="今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。补充：非VS工程不能用……
+<meta property="og:description" content="&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD
 
-要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  
-  
-怎么制造冲突我就不说了，结">
+title: 如何用Visual Studio作为Git的合并工具
+layout: post
+title: 如何用Visual Studio作为Git的合并工具layout: postdate: 2015-11-11tags: Git Merge VScategory: Git
+&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;">
 <meta property="og:image" content="http://liyu34.github.io/images/git/conflict.png">
 <meta property="og:image" content="http://liyu34.github.io/images/git/teamexplorer.png">
 <meta property="og:image" content="http://liyu34.github.io/images/git/teamexplorer2.png">
@@ -26,14 +28,15 @@
 <meta property="og:image" content="http://liyu34.github.io/images/git/merge.png">
 <meta property="og:image" content="http://liyu34.github.io/images/git/acceptmerge.png">
 <meta property="og:image" content="http://liyu34.github.io/images/git/mergend.png">
-<meta property="og:updated_time" content="2016-10-09T14:41:04.538Z">
+<meta property="og:updated_time" content="2016-10-15T11:51:34.597Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="如何用Visual Studio作为Git的合并工具">
-<meta name="twitter:description" content="今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。补充：非VS工程不能用……
+<meta name="twitter:title" content="AbLee's Blog">
+<meta name="twitter:description" content="&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt;&amp;lt; HEAD
 
-要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  
-  
-怎么制造冲突我就不说了，结">
+title: 如何用Visual Studio作为Git的合并工具
+layout: post
+title: 如何用Visual Studio作为Git的合并工具layout: postdate: 2015-11-11tags: Git Merge VScategory: Git
+&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;gt;&amp;">
 <meta name="twitter:image" content="http://liyu34.github.io/images/git/conflict.png">
   
     <link rel="alternate" href="/atom.xml" title="AbLee&#39;s Blog" type="application/atom+xml">
@@ -76,9 +79,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
@@ -89,27 +92,22 @@
       <div class="outer">
         <section id="main"><article id="post-如何用VS作为Git的合并工具" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/如何用VS作为Git的合并工具/" class="article-date">
-  <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
+    <a href="/2016/10/15/如何用VS作为Git的合并工具/" class="article-date">
+  <time datetime="2016-10-15T11:51:34.597Z" itemprop="datePublished">2016-10-15</time>
 </a>
     
   </div>
   <div class="article-inner">
     
     
-      <header class="article-header">
-        
-  
-    <h1 class="article-title" itemprop="name">
-      如何用Visual Studio作为Git的合并工具
-    </h1>
-  
-
-      </header>
-    
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。<br>补充：非VS工程不能用……</p>
+        <p>&lt;&lt;&lt;&lt;&lt;&lt;&lt; HEAD</p>
+<hr>
+<p>title: 如何用Visual Studio作为Git的合并工具</p>
+<h1 id="layout-post"><a href="#layout-post" class="headerlink" title="layout: post"></a>layout: post</h1><hr>
+<p>title: 如何用Visual Studio作为Git的合并工具<br>layout: post<br>date: 2015-11-11<br>tags: Git Merge VS<br>category: Git</p>
+<h2 id="gt-gt-gt-gt-gt-gt-gt-36ea38557df03e10502fb0e58cc82c85c94ee764"><a href="#gt-gt-gt-gt-gt-gt-gt-36ea38557df03e10502fb0e58cc82c85c94ee764" class="headerlink" title="&gt;&gt;&gt;&gt;&gt;&gt;&gt; 36ea38557df03e10502fb0e58cc82c85c94ee764"></a>&gt;&gt;&gt;&gt;&gt;&gt;&gt; 36ea38557df03e10502fb0e58cc82c85c94ee764</h2><p>今天突然发现我喜欢用的Visual Studio竟然也有git的冲突合并工具，后悔没有早点发现的同时本着不折腾不舒服的精神，放下月底的DeadLine先来折腾一下。可惜的是在写一篇博文之前我还没有尝试过非VS工程冲突合并能否用VS来合并，以后如果发现可以就来这里补充。<br>补充：非VS工程不能用……</p>
 <hr>
 <p>要冲突合并那就肯定要有冲突的说，所以我先人为的制造一个冲突再说。  </p>
 <p><img src="http://liyu34.github.io/images/git/conflict.png" alt="conflict">  </p>
@@ -133,7 +131,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/如何用VS作为Git的合并工具/" data-id="ciu2osn49000v8cygzdcww3j9" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/15/如何用VS作为Git的合并工具/" data-id="ciu2osn49000v8cygzdcww3j9" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -142,19 +140,10 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/10/09/研究生开学了/" id="article-nav-newer" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Newer</strong>
-      <div class="article-nav-title">
-        
-          研究生开学了
-        
-      </div>
-    </a>
   
-  
-    <a href="/2016/10/09/如何清除U盘的分区/" id="article-nav-older" class="article-nav-link-wrap">
-      <strong class="article-nav-caption">Older</strong>
-      <div class="article-nav-title">如何清除U盘的分区</div>
+    <a href="/2016/10/09/Win10无声音/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Ancien</strong>
+      <div class="article-nav-title">关于Win10无声音的问题以及解决办法。</div>
     </a>
   
 </nav>
@@ -167,18 +156,10 @@
           <aside id="sidebar">
   
     
-
-  
-    
-
-  
-    
-  
-    
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a></li></ul>
     </div>
   </div>
 
@@ -186,28 +167,57 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+            <a href="/2016/10/15/如何用VS作为Git的合并工具/">(no title)</a>
           </li>
         
           <li>
             <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/">用VS组建一个Qt多工程的解决方案来进行软件开发</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/RTU通信协议（翻译）/">NARTU通信协议（翻译）</a>
           </li>
         
       </ul>
@@ -223,7 +233,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 AbLee<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
@@ -65,9 +65,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-SetupStationNote" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-Git发布博文" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/SetupStationNote/" class="article-date">
+    <a href="/2016/10/09/Git发布博文/" class="article-date">
   <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/SetupStationNote/">建站记录</a>
+      <a class="article-title" href="/2016/10/09/Git发布博文/">使用Git来发布博文</a>
     </h1>
   
 
@@ -87,59 +87,14 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>这次的建站还是比较成功的，页面我也很喜欢。</p>
-<hr>
-<p>首先说一下这次冲动的原因。其实之前一直就想要有个博客的，因为这一阵子做了很多东西本以为学了很多，没想到再次遇到同样的问题的时候还是得回去看原来的代码，所以体会到了整理总结并且记录下来的重要性。而且你看那些网站一个个的跟我要个人网站地址，但是我又没有，VPS是有的，域名也是有的，干脆一不做二不休建一个博客吧。  </p>
-<p>其实在准备建站之前也去看了看CSDN的博客，还在上面写了篇文章，但是每次都要审核好麻烦的，而且CSDN有些界面还是那么的丑，然后去SegmentFault上面也看了看那个专栏，并且把之前在CSDN上写的那篇文章复制过去了，我还好心的在后面写了一句“复制自我刚写的CSDN博客”，然后审核就不通过了，原因是“文章质量不高”，我本来以为是我写的太零碎了，没想到还真是因为我的最后一句注释，因为我把它删掉之后再次提交审核竟然通过了，由此我就很不开心。。。  </p>
-<p>所以我昨天晚上开始建站，因为喜欢上了MarkDown，所以在找能用md的博客，不经意间发现了GitBlog，发现这个很适合小巧的VPS，所以我就决定尝试一下。  </p>
-<p>一开始都很顺利，安装nginx，安装php的一些组件，之后配置nginx，然后把GitBlog放到nginx配置的网站根目录下，结果发现主页什么都不显示，然后我就加了GitBlog的交流群，群主很热心的为我解答一些问题，然后还是不行，我就把我的vps帐号给了群主，他帮我检查（那时候已经凌晨一点了），最后检查出来是因为缺少了mbstring扩展库，他帮我安装好了，真的是很感谢群主。  </p>
-<p>到此为止我的博客算是建立成功了，之后就是最为重要的记录了。</p>
-<p>现在是研零的暑假，马上就要开学成为真正的研究生了，我要养成一个记录已经学到的知识的好习惯。与GitBlog共勉。</p>
+        <p>##使用Git发布博文<br>其实之前也尝试过使用Git发布博文，但是totally失败了，上次方法很可笑，这次用git的hook工具。<br>首先在服务器上安装git，这个就不说了。安装好git之后需要在服务器上面给git分配一个用户<code>adduser git</code>并给它一个密码。<br>切换到git用户之后创建一个git远程代码仓库（myblog.git），然后再去博文目录创建git仓库。（在这一步我遇到了问题……权限问题，最后无奈的我把blog目录所有者改为了git）在博文目录添加myblog.git作为远程仓库。<br>然后去myblog.git的目录，进入hooks目录之后新建post-receive脚本文件，这个文件会在每次接收到客户端push之后执行，其余hook用法可以看<a href="http://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">这里</a><br>下面是脚本文件的内容，保存好之后还得给它+x<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="built_in">unset</span> GIT_DIR</div><div class="line">B<span class="built_in">log</span>Path=/data/vhost/liyu34.xyz/blog</div><div class="line"></div><div class="line"><span class="built_in">cd</span> <span class="variable">$BlogPath</span></div><div class="line">git add . -A &amp;&amp; git stash</div><div class="line">git pull orig master</div><div class="line">cp -r conf.yaml ../conf.yaml</div><div class="line">rm -rf ../app/cache/*</div><div class="line">```  </div><div class="line">这样钩子就设定好了，接下来得把网站服务器上的git搭建为服务器git，</div><div class="line">参照[这里](https://ruby-china.org/topics/5040)（我就是偷懒了……）  </div><div class="line"></div><div class="line">**然后vps的ssh端口变了怎么办，也请参照[这里](http://zengrong.net/post/1544.htm)。**  </div><div class="line"></div><div class="line">权限问题？刚刚我遇到了一个问题就是我按照之前的办法来写了post-receive脚本，就是无法执行，后来发现是权限问题，我把blog目录的权限设为765之后git就不能pull了，暂时还不清楚是什么原因。  </div><div class="line">权限问题真混乱，缓存目录下面的东西是apache用户的,我把cache目录设为777之后apache用户产生的目录还是755的，git无法去操作那些目录。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2015.10.21补充</span></div><div class="line">经过今天的事情我充分认识到我的Linux水平就跟海平面一样。。。稍稍高一点的东西就不懂了……  </div><div class="line">之前我每次在本地提交的时候还需要输入登陆密码，作为一个合格程序员（就是懒），我觉得我得做点什么，比如ssh什么的。</div><div class="line">然后我就把ssh的key传到了服务器上，然后……就不用输密码了。。。由于我的Linux水平低下，所以我并不准备说太多。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2016年3月3日补充</span></div><div class="line">如果是SCP命令想要使用除了22以外的端口的话，需要加上端口参数如下：</div></pre></td></tr></table></figure></p>
+<p>SCP -P port_number user@serviceip:floder<br>```  </p>
+<p>也必须在blog目录下面初始化git目录。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/SetupStationNote/" data-id="ciu2osn3m000j8cygeri4ygq5" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-GitNote_lola&amp;rm-cache" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/GitNote_lola&rm-cache/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.478Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/GitNote_lola&rm-cache/">GitNote:用图形化的方式显示log&amp;删除误提交的大文件</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>好久没写代码，也就好久没用Git了，今天写了些代码之后发现Git的一些常用命令竟然已经忘得差不多了，所以来这里记录一下。</p>
-<p>好用的命令别名，让log用树状图形的方式显示出来：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">git config --system alias.lola &quot;log --graph --decorate --pretty=oneline --abbrev-commit --all&quot;</div><div class="line">```  </div><div class="line"></div><div class="line">然后是`git commit --amend`这个命令会重新commit，可以重新编辑提交内容，但是会生成一个新提交（CommitID会和以前的不一样）</div><div class="line"></div><div class="line">还有常用的`git reset`命令，这个命令一般跟着`--hard`这样会“硬恢复”到上个版本。</div><div class="line"></div><div class="line">其余我常用的是最最基本的了，基本不会忘记了。</div><div class="line">```git</div><div class="line">git init --bare</div><div class="line">git remote add orig URL</div><div class="line">...</div><div class="line">...</div></pre></td></tr></table></figure></p>
-<hr>
-<p>要想删除误提交的大文件，需要先从cache里面把那个文件删除，然后更新.gitignore，然后提交。<br>从缓存中删除文件可以用下面的语句:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git rm --cached XXX.xxx</div></pre></td></tr></table></figure></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/GitNote_lola&rm-cache/" data-id="ciu2osn2b00028cyghih841bp" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/Git发布博文/" data-id="ciu2osn2l00058cygyw1dsxwo" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -183,9 +138,96 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/GitNote_PATH/" data-id="ciu2osn2700018cygwth2e6sp" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/GitNote_PATH/" data-id="ciu2osn2700018cygwth2e6sp" class="article-share-link">Partager</a>
       
       
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-GitNote_lola&amp;rm-cache" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/GitNote_lola&rm-cache/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.478Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/GitNote_lola&rm-cache/">GitNote:用图形化的方式显示log&amp;删除误提交的大文件</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>好久没写代码，也就好久没用Git了，今天写了些代码之后发现Git的一些常用命令竟然已经忘得差不多了，所以来这里记录一下。</p>
+<p>好用的命令别名，让log用树状图形的方式显示出来：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">git config --system alias.lola &quot;log --graph --decorate --pretty=oneline --abbrev-commit --all&quot;</div><div class="line">```  </div><div class="line"></div><div class="line">然后是`git commit --amend`这个命令会重新commit，可以重新编辑提交内容，但是会生成一个新提交（CommitID会和以前的不一样）</div><div class="line"></div><div class="line">还有常用的`git reset`命令，这个命令一般跟着`--hard`这样会“硬恢复”到上个版本。</div><div class="line"></div><div class="line">其余我常用的是最最基本的了，基本不会忘记了。</div><div class="line">```git</div><div class="line">git init --bare</div><div class="line">git remote add orig URL</div><div class="line">...</div><div class="line">...</div></pre></td></tr></table></figure></p>
+<hr>
+<p>要想删除误提交的大文件，需要先从cache里面把那个文件删除，然后更新.gitignore，然后提交。<br>从缓存中删除文件可以用下面的语句:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git rm --cached XXX.xxx</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/GitNote_lola&rm-cache/" data-id="ciu2osn2b00028cyghih841bp" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-正视差距仍须努力" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/08/28/正视差距仍须努力/" class="article-date">
+  <time datetime="2015-08-27T16:00:00.000Z" itemprop="datePublished">2015-08-28</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/随笔/">随笔</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/08/28/正视差距仍须努力/">正视差距，仍需努力。</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>不知不觉马上研一就要开学了，这一段时间其实说实话我也没做什么引以为傲的事情，只是自己写了几个小程序而已。然而优秀的人并不会浪费这一些闲暇时光，亦或是说，学习已然成为了他们的习惯。</p>
+<p>自从搭建了这个博客以来，头一次对博客这个东西产生了如此大的兴趣（当然犯中二病的时候也写过少年不知愁滋味的博客），然后也看了不少大神们的博客，深深的感觉到自己与他们的差距，以前都会自我麻痹，但是随着知识的增长，我慢慢的感觉到这么自我麻痹并没什么用，也越来越清晰的认识到我与他们的差距。</p>
+<p><strong>这是个好事，起码我看清了与他们的差距。</strong></p>
+<p>《三体》里面的一句话是说太聪明是搞不了学问的，我觉得这很对，做学问要沉下心来与智商并没有太多关系。所以接下来的研究生生活我要让学习成为习惯，持续做学习笔记。</p>
+<p>另外附上一位大神女博士的博客<a href="http://blog.csdn.net/abcjennifer?viewmode=contents" target="_blank" rel="external">Rachel Zhang的专栏</a>，涉猎非常广泛，也有机器学习的内容。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2015/08/28/正视差距仍须努力/" data-id="ciub57fiz0000t8yg32rslygp" class="article-share-link">Partager</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+
     </footer>
   </div>
   
@@ -203,18 +245,10 @@
           <aside id="sidebar">
   
     
-
-  
-    
-
-  
-    
-  
-    
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a></li></ul>
     </div>
   </div>
 
@@ -222,28 +256,57 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+            <a href="/2016/10/15/如何用VS作为Git的合并工具/">(no title)</a>
           </li>
         
           <li>
             <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/">用VS组建一个Qt多工程的解决方案来进行软件开发</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/RTU通信协议（翻译）/">NARTU通信协议（翻译）</a>
           </li>
         
       </ul>
@@ -259,7 +322,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 AbLee<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

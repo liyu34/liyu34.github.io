@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
@@ -65,9 +65,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Multiple Qt Dll Project in one Solution" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-研究生开学了" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/" class="article-date">
+    <a href="/2016/10/09/研究生开学了/" class="article-date">
   <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Multiple Qt Dll Project in one Solution/">用VS组建一个Qt多工程的解决方案来进行软件开发</a>
+      <a class="article-title" href="/2016/10/09/研究生开学了/">研究生开学了</a>
     </h1>
   
 
@@ -87,27 +87,15 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>一直在各种场合看到真正的Visual Studio软件工程项目，无一不是多工程协同工作的，或者说多模块合作编程，不同的模块分为不同的子工程生成DLL，这样更新子工程的时候只需要更新DLL即可，无需重新交付用户新的版本，这样听起来就很有吸引力，这才是真正的软件工程师该干的事情，我终于得到机会亲自尝试一把了，这让我在软件工程师的道路上走了一大步。  </p>
-<p>当我把架构设计初稿用Atash UML完成之后，就准备着手实际新建一个这样的VS工程了，这期间遇到了不少问题，有一些也是很有意义的问题，是启发思维的问题，于是记录一下。那么首先说一下重构的软件架构，典型的MVC式的结构。下面就是简单的结构图。  </p>
-<p><img src="http://liyu34.github.io/images/mps1.png" alt="Multiple Project in One Solution">  </p>
-<p>这个系统结构简图忽略了项目特有的一些特征。可以看到主要有三层，底层是<code>Database</code>,<code>SystemIO</code>,<code>SystemTCP</code>三个，其中SystemTCP是SystemIO的一部分，再往上是Controller，在上面就是负责显示的子工程SystemView，除了SystemView是生成可执行文件以外，其他子工程都是生成DLL，他们按照箭头逆方向依赖，SystemView依赖于Controller，也就是说说SystemView要调用Controller的DLL，其余部分相类似。  </p>
-<p>那么我们就可以到Visual Studio里面新建工程了，新建五个工程（当然要先新建一个工程，然后再工程的解决方案中添加新的工程），然后VS也提供了文件夹功能，你可以使用解决方案中的文件夹让整个解决方案看起来符合逻辑结构。  </p>
-<p>新建完工程之后就需要让VS知道他们之间的关系，首先是项目依赖关系，也就是编译顺序，这个是在解决方案的属性中设置的（右键解决方案，选择属性，然后在<strong>通用属性</strong>中找到第二个<strong>项目依赖</strong>，按照实际的依赖关系选择即可，比如Controller依赖Database和SystemIO，SystemIO依赖SystemTCP这样）。这样设置完之后可以编译下试试，可以发现编译顺序就是按照设定的顺序来的。  </p>
-<p>当然，这还没完，这样只是设置了编译顺序，实际上各个项目之间半毛钱关系都没有，需要在每个工程里面添加它依赖的工程的<strong>引用目录</strong>、<strong>库目录</strong>、<strong>附加依赖项</strong>，这个可以参照我之前的那篇博文<a href="http://ablee.cc/blog/%25E8%25B0%2583%25E8%25AF%2595%25E9%2593%25BE%25E6%258E%25A5%25E5%25BA%2593%25E5%25B7%25A5%25E7%25A8%258B.html">《如何调试一个链接库工程工程》</a>。但是那篇博客里面只是说了要添加这些， 但是怎么添加路径这个事情其实是有大学问的。  </p>
-<hr>
-<p>假设你把绝对路径作为参数添加进去之后，实际使用起来没有任何问题，但是问题就是，你从<code>Debug</code>换到<code>Release</code>的时候，就会发现<strong>库目录</strong>这个东西不对了，因为之前添加的是调试DLL的目录，所以肯定就不行了。这种问题其实其他程序员前辈们早就考虑好了，要知道程序员可能是世界上最懒的工种了，解决办法就是路径<code>Macro</code>，当你添加的时候你会在界面上发现有一个Macro按钮，点开你就会发现所有的路径宏。如下图：  </p>
-<p><img src="http://liyu34.github.io/images/mps2.png" alt="Direction Macros">  </p>
-<p>另外附上几个常用的路径宏：  </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">$(SolutionDir)是指解决方案目录，</div><div class="line">$(ProjectDir)是指工程目录，</div><div class="line">$(IntDir)指的是当前配置环境下的库目录地址。</div><div class="line">```  </div><div class="line"></div><div class="line">---</div><div class="line">Qt动态链接库工程要在所有（想要编译到dll）的类中加上一个宏指令`$PROJECTNAME_EXPORT`，这个宏可以在工程中的`$projectname_global.h`文件中发现，`$`符号表示这是个变量，加在如下的位置：</div></pre></td></tr></table></figure>
-<p>class $PROJECTNAME_EXPORT ClassName<br>{<br>public:<br>    ClassName();<br>    ~ClassName();<br>};<br>```  </p>
-<p>否则会出现连接错误。  </p>
-<p>如果不加这个可以把动态链接库改成静态链接库也可以，但是加上这个之后就不能改静态链接库了。  </p>
-<p><strong>还有非常重要的一点就是父工程需要包括所有的子工程的引用目录和Qt Project Settings，比如一个子工程用到了SQL，那么所有的父工程都要包含SQL，否则可能出现打不开头文件的连接错误。</strong></p>
+        <p>研究生的生活终于要开始了，不过每次来到新的环境都要耗费很久来拾掇我的小窝来让我生活的舒服一点。经过了两天时间，现在总算是像模像样了。</p>
+<p>最近好像很多讲座的样子，不过我后天下午要去接我女朋友，所以如果冲突的话只能请假了……</p>
+<p>现在媳妇儿大人也已经开学了，接下来就是用三年的努力来换取以后幸福的生活了。我的方向应该是人工智能，研究生阶段的课程我已经选择好了。下面是我的课程列表。  </p>
+<p><img src="http://liyu34.github.io/images/my_courses.png" alt="my_course">  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Multiple Qt Dll Project in one Solution/" data-id="ciu2osn2x00088cygjx94g8zf" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/研究生开学了/" data-id="ciu2osn4c000w8cyg82ybjbs1" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -117,9 +105,9 @@
 
 
   
-    <article id="post-RTU通信协议（翻译）" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-sqlserver express" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/RTU通信协议（翻译）/" class="article-date">
+    <a href="/2016/10/09/sqlserver express/" class="article-date">
   <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -131,7 +119,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/RTU通信协议（翻译）/">NARTU通信协议（翻译）</a>
+      <a class="article-title" href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
     </h1>
   
 
@@ -139,29 +127,33 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>NARTU通常装备有串行端口或者以太网端口，串行端口支持MODBUS协议，以太网端口支持MODBUS TCP/IP协议（注释：MODBUS协议和MODBUS TCP/IP协议是生产PLC的施耐德电气公司制定的，NARTU完全遵循以上两种标准协议）。  </p>
-<p>#1、概要介绍</p>
-<p>##（1）信息交换属性<br>MODBUS是一个主从类型的协议，它允许一次读写一个或者多个字（16bits），但是在任何情况下都不允许直接读写单个byte。<br>除去广播信息之外，所有的信息交换都是由主方发起的，所有完整的信息交换流程都包含下行（downlink）和上行（uplink）两个消息。  </p>
-<ul>
-<li>下行消息：一个由主方发出的请求消息  </li>
-<li>上行消息：一个由从方发出的回应消息<br><img src="http://liyu34.github.io/images/RTU_fg1.png" alt="fg1"><br><img src="http://liyu34.github.io/images/RTU_fg2.png" alt="fg2"></li>
-</ul>
-<p>如图Fig.12.1，主方的请求信号一般是向特定的从属设备发出的（通过请求信息的第一个字节我们可以知道目标从属设备的地址）。如图Fig.12.2，如果从属设备地址为0的话，那么这条消息就是一条广播消息，广播消息会被发送到所有的从属设备，但是ModBus通信协议规定这种信息只能是写入指令，从属设备也不会对广播消息作出回应（发出回应消息）。  </p>
-<p>##（2）信息格式<br>所有的RTU交换信息（包括上行消息和下行消息）都遵循相同的信息格式。信息格式如下：<br><img src="http://liyu34.github.io/images/RTU_t1.png" alt="t1"><br>每条信息具有四种信息：</p>
-<p>###从属设备地址<br>从属设备的地址长度为一个字节（取值范围为0-FFH），但是如果从属设备地址为0的话，这条消息实际上是一个广播消息，所以从属设备的真正的取值范围为01H-FFH（即1-255）。</p>
-<p>###操作码<br>操作码的长度也为一个字节，操作码用来告诉设备这条消息选择了哪一个指令（读、写、回答正确还是不正确等等）。操作码的有效范围为1-255，各种操作码的指令含义会在本手册的后续部分进行详细讲解。</p>
-<p>###数据区<br>数据区均为16进制的数据，数据区的长度并不固定，实际长度与操作码有关。</p>
-<p>###CRC16检测<br>CRC16检测占每条信息的最后两个字节。这是一个遵循CRC16算法的检测，检测范围是从第一个字节（从属设备地址）到数据区的最后一个字节。<br>【例子】CRC16算法的C语言实现：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="title">CRC16</span><span class="params">(<span class="keyword">unsigned</span> <span class="keyword">char</span>* buf, <span class="keyword">unsigned</span> <span class="keyword">short</span> len)</span></span></div><div class="line">&#123;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> crc=<span class="number">0xffff</span>;</div><div class="line">	<span class="keyword">unsigned</span> <span class="keyword">short</span> i,j,k;</div><div class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;len;i++)</div><div class="line">	&#123;</div><div class="line">		crc =crc ^ buf[i];</div><div class="line">		<span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;<span class="number">8</span>;j++)</div><div class="line">		&#123;</div><div class="line">			k=crc &amp; <span class="number">01</span>;</div><div class="line">			crc=crc &gt;&gt; <span class="number">1</span>;</div><div class="line">			<span class="keyword">if</span> (k==<span class="number">0</span>) <span class="keyword">continue</span>;</div><div class="line">			crc =crc ^ <span class="number">0xA001</span>;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	<span class="keyword">return</span> crc;</div></pre></td></tr></table></figure></p>
-<p>#2、寻址方式<br>如上图Fig.12.1和Fig12.2所示，主方设备可以与n（1≤n≤255）个从属设备进行通话。当然，n=0（即从属设备地址为0）的时候是广播消息。  </p>
-<p>从Fig.12.1和Fig.12.2可以得出，主方设备访问从属设备这一行为实际上是主方设备访问特定从属设备中的特定装置中的一系列寄存器。所以主方设备访问的地址应该由三个方面共同决定：从属设备地址，从属设备中的装置号，装置中寄存器的地址。</p>
-<p>在信息中，装置号和装置中寄存器的地址被合称为”word address”。</p>
+        <p>因为sqlserver的express版本是免费的，而且又小巧，所以我就安装了一个sqlserver 2014 express，然而express版本默认是只能本地连接的，而我的项目又需要小伙伴连接我的数据库，于是我谷歌了。<del>其实我也百度了。</del>2015.10.21补录作死记录，如何让你的Sqlserver成功的启动不起来。  </p>
+<p>闲话不多说，首先说的是我安装的sqlserver express是最简版本，就是说只有一个数据库系统，没有任何管理软件，创建数据库都得用<code>sqlcmd</code>。所以网络上好多使用sqlserver management studio的对我来说就不适用了。但是我发现要想远程访问sqlserver其实并不难，所需要做的事情也不多。（最起码我是这样的）。我也在网络上面找到了一个很简单的版本，在<a href="http://www.veryhuo.com/a/view/180.html" target="_blank" rel="external">这里</a>。  </p>
 <hr>
-<p>未完待续  </p>
+<p>##如何配置Sql Server 2014 Express</p>
+<p>###1.配置SQL网络配置<br>在这一步我们需要启用两个服务，第一个是<code>Named Pipes</code>，第二个是<code>TCP/IP</code>。默认是不启用的，右键点击启用即可，它可能会提示你重启之后才会生效什么的，这个重启服务指的就是sqlserver服务，去第一个Sql Server服务里面重启一下那个Sqlserver就行了。下面是启动好的图片。<br><img src="http://liyu34.github.io/images/sqlserverconfigs.png" alt="sqlserverconfigs.png"><br>可能有的教程还需要你启动什么Sql Server Browser什么的，我发现这个不是必须的，因为我安装的最简版本连安装都没安装。  </p>
+<p>###2.配置TCP/IP属性<br>在这一步我们需要配置刚刚启动的两个服务中的tcp协议。首先我们需要把一个’全部侦听’设置为’否’（这个我是按照教程来的，没有测试设置为’是’的情况），如图：<br><img src="http://liyu34.github.io/images/sqlservertcpip1.png" alt="sqlservertcpip1.png"><br>这一页就ok了，然后我们需要配置你想远程的那个ip地址的端口等参数，如图：<br><img src="http://liyu34.github.io/images/sqlservertcpip2.png" alt="sqlservertcpip2.png"><br>要注意画红线的部分，要把这个设置为启动才可以。我之前并没有发现刚刚那个<a href="http://www.veryhuo.com/a/view/180.html" target="_blank" rel="external">教程</a>其实也说了这个了，因为没有注意，所以做了好多次尝试。  </p>
+<hr>
+<p>这样就可以远程访问数据库啦，另外我之前安装Sqlserver的时候设置了sa账户，如果使用Windows登陆验证能不能login就不清楚了。  </p>
+<hr>
+<p>另外，经过今晚的尝试我还为我自己解答了之前的一个疑惑。之前我用qt连接这个数据库的时候用ip地址连接怎么都不行，只有在管理面板里面的数据源设置好了之后才能在程序里访问。原来就是因为我其实并没有启用那个本地ip啊。</p>
+<hr>
+<p>##2015.10.21作死记录  </p>
+<p>###把TCP/IP协议里面的IP地址都清空！</p>
+<p>作为一个用精神洁癖的人，看着SQL Server网络服务TCP/IP协议属性框那一堆堆的ipv6地址就难受。  </p>
+<p><img src="http://liyu34.github.io/images/sqlservertcpip03.png" alt="sqlservertcpip3.png">  </p>
+<p>所以我曾经无数次的点击每个ip地址前面的减号想要把它删掉，但是每次也只能把它收起来而已。为了删掉它们，我尝试了把多余的ip地址都清空（就是把ip地址那一栏里面的内容删掉），然后Sqlserver服务器就启动不起来了，尝试了三遍确定它确实启动不起来之后我就意识到是我刚刚的所作所为要为它的事故负责。  </p>
+<p>为了更加精确的明白它到底哪里出了问题，所以我就去看了errorlog，然后找到了最为关键的一句话。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">TDSSNIClient initialization failed with error 0x57, status code 0x1e. </div><div class="line">Reason: The SQL Server Network Interface found a duplicate IP address in the SQL Server TCP listening settings.  </div><div class="line">Remove the duplicate IP address by using SQL Server Configuration Manager. </div><div class="line">The parameter is incorrect. </div><div class="line">```  </div><div class="line">其实最关键的三个词就是`duplicate IP address`（重复的ip地址），然后我还看到了`Remove ... by using SQL Server Configuration Manager`，就是这个remove让我又去SQL Server Configuration Manager里面右键了很多次。  </div><div class="line"></div><div class="line">删除无果之后我猜想那几个空位其实是Sqlserver预留的，没法删除，但是留空之后就重复了（***空白也是一种重复呢***），那么我就自然而然的想到了修复，拿安装管理器修复一通，它给我填上了几个ipv6的地址，仍然还有很多留空。  </div><div class="line"></div><div class="line">没有办法的我只好实行权宜之计咯。</div></pre></td></tr></table></figure></p>
+<p>127.0.0.2<br>127.0.0.3<br>127.0.0.4<br>127.0.0.5<br>127.0.0.6<br>…<br>```<br>然后运行，就可以了。。。</p>
+<hr>
+<p>要注意Windows防火墙设置！！！Windows防火墙默认会把sqlserver给屏蔽掉的，所以要么把sqlserver置为例外，要么关掉Windows防火墙。<br>我因为sqlserver实例位置不好找就关闭了专用网络的防火墙。</p>
+<hr>
+<p>##2016年3月4日补充<br>电脑ip地址更改，会导致SqlServer服务器监听程序监听失败，从而导致SqlServer实例启动失败，如图：<br><img src="http://liyu34.github.io/images/sqlserver_listener_error.png" alt="sqlserver_listener_error"><br>进入SqlServer的TCPIP设置里面把原来的地址更改为新地址即可，我这里使懒，直接把老地址设置为了不启用，反正暂时用不到远程访问我的SqlServer服务器。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/RTU通信协议（翻译）/" data-id="ciu2osn3l000i8cygnssowtfg" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/sqlserver express/" data-id="ciu2osn40000p8cygojp3yff6" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -171,9 +163,9 @@
 
 
   
-    <article id="post-QtNote_QTcpSocket_QObject" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-如何清除U盘的分区" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/QtNote_QTcpSocket_QObject/" class="article-date">
+    <a href="/2016/10/09/如何清除U盘的分区/" class="article-date">
   <time datetime="2016-10-09T14:41:04.538Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -185,7 +177,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+      <a class="article-title" href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
     </h1>
   
 
@@ -193,27 +185,72 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>昨晚在做ModBus的时候遇到了两个问题，第一个是tcpsocket突然无法发送数据了，显示tcpsocket无法跨进程调用；第二个是编译时一直显示无法访问QObject的私有变量。</p>
-<hr>
-<p>##一、QTcpSocket无法跨进程调用的问题<br>当时的情况是这样的，经过两天的思考与实现之后，程序突然无法收到从RTU返回的信息了，两天前同样的收集线程程序明明可以的。找了半天到底是哪里出了问题。  </p>
-<p>最后发现问题是出在启动线程的<code>start()</code>函数上，之前我的所有线程都是在主线程初始化的时候就start。主进程里面有线程的对象（不是指针），线程的对象会随着主进程初始化而初始化，tcpsocket对象（不是指针）在线程初始化的时候初始化，同时通过tcp/ip连接模拟程序。这样线程初始化完成之后就立刻开始运行。  </p>
-<p>后来我写了一个按钮响应，把线程的<code>start()</code>给挪到按钮响应里去了，这样之后每次tcpsocket发送数据的时候就是出错，输出“tcpsocket无法跨线程调用”，于是我又把start给挪回构造函数里了，下一步准备试一下在按钮响应里面new一个线程的对象。  </p>
-<p>这个问题我觉得可能是因为主进程和线程的关系的原因？</p>
-<hr>
-<p>##二、无法访问QObject私有变量<br>这个问题其实是发生在上一个问题之前的，这个问题在之前的我看来其实是蛮无厘头的。光说可能没啥感觉，上个图先。<br><img src="http://liyu34.github.io/images/qobjectclass.png" alt="qobjectclass.png">  </p>
-<p>上图就是这次问题的三个主角，<code>DataBlock</code>、<code>CollectionThread</code>、<code>DBManager</code>。  <del>需要交代的是DataBlock这个主角中的主角是一个关系户，他爸爸是QObject（传说中Qt大家庭里面大部分人的爷爷or太爷爷…）</del>  也就是说DataBlock直接继承自QObject。然后编译的时候就一直提示我“无法访问QObject的私有成员”，我还真信了，跑去看了几个DataBlock里面的变量，后来想不可能啊，以我这奇葩的命名方式，怎么可能会那么巧合的重名！于是我百度了。  </p>
-<p>然后我发现是因为QObject不允许copy或者opeartor=，然后我看了看我的代码，果真有地方用了等于号。</p>
-<p>本来是想借用Qt的QObject的管理机制来管理这个DataBlock的，原来这么多限制，  <del>于是就取消了DataBlock和QObject的父子关系</del>，  于是就不让DataBlock继承QObject了，也不用Q_OBJECT宏了。这样就解决了。  </p>
-<p><strong>需要注意的是之前我以为必须纳入Qt的体系中才可以用QList管理数据，现在发现不需要纳入Qt的体系也可以用QList管理数据。</strong></p>
-<hr>
-<p>##三、在非QObject子类中使用connect函数<br>（2015.10.20补充）<br>今天我又遇到Qobject的子类不能copy和operator=的问题了，但是我需要在那个类里面使用connect函数连接槽函数和消息，这该怎么办呢？  </p>
-<p>我想了一个麻烦的办法和一个简单的办法。麻烦的办法就是传给它一个是Qobject子类的对象的指针，用这个指针来调用connect函数。  </p>
-<p>简单的办法有效，所以我就没有尝试麻烦的办法究竟可行不可行，<strong><code>QObject::connect(...)</code></strong>，这样就行了。<br>我理解的qt程序是都运行在一个core上，所以只需要通知它绑定了什么信号和槽就行了。</p>
+        <p>之前我把我的新U盘装成了win7的安装U盘，但是我用UltraISO写入硬盘映像的时候选择了高端隐藏，把我的U盘分成了两部分，我发现了在磁盘管理里面无法进行扩展U盘分区等操作，所以我百度了。  </p>
+<p>然后我发现了这个网址<a href="http://jingyan.baidu.com/article/86112f1346ec5227379787df.html" target="_blank" rel="external">怎样为u盘分区</a>。  </p>
+<p>我按照教程做的，成功的清楚了U盘的分区，但是这个教程中有个让我非常疑惑的地方（幸好我成功了），所以来记录下来。  </p>
+<p>教程是这样的，先打开<code>cmd</code>，然后输入<code>diskpart</code>进入分区程序，然后选择你要进行操作的disk，即输入<code>select disk *N*</code>，这个N在教程中是1，然后教程注释说：“写1就是一个u盘，两个就写2，以此类推”，这完全把我弄混了，然后看了看他的后续操作，输入clean，删除U盘所有信息，假如我选中的是我的系统硬盘，那后果很严重（虽然我感觉系统不会让clean在系统盘上执行，但我不想冒险）。  </p>
+<p>所以这个教程的问题就在这了，这个N到底应该是多少，后来我发现这个N就是硬盘管理里面的那个N，你可以打开磁盘管理，然后看看你的U盘是磁盘几。如下图所示：  </p>
+<p><img src="http://liyu34.github.io/images/diskn.png" alt="diskn">  </p>
+<p>知道是磁盘几了之后继续那个教程的操作就行了，<code>clean</code>之后就可以去磁盘管理里面进行新建分区操作了。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTcpSocket_QObject/" data-id="ciu2osn3b000e8cygxzv3nn39" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/如何清除U盘的分区/" data-id="ciu2osn47000u8cygpasfl4pm" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-Gitblog邮戳（GitblogPostmark）" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/Gitblog邮戳（GitblogPostmark）/" class="article-date">
+  <time datetime="2016-10-09T14:41:04.534Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/Gitblog邮戳（GitblogPostmark）/">Gitblog邮戳（GitblogPostmark）</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Gitblog邮戳使用Qt进行开发，现在只有windows版本，可以在<a href="https://github.com/liyu34/GitblogPostmark/releases" target="_blank" rel="external">GitblogPostmark</a>的Github的发行版本页面进行下载。提供zip格式和exe格式两种。  </p>
+<p>##一、简介<br>Gitblog邮戳（GitblogPostmark）（以下简称邮戳）是为更加方便的发布Gitblog博文而开发的为Gitblog博文加盖特定格式的文件前缀的程序，使用它可以方便的为Gitblog提供“作者”、“日期”、“主题”等等信息。<a href="https://github.com/jockchou/gitblog" target="_blank" rel="external">Gitblog</a>的详细信息请参见其Github主页。  </p>
+<p>##二、功能特点</p>
+<ol>
+<li>根据填写的信息可便捷的为Gitblog博文添加文件前缀。</li>
+<li>可以选择已有md文件或者自动生成md文件。</li>
+<li>可以设置默认生成博文的文件夹路径。</li>
+<li>可以本地保存已有文集名称。</li>
+<li>支持中文输入。  </li>
+</ol>
+<p>##三、环境要求<br>Windows7+  </p>
+<p>##四、安装步骤</p>
+<ol>
+<li>下载Zip包或者EXE安装包。</li>
+<li>解压缩或者安装到本地。  </li>
+</ol>
+<p>##五、软件界面<br><img src="http://liyu34.github.io/images/GPostmark_main.png" alt="MainWindow">  </p>
+<p>##六、问题及Bug反馈<br>请直接在<a href="https://github.com/liyu34/GitblogPostmark" target="_blank" rel="external">GitblogPostmark</a>的Github主页发起issue或直接提交。  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/Gitblog邮戳（GitblogPostmark）/" data-id="ciu2osn2h00048cygqijlv9vh" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -272,61 +309,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/GBCMInstruction/" data-id="ciu2osn1z00008cygxit1n2u0" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Gitblog邮戳（GitblogPostmark）" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/Gitblog邮戳（GitblogPostmark）/" class="article-date">
-  <time datetime="2016-10-09T14:41:04.534Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Gitblog邮戳（GitblogPostmark）/">Gitblog邮戳（GitblogPostmark）</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Gitblog邮戳使用Qt进行开发，现在只有windows版本，可以在<a href="https://github.com/liyu34/GitblogPostmark/releases" target="_blank" rel="external">GitblogPostmark</a>的Github的发行版本页面进行下载。提供zip格式和exe格式两种。  </p>
-<p>##一、简介<br>Gitblog邮戳（GitblogPostmark）（以下简称邮戳）是为更加方便的发布Gitblog博文而开发的为Gitblog博文加盖特定格式的文件前缀的程序，使用它可以方便的为Gitblog提供“作者”、“日期”、“主题”等等信息。<a href="https://github.com/jockchou/gitblog" target="_blank" rel="external">Gitblog</a>的详细信息请参见其Github主页。  </p>
-<p>##二、功能特点</p>
-<ol>
-<li>根据填写的信息可便捷的为Gitblog博文添加文件前缀。</li>
-<li>可以选择已有md文件或者自动生成md文件。</li>
-<li>可以设置默认生成博文的文件夹路径。</li>
-<li>可以本地保存已有文集名称。</li>
-<li>支持中文输入。  </li>
-</ol>
-<p>##三、环境要求<br>Windows7+  </p>
-<p>##四、安装步骤</p>
-<ol>
-<li>下载Zip包或者EXE安装包。</li>
-<li>解压缩或者安装到本地。  </li>
-</ol>
-<p>##五、软件界面<br><img src="http://liyu34.github.io/images/GPostmark_main.png" alt="MainWindow">  </p>
-<p>##六、问题及Bug反馈<br>请直接在<a href="https://github.com/liyu34/GitblogPostmark" target="_blank" rel="external">GitblogPostmark</a>的Github主页发起issue或直接提交。  </p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Gitblog邮戳（GitblogPostmark）/" data-id="ciu2osn2h00048cygqijlv9vh" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/GBCMInstruction/" data-id="ciu2osn1z00008cygxit1n2u0" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -346,18 +329,10 @@
           <aside id="sidebar">
   
     
-
-  
-    
-
-  
-    
-  
-    
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a></li></ul>
     </div>
   </div>
 
@@ -365,28 +340,57 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+            <a href="/2016/10/15/如何用VS作为Git的合并工具/">(no title)</a>
           </li>
         
           <li>
             <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/">用VS组建一个Qt多工程的解决方案来进行软件开发</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/RTU通信协议（翻译）/">NARTU通信协议（翻译）</a>
           </li>
         
       </ul>
@@ -402,7 +406,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 AbLee<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

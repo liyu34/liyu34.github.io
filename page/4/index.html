@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
@@ -65,9 +65,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-大数据机器学习并行算法综述" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-sublime" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/大数据机器学习并行算法综述/" class="article-date">
+    <a href="/2016/10/09/sublime/" class="article-date">
   <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/大数据机器学习并行算法综述/">大数据机器学习并行算法综述</a>
+      <a class="article-title" href="/2016/10/09/sublime/">配置sublime</a>
     </h1>
   
 
@@ -87,69 +87,47 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>把现有的传统机器学习算法并行化是将其运用于大数据环境中的一种典型策略。把现有的传统机器学习算法并行化主要问题有两个，第一个是如何重新设计传统算法使之能够并行化，二是选择何种手段实现并行化。目前的常用手段有三种，第一种是借助于众核设备对常规机器学习算法进行并行化；第二种是基于Hadoop MapReduce模式的并行化，这种方法扩展性好但是由于Hadoop MapReduce本身对于IO开销较大所以效率比较差；第三种是基于Spark的并行化算法，Spark基于内存计算也有较好的可扩展性。  </p>
+        <p>#1. Package Control<br>使用sublime3最方便的安装package的方法就是使用<strong>Package Control</strong>，Package Control安装起来还是很容易的，在sublime的控制台中输入一句话（这句话看起来有点长）就好了，控制台的快捷键是<code>Ctrl + ~</code>，也可以从菜单View - Show Console打开，打开之后复制如下一句话（注意这真的是一句话）：  </p>
+<p><code>import urllib.request,os; pf = &#39;Package Control.sublime-package&#39;; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); open(os.path.join(ipp, pf), &#39;wb&#39;).write(urllib.request.urlopen( &#39;http://sublime.wbond.net/&#39; + pf.replace(&#39; &#39;,&#39;%20&#39;)).read())</code>  </p>
+<p>如果发现这种简单的方法不能用的话可以试试手动安装的方法，方法连接在<a href="http://www.imjeff.cn/blog/62/" target="_blank" rel="external">这里</a>。  </p>
+<p>安装好之后可以打开sublime的命令模式（<code>Ctrl + Shift + P</code>），输入<code>Package Control</code>就可以看到Package Control的菜单了，可以在里面安装package，也可以删除，如果只是想安装package的话可以输入<code>install</code>作为关键字，回车之后就可以看到网络上的sublime3的各种package了。  </p>
 <hr>
-<p>Wang等[1]提出一种将蚁群算法并行化的策略，其思路是通过将蚂蚁构造为弹性分布式数据集，由此给出相应的一系列转换算子，实现了蚂蚁构造解过程的并行化。实验表明并行的蚁群优化算法大幅提升了优化速度。  </p>
-<p>Guo等[2]首先针对CLOPE算法受输入数据顺序影响较大的不足提出了MRCLOPE算法，MRCLOPE算法通过等分划分再排列的方式将输入数据等分划分形成不同顺序的输入数据集，然后对各种输入数据集进行分别聚类；然后使用MapReduce并行编程模型对MRCLOPE算法进行并行化处理，实验结果表明并行化的MRCLOPE算法对比于CLOPE算法在没有显著扩大聚类时间的情况下，提高了收益值。  </p>
-<p>文献[3] 基于SparkR设计并实现了并行化的Multinomial NaiveBayes多分类算法、SVM以及Logistic Regression二分类算法并评估了基于Hadoop MapReduce实现的并行化算法的性能差别。实验结果表明，基于SparkR设计并实现的并行化Multinomial NaiveBayes多分类算法比较于基于Hadoop MapReduce实现的并行化算法效率要高。  </p>
-<p>Gu等[4]提出了一种基于Tesla K10 GPU的误差反向传播算法，该算法采取MiniBatch结构作为BP算法的并行结构，并充分利用了PCI-E3. 0 传输特性，并结合了 peer-to-peer 以及异步传输的特性来降低计算任务在划分和合并过程中带来的额外开销。实验证明，该算法拥有双卡超过 1. 87 的并行加速比，且算法执行过程中不会引入计算误差，可有效保证训练过程中的收敛效率，拥有理想的并行加速效果。  </p>
-<p>Yu[5]提出了一种K-means算法的一种优化方式和并行化手段，通过结合K-means++算法和密度提出了一种初始点选择的优化算法，以及结合K-means++算法和Mean Shift算法给出了另外一种初始点选择的优化算法，并提出了K-means算法的一种并行化手段，将计算点距离和更新簇中心点位置并行，实验结果表明，并行化的K-means算法在不损害精确度的情况下较大的提升了效率。  </p>
-<hr>
-<p>综上所述，并行策略是传统机器学习运用于大数据的典型策略之一，并且在一定范围内取得了一些进展，能够处理一定量级的大数据。如何为传统机器学习算法设计高效的并行策略也是当今的研究热点之一。</p>
-<hr>
-<p>参考文献：<br>[1]王诏远,王宏杰,邢焕来,李天瑞.基于Spark的蚁群优化算法[J].计算机应用,2015,10:2777-2780+2797.  </p>
-<p>[2]刘志强,顾荣,袁春风,黄宜华.基于SparkR的分类算法并行化研究[J].计算机科学与探索,2015,11:1281-1294.  </p>
-<p>[3]郭涛.分类数据的并行聚类算法研究[D].东华大学,2015.  </p>
-<p>[4]宇斌彬.基于数据划分的迭代算法的并行与优化[D].中国科学技术大学,2015.  </p>
-<p>[5]顾乃杰,赵增,吕亚飞,张致江.基于多GPU的深度神经网络训练算法[J].小型微型计算机系统,2015,05:1042-1046.  </p>
+<p>#2. Python<br>当时买sublime的第一原因就是想要找个写python的IDE，然后配置一通下来之后发现sublime无愧于神器之称，充分的满足了程序员们想要敲命令的癖好……  </p>
+<p>##2.1 Anaconda<br>这里说的<strong>Anaconda</strong>不是那个python的集成科学计算库，而是sublime的一个package，使用Anaconda可以方便的进行命令补全，而且可以自动的给你的python代码进行pep8格式化，那么安装Anaconda非常简单，只需要在选择package control的安装功能后输入Anaconda进行搜索，然后点击全字匹配的那个就好了，package control会帮你把Anaconda安装好的。  </p>
+<p>然后的问题就是把Anaconda配置的让自己喜欢就好了。  </p>
+<p>###2.1.1 让Anaconda以dot为命令补全触发器<br>作为一个被Visual Studio惯坏的程序员，不能<strong>点</strong>出点什么东西来是很难受的一件事，虽然按<strong>tab</strong>补全也很正常，但是我还是喜欢能够点出点东西来。<br>那么需要在用户自定义设置中添加一句话：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&#123;</div><div class="line">    &quot;auto_complete_triggers&quot;: [&#123;&quot;selector&quot;: &quot;source.python - string - comment</div><div class="line">    - constant.numeric&quot;, &quot;characters&quot;: &quot;.&quot;&#125;]</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个用户自定义设置有两个选择，你可以直接在Preferences - Settings-User里面添加这么一句，也可以在Preferences - Browse Packages…打开的文件夹里面新建一个叫做<code>Python.sublime-settings</code>的文件，并把上面的语句添加在里面。  </p>
+<p><em>注意：我之前先是安装了SublimeCodeIntel然后卸载之后再安装的Anaconda的，然后再配置这个就没用了，当时对这个理解还不够深（现在也不够），就卸载了整个sublime然后删掉缓存中的sublime文件夹之后重新安装了sublime再这么配置才好的。</em>    </p>
+<p>###2.1.2 让回车不再输错代码<br>sublime在代码补全的时候默认会用tab和enter作为确认的按键，所以我很经常误输入一些东西（特别是添加了以dot作为命令补全的触发器之后），那么就得让enter不再作为代码补全的确认按键。  </p>
+<p>方法也很简单，首先在用户自定义设置（Preferences - Settings-User）里面添加一个配置：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&quot;auto_complete_commit_on_tab&quot;: true,</div></pre></td></tr></table></figure>
+<p>然后在Preferences - KeyBindings-User中添加如下配置：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;keys&quot;: [&quot;enter&quot;], &quot;context&quot;:</div><div class="line">    [</div><div class="line">        &#123; &quot;key&quot;: &quot;setting.auto_complete_commit_on_tab&quot;, &quot;operand&quot;: true &#125;</div><div class="line">    ]</div><div class="line">&#125;,</div></pre></td></tr></table></figure>
+<p>其实大家可以看到Preferences - KeyBindings-Default里面有这么一段，但是这个Default文件是无法更改的，所以就要放到User里面去。  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">&#123; &quot;keys&quot;: [&quot;enter&quot;], &quot;command&quot;: &quot;commit_completion&quot;, &quot;context&quot;:</div><div class="line">        [</div><div class="line">            &#123; &quot;key&quot;: &quot;auto_complete_visible&quot; &#125;,</div><div class="line">            &#123; &quot;key&quot;: &quot;setting.auto_complete_commit_on_tab&quot;, &quot;operand&quot;: false &#125;</div><div class="line">        ]</div><div class="line">&#125;,</div><div class="line">```  </div><div class="line"></div><div class="line">###2.1.3 PEP8自动格式化宏  </div><div class="line">打开录制宏（Tools - Record Macro）之后，做两部操作，第一步全选（快捷键`Ctrl + A`），第二步PEP8格式化（默认快捷键`Ctrl + Alt + R`），然后结束录制宏（Tools - Stop Record Macro），并且把宏存储为一个文件`PEE8Format.sublime-macro`，然后绑定一个快捷键到这个宏文件上。在KeyBindings-User里面添加：</div></pre></td></tr></table></figure>
+<p>{<br>    “keys”: [“f1”],<br>    “command”: “run_macro_file”,<br>    “args”:{“file”: “Packages/User/PEE8Format.sublime-macro”}<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">###2.1.4 把tab键当作4个空格</div><div class="line">由于PEP8规定缩进是以4个空格为单位的，虽然tab运行起来没错，但是Anaconda会提醒你不符合PEP8标准，所以还是把tab直接替换为4个空格吧。我们需要在`Setting-User`里面添加两句话，含义显而易见的两句话。</div></pre></td></tr></table></figure></p>
+<pre><code>&quot;tab_size&quot;: 4,
+&quot;translate_tabs_to_spaces&quot;: true
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line"></div><div class="line">##2.2 运行Python  </div><div class="line">###2.2.1 Tool - Build</div><div class="line">我希望写完代码直接就可以运行看看，sublime支持build，但是build有点问题，默认的build-system中的python在遇到中文字符时就傻了，而且没法输入字符到python解释器中，也就是说按`Ctrl + B`（默认Build的快捷键）出来的窗口中是无法用`input()`这个函数的，虽然有这个不能输入的致命缺点，但是我还是决定解决中文字符的问题先。  </div><div class="line"></div><div class="line">解决这个问题也很简单，可以Tool - Build System - New Build System...然后把下面的文本粘贴进去，并且保存为`Python3.sublime-build`文件名（后缀前面的那部分）可以随意起，但是要注意的是到时候在sublime菜单栏里面显示的就是这个文件名，要能够方便与原来的区别。</div></pre></td></tr></table></figure>
+<p>{<br>    “cmd”: [“python”, “-u”, “$file”],<br>    “file_regex”: “^[ ]<em>File \”(…</em>?)\”, line ([0-9]*)”,<br>    “selector”: “source.python”,<br>    “encoding”: “cp936”<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">这个编译设定指定了编码格式为&apos;cp936&apos;。  </div><div class="line"></div><div class="line">###2.2.2 SublimeREPL  </div><div class="line">这是一个神奇的东西，可以新建一个新的交互窗口，并且不存在上面所有的问题，中文没问题，也可以输入，简直神奇，就是有一点，每次要运行都太麻烦了。。。`Tools - SublimeREPL - Python - Python-RUN current file`其实要是能够忍受的话也倒是没什么问题啦，但是我忍不了，所以我绑定了F5作为运行的快捷键，恩，方便多了。  </div><div class="line"></div><div class="line">同样，在KeyBindings-User里面添加如下配置：</div></pre></td></tr></table></figure></p>
+<p>{<br>    “keys”:[“f5”],<br>    “caption”: “SublimeREPL: Python - RUN current file”,<br>    “command”: “run_existing_window_command”, “args”:<br>    {“id”: “repl_python_run”,”file”: “config/Python/Main.sublime-menu”}<br>},<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">#3. Markdown  </div><div class="line">其实Sublime也可以编写Markdown文件，并且预览也挺方便的，这一部分需要配置的就不多了，比较简单，只需要通过package control安装&apos;Markdown Preview&apos;就好了，安装好之后就可以用啦。  </div><div class="line"></div><div class="line">当然做一点点小配置也会大大提升使用幸福感。比如把下面的配置放到Preferences - Package Settings - Markdown Preview - Settings-User里面就会让你按下`Ctrl + B`之后自动打开浏览器预览：</div></pre></td></tr></table></figure></p>
+<p>{</p>
+<pre><code>&quot;enable_mathjax&quot;: true,
+
+&quot;enable_highlight&quot;: true,
+
+&quot;parser&quot;: &quot;markdown&quot;,
+
+&quot;build_action&quot;: &quot;browser&quot;,
+</code></pre><p>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">其中把parser（解释器）设定为`markdown`是因为`github`解释器会去访问网络资源，所以比较慢。其他的设定是什么意思可以去Markdown Preview的默认设置里面看是什么意思。  </div><div class="line"></div><div class="line">##3.1 编码问题  </div><div class="line">不可避免的遇到了编码问题，这得益于我之前写的GitblogPostmark，它生成的文档是GB2312编码的，弄到gitblog里面全是乱码（看来之前的Markdown Pad做了编码转化自动处理啊，当然也有可能是Sublime对中文处理太蛋疼了），然后幸亏之前安装了`ConvertToUTF-8`这个神奇的东西，可以把编码变成utf-8的，具体操作是`Ctrl + Shift + P`然后打上`Convert`作为关键字找到`ConvertToUTF-8: Reload and Encoding`回车选择之后选择编码方式为`UTF-8`就好了。  </div><div class="line"></div><div class="line">其实也可以选择使用菜单栏中的`File - Reload and Encoding: UTF-8`  </div><div class="line"></div><div class="line">---</div><div class="line">#4. 给菜单项自定义快捷键的办法  </div><div class="line">如果可以的话，我想给每个菜单项都设上快捷键——不设快捷键不舒服斯基。  </div><div class="line"></div><div class="line">我学到了给菜单项设置快捷键的办法，首先，打开控制台（`Ctrl + ~`），然后让sublime把所有的命令都显示（log）出来，即输入`sublime.log_commands(True)`回车后你就会发现世界不一样了，然后直奔主题，去点击一下你的目标菜单项，观察控制台的输出。控制台的输出一般类似于`command: reload_with_encoding&#123;&quot;encoding&quot;: &quot;UTF-8&quot;&#125;`，从这里面我们可以知道那个菜单项的命令名字，以及传递的参数（大括号内的是参数名以及内容）。那么我们就可以定义一个快捷键了。</div></pre></td></tr></table></figure></p>
+<p>{<br>    “keys”: [“f10”],<br>    “command”: “reload_with_encoding”, “args”:<br>    {“encoding”: “UTF-8”}<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">另外我总结了一下可以放心拿去用的F系列快捷键，即没有被KeyBindings-Default绑定的F系列快捷键：</div></pre></td></tr></table></figure></p>
+<p>F1：没被占用，可放心使用<br>F2：默认书签快捷键，建议不要再绑定<br>F3：寻找下一个快捷键，建议不要再绑定<br>F4：下一个结果快捷键（不太清楚什么意思），建议不要再绑定<br>F5：没被占用，可放心使用<br>F6：开启拼写检查快捷键，讨厌拼写检查，可以再绑定<br>F7：编译快捷键，Ctrl+B感觉已经够方便了，可以再绑定<br>F8：没被占用，可放心使用<br>F9：sort_lines快捷键，建议不要再绑定<br>F10：没被占用，可放心使用<br>F11：全屏快捷键，建议不要再绑定<br>F12：Goto_Definition快捷键，建议不要再绑定<br>```</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/大数据机器学习并行算法综述/" data-id="ciu2osn46000t8cyg52bkoh4i" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-调试链接库工程" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/调试链接库工程/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/调试链接库工程/">如何调试一个链接库工程工程</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>近来我突发奇想想要把原来的一个功能发布成一个链接库，但是还需要完善，所以需要对它进行调试，所以我就学会了如何调试一个链接库工程。  </p>
-<p>那么如何才能对一个链接库工程进行调试呢？这个方法的核心思想就是再给它专门建立一个测试工程（突然回想起大四的时候春雷哥一直跟我们说的测试工程，没想到现在我也用上了这个词）。这个测试工程与链接库工程处于同一个解决方案内。  </p>
-<p>当然不是新建一个测试工程就可以直接测试了，如果你直接打开文件写代码会发现无法引用链接库工程的头文件。  </p>
-<p>那是因为还需要在测试工程的属性中添加几个内容。一个是附加引用目录，这个就写链接库工程根目录就行（注意不是解决方案根目录）；第二就是附加库目录，这个要写库文件生成的地方；第三个就是把库文件名字添加到附加依赖项上。  </p>
-<p>这样就好啦，尽情测试吧。  </p>
-<hr>
-<p>以上为Visual Studio 2013环境下。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/调试链接库工程/" data-id="ciu2osn4p000z8cygevmu0yyr" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/sublime/" data-id="ciu2osn43000r8cygq9aw8hp9" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -222,7 +200,7 @@ location ~ .*\.(php|php5)?$
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/站点迁移/" data-id="ciu2osn4m000x8cyg5311hgec" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/站点迁移/" data-id="ciu2osn4m000x8cyg5311hgec" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -266,7 +244,7 @@ location ~ .*\.(php|php5)?$
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/自动检测是否有新博文/" data-id="ciu2osn4o000y8cyg0eibywhc" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/自动检测是否有新博文/" data-id="ciu2osn4o000y8cyg0eibywhc" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -276,9 +254,48 @@ location ~ .*\.(php|php5)?$
 
 
   
-    <article id="post-friends" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-sqlserver命令行导入数据库文件" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/friends/" class="article-date">
+    <a href="/2016/10/09/sqlserver命令行导入数据库文件/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.526Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/sqlserver命令行导入数据库文件/">SQLServer如何用命令行将数据库文件导入数据库</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>之前就想把这个记录到博客里面，但是觉得以后用的机会不多，就没记录，但是今天课题组的同志需要用我的电脑当数据库服务器，需要我导入数据库，所以又用到了，我就记录下来吧。（摘自<a href="http://zhidao.baidu.com/link?url=eqX1lFIyksakIty9eWmXifVK_EkQ_Nk4KXkRyCR3WW80jK_pCrPaXYQ7d96MUG3D3FqY5E2tUaXyZcf9YmtKHTPinr67fyFKiIOFMLE6YSG" target="_blank" rel="external">百度知道</a>）  </p>
+<hr>
+<p>sqlcmd<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">sqlcmd -S &quot;localhost\SQLEXPRESS&quot;</div><div class="line">USE [master]</div><div class="line">GO</div><div class="line">CREATE DATABASE [TEST] ON</div><div class="line">( FILENAME = N&apos;C:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS\MSSQL\DATA\TEST.mdf&apos; ),</div><div class="line">( FILENAME = N&apos;C:\Program Files\Microsoft SQL Server\MSSQL10.SQLEXPRESS\MSSQL\DATA\TEST_log.ldf&apos; )</div><div class="line"> FOR ATTACH ;</div><div class="line">GO</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/sqlserver命令行导入数据库文件/" data-id="ciu2osn41000q8cygkj01q8p5" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-HowToUpdateBlogWithGit" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/HowToUpdateBlogWithGit/" class="article-date">
   <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -290,7 +307,7 @@ location ~ .*\.(php|php5)?$
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/friends/">友情链接</a>
+      <a class="article-title" href="/2016/10/09/HowToUpdateBlogWithGit/">如何使用Git更新博客（一次失败的尝试）</a>
     </h1>
   
 
@@ -298,16 +315,30 @@ location ~ .*\.(php|php5)?$
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>#友链见下方：  </p>
+        <p>开门见山，先来说一下我用git发布博文的整体结构。  </p>
+<ul>
+<li>博客服务器一枚  </li>
+<li>Git@OSC帐号一枚  </li>
+<li>本地电脑一台</li>
+</ul>
+<p>发布工作的流程是这样的：  </p>
+<ol>
+<li>本地编写完成之后在博文目录提交并push到OSC的仓库  </li>
+<li>博客服务器从OSC的仓库中pull得最新博文。</li>
+</ol>
+<p>这样博客服务器和本地电脑上面的git都是充当客户端的git，本来想看一看有没有直接上传的办法，找了一会没找到就采取这种办法了，不过这样也好，我的博文有<strong>四处</strong>存放点（本地+博客服务器+OSC仓库+坚果云）。  </p>
+<p>为了保证每次打开博客看到的都是最新的情况，我在GitBlog的index.php里面加了一句运行本地shell文件的命令，如下：<br><code>exec(&quot;.../gitpull.sh&quot;);</code><br>这样每次打开博客都会自动去远程仓库pull一下，总感觉pull频繁了会有安全隐患呢。。。先不管了，以后再说吧。其实刚才也尝试了crontab的方法（linux的定时器），设定的是每五分钟pull一次，但是好像没什么效果，加上这么做可能不能实时更新，就放弃了。以后的话看看改善一下gitpull这个脚本吧。  </p>
 <hr>
-<p>##<a href="http://www.gitblog.cn/index.html" target="_blank" rel="external">GitBlog官网</a></p>
-<p>##<a href="http://www.lihuanyu.com" target="_blank" rel="external">环宇博客</a></p>
-<p>虽然我很想再写上几个，但是现在就只能写这些了，希望以后能够多起来。</p>
+<p>对了，我现在用的MarkDown是一个开源的Qt的本地编辑器CuteMarkEd，每次打开都要手动复制博文的前缀也是很麻烦的，所以最近想要在这个CuteMarkEd的基础上添加一些适合GitBlog的功能，这样用起来应该会方便一些吧。  </p>
+<hr>
+<p>但是Git的方案失败了，因为在网页里面的php代码不能执行git pull，有说是权限问题的，我尝试了几次不行就放弃了，因为对php不熟悉。  </p>
+<hr>
+<p><strong>但是！我现在也实现了自动发布博文功能！是用Dropbox实现的，稍等我就来记载一下</strong>  </p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/friends/" data-id="ciu2osn3v000o8cyghtbp94je" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/HowToUpdateBlogWithGit/" data-id="ciu2osn2p00068cygj42tgd8x" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -327,18 +358,10 @@ location ~ .*\.(php|php5)?$
           <aside id="sidebar">
   
     
-
-  
-    
-
-  
-    
-  
-    
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a></li></ul>
     </div>
   </div>
 
@@ -346,28 +369,57 @@ location ~ .*\.(php|php5)?$
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+            <a href="/2016/10/15/如何用VS作为Git的合并工具/">(no title)</a>
           </li>
         
           <li>
             <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/">用VS组建一个Qt多工程的解决方案来进行软件开发</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/RTU通信协议（翻译）/">NARTU通信协议（翻译）</a>
           </li>
         
       </ul>
@@ -383,7 +435,7 @@ location ~ .*\.(php|php5)?$
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 AbLee<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>

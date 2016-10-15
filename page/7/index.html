@@ -52,9 +52,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="Flux RSS"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Rechercher"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://ablee.cc"></form>
@@ -65,9 +65,9 @@
       <div class="outer">
         <section id="main">
   
-    <article id="post-Git发布博文" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-QtNote_QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/Git发布博文/" class="article-date">
+    <a href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" class="article-date">
   <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -79,7 +79,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Git发布博文/">使用Git来发布博文</a>
+      <a class="article-title" href="/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/">QtNote:QTcpServer&amp;TcpSocket&amp;中文乱码问题&amp;超时掉线问题</a>
     </h1>
   
 
@@ -87,14 +87,30 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>##使用Git发布博文<br>其实之前也尝试过使用Git发布博文，但是totally失败了，上次方法很可笑，这次用git的hook工具。<br>首先在服务器上安装git，这个就不说了。安装好git之后需要在服务器上面给git分配一个用户<code>adduser git</code>并给它一个密码。<br>切换到git用户之后创建一个git远程代码仓库（myblog.git），然后再去博文目录创建git仓库。（在这一步我遇到了问题……权限问题，最后无奈的我把blog目录所有者改为了git）在博文目录添加myblog.git作为远程仓库。<br>然后去myblog.git的目录，进入hooks目录之后新建post-receive脚本文件，这个文件会在每次接收到客户端push之后执行，其余hook用法可以看<a href="http://git-scm.com/book/zh/v2/%E8%87%AA%E5%AE%9A%E4%B9%89-Git-Git-%E9%92%A9%E5%AD%90" target="_blank" rel="external">这里</a><br>下面是脚本文件的内容，保存好之后还得给它+x<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/sh</span></div><div class="line"><span class="built_in">unset</span> GIT_DIR</div><div class="line">B<span class="built_in">log</span>Path=/data/vhost/liyu34.xyz/blog</div><div class="line"></div><div class="line"><span class="built_in">cd</span> <span class="variable">$BlogPath</span></div><div class="line">git add . -A &amp;&amp; git stash</div><div class="line">git pull orig master</div><div class="line">cp -r conf.yaml ../conf.yaml</div><div class="line">rm -rf ../app/cache/*</div><div class="line">```  </div><div class="line">这样钩子就设定好了，接下来得把网站服务器上的git搭建为服务器git，</div><div class="line">参照[这里](https://ruby-china.org/topics/5040)（我就是偷懒了……）  </div><div class="line"></div><div class="line">**然后vps的ssh端口变了怎么办，也请参照[这里](http://zengrong.net/post/1544.htm)。**  </div><div class="line"></div><div class="line">权限问题？刚刚我遇到了一个问题就是我按照之前的办法来写了post-receive脚本，就是无法执行，后来发现是权限问题，我把blog目录的权限设为765之后git就不能pull了，暂时还不清楚是什么原因。  </div><div class="line">权限问题真混乱，缓存目录下面的东西是apache用户的,我把cache目录设为777之后apache用户产生的目录还是755的，git无法去操作那些目录。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2015.10.21补充</span></div><div class="line">经过今天的事情我充分认识到我的Linux水平就跟海平面一样。。。稍稍高一点的东西就不懂了……  </div><div class="line">之前我每次在本地提交的时候还需要输入登陆密码，作为一个合格程序员（就是懒），我觉得我得做点什么，比如ssh什么的。</div><div class="line">然后我就把ssh的key传到了服务器上，然后……就不用输密码了。。。由于我的Linux水平低下，所以我并不准备说太多。。。</div><div class="line"></div><div class="line">---</div><div class="line"><span class="comment">##2016年3月3日补充</span></div><div class="line">如果是SCP命令想要使用除了22以外的端口的话，需要加上端口参数如下：</div></pre></td></tr></table></figure></p>
-<p>SCP -P port_number user@serviceip:floder<br>```  </p>
-<p>也必须在blog目录下面初始化git目录。</p>
+        <p>因为学生会活动需要一个抢答器，之前师兄他们做的硬件抢答器坏掉了，于是我就萌生了做一个C/S结构抢答器的想法，Client比较容易，因为之前做过Qt里面Socket的程序，但是这个Server就有点没有头绪了。  </p>
+<p>还好有百度（百度出来的结果真的不好……）看了几篇博客然后决定动手做了。虽然看到论坛里面有人说Qt的Server不好，不如用C++的其他库，但是我这只是个小程序，顶多同时10个Client，就用Qt吧，反正现在Qt用的顺手（但是也会遇到一堆问题）。  </p>
+<hr>
+<p>做完了之后想来，这个程序还是蛮简单的，最起码Server的监听挺简单的。</p>
+<p>要想用Qt做一个Server程序，只需要在一个类（exp. class MyServer）里面定义一个<code>QTcpServer</code>的对象（或指针），初始化之后可以通过<strong><code>listen()</code></strong>函数告诉它监听哪个端口。然后每当有新的连接接入的时候QTcpServer对象会emit一个<strong><code>newConnection()</code></strong>的信号，然后你可以在你的服务器类里面定义槽函数来处理这个新连接的接入。<br>那么监听哪个端口的函数模版是这样的：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">bool MyServer::StartListen()</div><div class="line">&#123;</div><div class="line">	if (!m_server-&gt;isListening())</div><div class="line">	&#123;</div><div class="line">		if (m_server-&gt;listen(QHostAddress::Any, 2333))//开始监听2333窗口</div><div class="line">		&#123;</div><div class="line">			return true;</div><div class="line">		&#125;</div><div class="line">		else</div><div class="line">		&#123;</div><div class="line">			return false;</div><div class="line">		&#125;</div><div class="line">	&#125;</div><div class="line">	else</div><div class="line">	&#123;</div><div class="line">		return true;</div><div class="line">	&#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>我看的博客里面都是定义一个<code>class MySocket : public QThread</code>线程来接收接入的连接。  </p>
+<hr>
+<p>我定义的<code>MySocket</code>是这样的:  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">class MySocket :public QThread</div><div class="line">&#123;</div><div class="line">	Q_OBJECT</div><div class="line">public:</div><div class="line">	MySocket(QTcpSocket *connection,QObject *parent = 0);</div><div class="line">	~MySocket();</div><div class="line">	void SendMessage(QString text);</div><div class="line"></div><div class="line">private:</div><div class="line">	QTcpSocket *m_socket;</div><div class="line">private:</div><div class="line">	void run();</div><div class="line">private slots:</div><div class="line">	void DataReceived();</div><div class="line">&#125;;</div><div class="line">```  </div><div class="line"></div><div class="line">以上代码中只包括了最主要的部分， 我把软件逻辑功能相关的变量、函数定义删掉了。其中需要说明的是在构造函数里面会把QTcpSocket类型的指针赋值给类里面的`m_socket`。  </div><div class="line"></div><div class="line">那么回到刚刚提到的`MyServer`的处理新连接的槽函数：</div></pre></td></tr></table></figure>
+<p>void MyServer::NewConnectionSlot()<br>{<br>        MySocket <em>temp_socket;<br>        temp_socket = new MySocket(m_server-&gt;nextPendingConnection());<br>        temp_socket-&gt;start();<br>        socketList &lt;&lt; temp_socket;//socketList的类型是QList&lt;MySocket</em>&gt;<br>}<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">这样这个服务器端的监听程序部分就基本上完成了。</div><div class="line"></div><div class="line">---</div><div class="line">另外我还遇到了TcpSocket传输中文乱码的问题，经查找，我使用的有效方法如下：  </div><div class="line"></div><div class="line">1.发送时：</div></pre></td></tr></table></figure></p>
+<pre><code>QString text = &quot;你要传输的文字&quot;;
+QByteArray datasend = text.toLocal8Bit();
+m_socket-&gt;write(datasend);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">2.接收时：</div></pre></td></tr></table></figure>
+<pre><code>QByteArray vTemp;
+vTemp = m_socket-&gt;readLine();
+QString vTempStr = QString::fromLocal8Bit(vTemp);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">---</div><div class="line">完成这个东西之后就直接拿去用了，没有经过完整测试，结果到了现场根本没法用，客户端没有每隔一段时间去汇报情况，过一会连接就自动断掉了，所以完全没法用，解决办法也很简单，既然长时间不汇报情况连接会断，那么就每隔一段时间发送个报文给服务器就好了（其实这个方法早就有，也不能叫方法，因为一般人都会默认加上这个东西来确保两者连接，只是我经验不够老到，吃了大亏）。可以在MyClient类的构造函数里面定义一个Timer（`startTimer(3000);`），到时间之后触发timerEvent函数（在MyClient类里面重载`protected void timerEvent(QTimerEvent *event);`），在这个函数里面给服务器发一个空报文就好了。</div></pre></td></tr></table></figure>
+<p>void MyClient::timerEvent(QTimerEvent *event)<br>{<br>    QString c = “”;<br>    socket-&gt;write(c.toLatin1(), c.length());<br>}<br>```</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Git发布博文/" data-id="ciu2osn2l00058cygyw1dsxwo" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_QTcpServer&TcpSocket&中文乱码问题&超时掉线问题/" data-id="ciu2osn39000d8cygfxg074se" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -104,9 +120,9 @@
 
 
   
-    <article id="post-Gitblog升级记录" class="article article-type-post" itemscope itemprop="blogPost">
+    <article id="post-SetupStationNote" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
-    <a href="/2016/10/09/Gitblog升级记录/" class="article-date">
+    <a href="/2016/10/09/SetupStationNote/" class="article-date">
   <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
 </a>
     
@@ -118,7 +134,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Gitblog升级记录/">Gitblog升级记录</a>
+      <a class="article-title" href="/2016/10/09/SetupStationNote/">建站记录</a>
     </h1>
   
 
@@ -126,26 +142,117 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>今天晚上Gitblog又发布新版本了，于是又是一次更新换代的时间，我第一时间在我的VPS上更新了Gitblog2.2，期间还做了些小改动。Gitblog版本的更新细则请参见<a href="https://github.com/jockchou/gitblog/releases" target="_blank" rel="external">这里</a>。</p>
-<p>那么每次更新Gitblog版本的时候都要注意不要把博文和自己的配置给弄丢，我之前是把所有的博文放到了Dropbox中，所以这次我直接把更新包里面的东西全部丢进了我的站点目录，然后暂时停掉Dropbox服务，把Dropbox自动更新目录重新指向正确的目录就OK啦！这时候博客已经可以打开了。</p>
-<p>但是由于这时候我忘记了把配置文件放进去，所以网站有点奇奇怪怪的，我不得不打开WinSCP把配置文件拷贝进去，这样倒是可以，不过每当我想要更改什么配置的时候还得打开WinSCP什么的，好麻烦。所以我就把配置文件放到了Dropbox里面同时备份，这样配置文件就会出现在blog/文件夹下，那么我在网站根目录下做一个配置文件的软连接即可。</p>
-<p>我也尝试过硬链接，但是我在本地改了配置文件之后只有blog文件夹里面的配置文件发生了变化，但是根目录下的硬连接文件并没有改变，可能是因为Dropbox在同步的时候把旧文件内容和新内容加在一起生成了一个新文件，然后旧文件依旧在原处作为备份，硬链接依旧指向原来的地址，所以并没有发生变化。</p>
-<p>所以现在我的所有配置和博文都在Dropbox里面了，下次更新Gitblog只需要更新一下配置文件的软连接就行了。</p>
-<ol>
-<li>停止Dropbox服务<code>killall dropbox</code></li>
-<li>把网站根目录下的blog文件夹拷贝到别处<code>cp -Rf blog/* ../blog/</code></li>
-<li>解压Gitblog<code>tar -xvzf v2.2</code></li>
-<li>把解压目录下的blog文件夹删除</li>
-<li>把解压目录下所有的东西拷贝到网站根目录</li>
-<li>将blog文件夹拷贝回来</li>
-<li>重新建立配置文件的软连接<code>ln -s blog/conf.yaml conf.yaml</code></li>
-<li>启动Dropbox服务<code>~/.dropbox-dist/dropboxd &amp;</code>  </li>
-</ol>
+        <p>这次的建站还是比较成功的，页面我也很喜欢。</p>
+<hr>
+<p>首先说一下这次冲动的原因。其实之前一直就想要有个博客的，因为这一阵子做了很多东西本以为学了很多，没想到再次遇到同样的问题的时候还是得回去看原来的代码，所以体会到了整理总结并且记录下来的重要性。而且你看那些网站一个个的跟我要个人网站地址，但是我又没有，VPS是有的，域名也是有的，干脆一不做二不休建一个博客吧。  </p>
+<p>其实在准备建站之前也去看了看CSDN的博客，还在上面写了篇文章，但是每次都要审核好麻烦的，而且CSDN有些界面还是那么的丑，然后去SegmentFault上面也看了看那个专栏，并且把之前在CSDN上写的那篇文章复制过去了，我还好心的在后面写了一句“复制自我刚写的CSDN博客”，然后审核就不通过了，原因是“文章质量不高”，我本来以为是我写的太零碎了，没想到还真是因为我的最后一句注释，因为我把它删掉之后再次提交审核竟然通过了，由此我就很不开心。。。  </p>
+<p>所以我昨天晚上开始建站，因为喜欢上了MarkDown，所以在找能用md的博客，不经意间发现了GitBlog，发现这个很适合小巧的VPS，所以我就决定尝试一下。  </p>
+<p>一开始都很顺利，安装nginx，安装php的一些组件，之后配置nginx，然后把GitBlog放到nginx配置的网站根目录下，结果发现主页什么都不显示，然后我就加了GitBlog的交流群，群主很热心的为我解答一些问题，然后还是不行，我就把我的vps帐号给了群主，他帮我检查（那时候已经凌晨一点了），最后检查出来是因为缺少了mbstring扩展库，他帮我安装好了，真的是很感谢群主。  </p>
+<p>到此为止我的博客算是建立成功了，之后就是最为重要的记录了。</p>
+<p>现在是研零的暑假，马上就要开学成为真正的研究生了，我要养成一个记录已经学到的知识的好习惯。与GitBlog共勉。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Gitblog升级记录/" data-id="ciu2osn2g00038cygv38br5j6" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/SetupStationNote/" data-id="ciu2osn3m000j8cygeri4ygq5" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_Qt5_6缺少ODBC的问题" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/">QtNote:Qt5.6缺少QODBC驱动</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>前阵子发现Qt5.6终于发布了之后，满心欢喜的安装了Visual Studio 2015和Qt5.6，最近发现Qt5.6默认不带QODBC驱动了，以前的程序连接不上SqlServer了，很是苦恼，于是尝试了以下两种解决办法，<strong>其中第一种是不可行的，大家不要尝再去试。</strong></p>
+<p>##从Qt5.5中拷贝QODBC（不可行）<br>秉承着少什么给什么的朴素主义程序员原则，我重新安装了Qt5.5，并且从Qt5.5.0\5.5\msvc2015\plugins\sqldrivers\下面拷贝出了以<code>qsqlodbc</code>开头的三个文件到Qt5.6对应的文件夹中，运行程序，还是显示无法加载QODBC，但是系统已经检测到sqldriver文件夹下面有QODBC了，但是由于版本不同无法使用，所以此路不通。  </p>
+<p>##从Qt5.6源码中编译QODBC<br>虽然不知道为什么Qt5.6默认不自带QODBC了，但是还是可以从源码中编译出QODBC的，方法步骤也挺简单的，取自<a href="http://blog.csdn.net/sniper_bing/article/details/51018783" target="_blank" rel="external">Qt5.6 windows下vs2015编译QODBC</a>作者：蜗牛的信仰。  </p>
+<p>主要有五步：  </p>
+<ol>
+<li>打开Visual Studio提供的CMD（我这里是<code>VS2015 x64 Native Tools Command Prompt</code>）</li>
+<li>进入<code>Qt5.6.0\5.6\msvc2015\bin</code>，执行<code>qtenv2.bat</code></li>
+<li>进入<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc</code>，执行<code>qmake odbc.pro</code></li>
+<li>执行<code>nmake</code>（开始编译）</li>
+<li>编译完成之后进入<code>Qt5.6.0\5.6\Src\qtbase\plugins\sqldrivers</code>中将所有<code>qsqlodbc</code>开头的文件（<strong>注意是所有的文件，不只是三个</strong>）拷贝到<code>Qt5.6.0\5.6\msvc2015\plugins\sqldrivers</code>  </li>
+</ol>
+<hr>
+<p>但是当我想要编译32位QODBC的时候（我同时也安装了32位Qt），上面的方法却行不通了，就算我用的是<code>VS2015 x86 Native Tools Command Prompt</code>也不行，说模型是x86的，但是目标机器是x64的，编译失败。  </p>
+<p>这时候可以打开Visual Studio，使用Qt的菜单栏<code>Open Qt Project File(.pro)</code>打开<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc</code>中的odbc.pro文件，然后将用Configuration Manager新建一个solution platform为x86的，然后分别Debug build一下和Release build一下。然后去<code>Qt5.6.0\5.6\Src\qtbase\src\plugins\sqldrivers\odbc\Debug|Release</code>里面拷贝东西就好了。  </p>
+<p>另外，其实Debug build的时候会在<code>Qt5.6.0\5.6\Src\qtbase\plugins\sqldrivers</code>里面生成Debug的库文件，但是Release的时候不会在那个目录下生成，因为新建solution platfrom的时候没有设置生成地点，所以就默认在odbc工程根目录下生成了。 </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_Qt5_6缺少ODBC的问题/" data-id="ciu2osn3d000f8cygvmhdo9ok" class="article-share-link">Partager</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/" class="article-date">
+  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/">QtNote:Qt连接SqlServer | Qt中的相互引用问题 | Qt发布数据库程序</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>最近要大改项目的一个工程，遇到了两个问题，一个问题是历史遗留的老大难问题，另一个是今天下午遇到的奇怪问题。  </p>
+<hr>
+<p>##Qt连接SqlServer<br>看到这个题目可能有人会说这里之前不是记录过吗？但是今天我又遇到了这个问题，不同的是这次我必须连接远程数据库服务器了。  </p>
+<p>我按照之前的做法，在ODBC里面添加了数据源，然后我就直接把原来的代码改了数据源名字，结果发现不行了。后来发现这个原因很傻，远程服务器上面没有我这个Windows账户的许可，所以我不添加用户名密码程序自动用Windows登陆验证去访问自然就被拒绝了。添加上用户名密码选项就好了。就像下面这样：  </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">	db.setDatabaseName(&quot;RTUData_DYX&quot;);</div><div class="line">	db.setUserName(&quot;sa&quot;);</div><div class="line">	db.setPassword(&quot;*******&quot;);</div><div class="line">```  </div><div class="line"></div><div class="line">然后，另一种让我神往的直接用连接字符串的方式也让我给摸索出来了，这个方法用语言描述是非常空洞的，所以直接上代码：</div></pre></td></tr></table></figure>
+<pre><code>QString dsn = &quot;DRIVER={SQL SERVER};SERVER=***.***.***.***\\sqlexpress;DATABASE=RTUData&quot;;
+db.setDatabaseName(dsn);
+db.setUserName(&quot;sa&quot;);
+db.setPassword(&quot;*******&quot;);
+</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"></div><div class="line">需要说明的两点是DRIVER后面的大括号里面必须是`SQL SERVER`必须都是大写中间空格也不能少；第二点是如果你的数据库服务器是express版本的话，在计算机名或ip后面必须跟着`\\sqlexpress`注意是双反斜杠，因为有个字符串转义存在。  </div><div class="line"></div><div class="line">这个dsn其实是我用VS连接了数据库之后从属性的&apos;连接字符串&apos;里面拷贝出来然后加了一个反斜杠的。  </div><div class="line"></div><div class="line">##Qt中的相互引用问题  </div><div class="line">其实C++里面也会遇到相互引用的问题，相互引用问题就是假设有两个类A类和B类，在这两个类里面相互作为成员变量，这在编译的时候会引起链接错误，因为编译A类的时候编译器还不知道B类是什么，所以B类的函数就会引起链接错误。  </div><div class="line"></div><div class="line">那么一般的解决方法是在一个类A的头文件里不引用另一个类B，但是声明一下类B，然后类体里面用这个类B的指针，在A的cpp文件里面引用B的头文件，这样在B类里面就照常使用就好了。  </div><div class="line"></div><div class="line">本来想仔细描述一下这个问题，现在发现解决方案和C++里面的解决方案一样，但是我之前遇到的奇怪问题再也找不回来了。  </div><div class="line"></div><div class="line">---</div><div class="line">##Qt发布数据库程序</div><div class="line">Qt发布数据库程序的时候必须在程序的根目录下面放置sqldriver文件夹，里面是对应的驱动，比如SqlServer就是qsqlodbc.dll。</div></pre></td></tr></table></figure>
+<p>/<br>|…sqldrivers/qsqlodbc.dll<br>```</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_Qt连接SqlServer_Qt中的相互引用问题 _Qt发布数据库程序/" data-id="ciu2osn3e000g8cygpyfsl6yo" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -193,131 +300,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_of_file_event/" data-id="ciu2osn3j000h8cyg1n8enl7m" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-Oracle连接" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/Oracle连接/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/Oracle连接/">Oracle数据库&amp;远程连接&amp;ODBC驱动</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>因为高级数据库课程需要，开始学习Oracle数据库，学习Oracle首先要安装，我尝试在linux上安装，结果失败了，然后把笔记本重新安装成Windows之后在上面安装上了Oracle。（在Windows上面安装Oracle也会提示很多错误，全部忽略就行了）</p>
-<hr>
-<p>Oracle安装完成之后，可以通过SQLplus进行连接，但是sqlplus不是图形化界面不利于保存SQL语句，还是想要通过图形界面访问，一开始使用PLSQL，但是一直连接不上，后来直接用Oracle提供的sqldeveloper进行连接。</p>
-<hr>
-<p>本地连接没什么特殊的，很容易就连接成功了，让我头疼的是如何远程连接，我按照网络上的教程，使用Net Managment配置本地服务和监听器，但是在远端使用Sqldeveloper就是通过不了测试，后来发现网上有教程说我缺少Instant Client（即时客户端），下载之后配置好了发现也不行。  </p>
-<p>我突然想起了之前sqlserver远程连接的时候需要重启服务，于是我去重启了一遍Oracle的TNSListener服务，果真，重启之后配置重新载入就好了。</p>
-<hr>
-<p>Oracle小记：  </p>
-<ol>
-<li>每个Oracle用户一个表方案，访问不同用户的表需要在表名字前面加用户名。  </li>
-<li>Oracle新建数据库是新建一个服务。  </li>
-<li><code>create user *name* identified by *passwd*</code>创建用户  </li>
-<li><code>grant connect,dba,resource to *name*</code>分配权限  </li>
-</ol>
-<hr>
-<p>在Windows上安装Oracle驱动  </p>
-<p>为了做分布式实验，需要在一个没有安装Oracle数据库的Windows上面用ODBC来访问oracle，百度了很多，那些回答、博客都跟傻逼似的，一点用也没有，唯一有用的是<a href="http://www.cnblogs.com/shelvenn/p/3799849.html" target="_blank" rel="external">这个</a>，这篇博客说的是对的。  </p>
-<p>所以我们需要下载两个东西一个是base包(instantclient-basic)，另一个是ODBC包(instantclient-odbc)，下载下来之后是两个压缩包，解压然后合并（其实都把它们解压到一个位置即可，因为里面的文件夹名字都是一样的，会自动合并），然后把这个文件夹放置到随便一个你喜欢的地方，然后进去用管理员权限运行”odbc_install.exe”就行了，这时候ODBC管理程序里面就会出现Oracle in instantclient了。  </p>
-<p>要连接服务器还必须得配置TNS，在instantclient根目录下面新建一个目录叫做”NETWORK”，进去再新建一个目录叫做”ADMIN”，在ADMIN里面新建一个文件叫做”tnsnames.ora”（当然你也可以从Oracle服务器里面直接复制出来），这时候还需要配置两个环境变量，分别是<code>ORACLE_HOME</code>和<code>NLS_LANG</code>。第一个变量值就是instantclient目录（比如<code>D:\instantclient_11_2</code>），第二个变量值等于<code>SIMPLIFIED CHINESE_CHINA.ZHS16GBK</code>，这个变量是解决sql通过odbc查询中文乱码问题的。</p>
-<p>这时候你去ODBC管理程序里面就可以配置Oracle服务器了。TNS Service Name里面可以下拉出你在tnsnames.ora配置的内容（如果下拉不到东西说明你ORACLE_HOME变量没有配置）。  </p>
-<hr>
-<p>后来我发现……想要在SqlServer Management Studio里面连接Oracle数据库最简单的方法还是在电脑上安一个Oracle客户端……  </p>
-<p>最后还是没能逃过安装Oracle……</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/Oracle连接/" data-id="ciu2osn3000098cyghv5e2h1h" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-QtNote_QDate、QTextCodec、QFileDialog以及Q_OBJECT" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2016/10/09/QtNote_QDate、QTextCodec、QFileDialog以及Q_OBJECT/" class="article-date">
-  <time datetime="2016-10-09T13:46:42.482Z" itemprop="datePublished">2016-10-09</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/10/09/QtNote_QDate、QTextCodec、QFileDialog以及Q_OBJECT/">QtNote:QDate、QTextCodec、QFileDialog以及Q_OBJECT</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>闲话不多说，直接记录。  </p>
-<hr>
-<p>首先说一点关于信号槽的误解，上次那个明明发射信号却无法进入槽函数的原因已经查明，因为自定义的类体里面没有<code>Q_OBJECT</code>所以无法纳入Qt大家庭中。我发现这个宏还有解决换行符跨平台等问题，加了这个宏的文件在使用git的时候不会提示CRLF的问题，没加的就会出现CRLF的问题。</p>
-<hr>
-<p>##QDate：<br>QDate是Qt提供的日期控件可以获取当前日期，如果是QDateTime的话可以精确到秒。获取了日期之后可以设置日期显示格式。由<code>toString(QString format)</code>函数实现设置格式。  </p>
-<p>这个toString函数类似printf函数，都是把format参数里面的特定字符替换为时间，比如<code>y</code>代表year，<code>M</code>代表month，由于日期时间格式里面有两个“m”，所以大写M表示month，小写<code>m</code>表示minute，<code>d</code>代表day，<code>h</code>代表hour，<code>s</code>代表second,<code>z</code>代表毫秒。举个例子：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">QDateTime::currentDateTime().toString(<span class="string">"yyyy-MM-dd-h-m"</span>);</div></pre></td></tr></table></figure>
-<p>那么返回就是<code>2015-08-22-16-33</code>；<br>2015.10.07补充（摘自互联网）：<br>这些是可能用到的日期表达式：  </p>
-<p>d - 没有前置0的数字的天（1－31）<br>dd - 前置0的数字的天（01－31）<br>ddd - 缩写的日名称（Mon－Sun）。使用<code>QDate::shortDayName()</code>。<br>dddd - 长的日名称（Monday－Sunday）。使用<code>QDate::longDayName()</code>。<br>M - 没有前置0的数字的月（1－12）<br>MM - 前置0的数字的月（01－12）<br>MMM - 缩写的月名称（Jan－Dec）。使用<code>QDate::shortMonthName()</code>。<br>MMMM - 长的月名称（January－December）。使用<code>QDate::longMonthName()</code>。<br>yy - 两位数字的年（00－99）<br>yyyy - 四位数字的年（0000-9999）  </p>
-<p>这些是可能用到的时间表达式：  </p>
-<p>h - 没有前置0的数字的小时（0－23或者如果显示AM/PM时，1－12）<br>hh - 前置0的数字的小时（00－23或者如果显示AM/PM时，01－12）<br>m - 没有前置0的数字的分钟（0－59）<br>mm - 前置0的数字的分钟（00－59）<br>s - 没有前置0的数字的秒（0－59）<br>ss - 前置0的数字的秒（00－59）<br>z - 没有前置0的数字的毫秒（0－999）<br>zzz - 前置0的数字的毫秒（000－999）<br>AP - 切换为AM/PM显示。AP将被“AM”或“PM”替换。<br>ap - 切换为am/pm显示。ap将被“am”或“pm”替换。<br>所有其他输入字符都将被忽略。  </p>
-<hr>
-<p>##QTextCodec<br>为了解决中文乱码的问题，可以通过设置本地编码来解决，当然也可以通过<code>QString::formLocal8bit()</code>解决（如果变量不多的话）。代码如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">QTextCodec *codec = QTextCodec::codecForName(<span class="string">"UTF-8"</span>);</div><div class="line">QTextCodec::setCodecForLocale(codec);</div></pre></td></tr></table></figure></p>
-<p>不过需要注意的一点就是改变本地编码之后换行符可能跟随变化。还是用<code>&#39;\n&#39;</code>吧，暂时没考虑跨平台的问题。</p>
-<hr>
-<p>##QFileDialog<br>QFileDialog是一个可以获取文件路径的类，使用它会自动弹出一个文件选择对话框。这个类同时也可以获取文件夹路径。  </p>
-<ul>
-<li>获取文件夹路径  <pre><code class="cpp">QString QFileDialog::getOpenFileName();
-</code></pre>
-</li>
-<li>当然获取同目录下多个文件的话就是  <pre><code class="cpp">QStringList QFileDialog::getOpenFileNames();
-</code></pre>
-</li>
-<li>获取已存在文件夹路径  <pre><code class="cpp">QString QFileDialog::getExistingDirectory();
-</code></pre>
-</li>
-</ul>
-<hr>
-<p>头一次在github发布自己的东西，蛮激动的，继续加油！</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://ablee.cc/2016/10/09/QtNote_QDate、QTextCodec、QFileDialog以及Q_OBJECT/" data-id="ciu2osn35000b8cygb7gslg7q" class="article-share-link">Share</a>
+      <a data-url="http://ablee.cc/2016/10/09/QtNote_of_file_event/" data-id="ciu2osn3j000h8cyg1n8enl7m" class="article-share-link">Partager</a>
       
       
     </footer>
@@ -337,18 +320,10 @@
           <aside id="sidebar">
   
     
-
-  
-    
-
-  
-    
-  
-    
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Catégories</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li></ul>
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/随笔/">随笔</a></li></ul>
     </div>
   </div>
 
@@ -356,28 +331,57 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">Mot-clés</h3>
+    <div class="widget">
+      <ul class="tag-list"><li class="tag-list-item"><a class="tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Nuage de mot-clés</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/10/">October 2016</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/08/">August 2015</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Articles récents</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2016/10/09/研究生开学了/">研究生开学了</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何用VS作为Git的合并工具/">如何用Visual Studio作为Git的合并工具</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/如何清除U盘的分区/">如何清除U盘的分区</a>
-          </li>
-        
-          <li>
-            <a href="/2016/10/09/sqlserver express/">如何远程连接Sqlserver 2014 Express版本</a>
+            <a href="/2016/10/15/如何用VS作为Git的合并工具/">(no title)</a>
           </li>
         
           <li>
             <a href="/2016/10/09/Win10无声音/">关于Win10无声音的问题以及解决办法。</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/Multiple Qt Dll Project in one Solution/">用VS组建一个Qt多工程的解决方案来进行软件开发</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/QtNote_QTcpSocket_QObject/">QtNote:QTcpSocket与QThread，QObject的拷贝问题</a>
+          </li>
+        
+          <li>
+            <a href="/2016/10/09/RTU通信协议（翻译）/">NARTU通信协议（翻译）</a>
           </li>
         
       </ul>
@@ -393,7 +397,7 @@
   <div class="outer">
     <div id="footer-info" class="inner">
       &copy; 2016 AbLee<br>
-      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+      Propulsé by <a href="http://hexo.io/" target="_blank">Hexo</a>
     </div>
   </div>
 </footer>
